@@ -736,3 +736,45 @@ class MagicBar {
     }
 
 }
+
+//All the UI information that needs to be kept track of on the current map
+/*
+keeps track of all the animations currently on the map
+keeps track of sprites, which can fade in fade out upon character having used an action
+keeps track of he current hp bar of the player
+keeps track of the current mp bar of the player
+keeps track of the percentage/number of the hp bar of the player
+keeps track of the percentage/number of the mp bar of the player
+keeps track of the player's battle skills (fades out upon not enough mp)
+keeps track of the player's skills (with additional information relating to those skills upon pointerover)
+keeps track of the current status effects that gets added or removed
+*/
+class UIinformation {
+    constructor (animations, sprites, hp_bar, mp_bar, hp_count, mp_count, battleSkills, skills, status_effects)
+    {
+        this.animations = animations;
+        this.sprites = sprites;
+        this.hp_bar = hp_bar;
+        this.mp_bar = mp_bar;
+        this.hp_count = hp_count;
+        this.mp_count = mp_count;
+        this.battleSkills = battleSkills;
+        this.skills = skills;
+         this.status_effects = status_effects;
+    }
+}
+
+//same but for enemies that do not have mp bar and such
+class EnemyUIinformation{
+    constructor(animations, sprites, hp_bar, hp_count, battleSkills, skills, status_effects){
+        this.animations = animations;
+        this.sprites = sprites;
+        this.hp_bar = hp_bar;
+        this.hp_count = hp_count;
+        this.battleSkills = battleSkills;
+        this.skills = skills;
+        this.status_effects = status_effects;
+    }
+}
+
+

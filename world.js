@@ -5,6 +5,8 @@ battlescenemap = 'heaven'; //default is heaven, this global variable determines 
 hp_bars = []; //global hp bars to keep track of in the UI scene
 mp_bars = []; //global mp bars to keep track of mp in the UI scene
 enemy_hp_bars = [];
+UIarray = []; //this array keeps track of all the UIs for every character on the map
+EnemyUIarray = []; //this array keeps track of all the UIs for every enemy on the map
 
 
 
