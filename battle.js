@@ -34,17 +34,33 @@ var BattleScene = new Phaser.Class({
         this.enemies = [];
         for (var i = 0; i < players.length; i++){
             //for each for loop we are gonna generate new fighting sprites 
-            var player = new PlayerCharacter(this, 1280-256, 256 + i*130, players[i].unitName, 1, "Warrior", 100, 20);
-            this.add.existing(player);
-            player.anims.play(players[0].unitAnimations[0], true);
-            this.heroes.push(player);
+            if (i === 0 || i === 1){
+                var player = new PlayerCharacter(this, 1280-256, 256 + i*130, players[i].unitName, 1, "Warrior", 100, 20);
+                this.add.existing(player);
+                player.anims.play(players[0].unitAnimations[0], true);
+                this.heroes.push(player);
+            }
+            else if (i >= 2){
+                var player = new PlayerCharacter(this, 1280-256 - 200, 256 + (i-2)*130 + 50, players[i].unitName, 1, "Warrior", 100, 20);
+                this.add.existing(player);
+                player.anims.play(players[0].unitAnimations[0], true);
+                this.heroes.push(player);
+            }
         }
 
         for (var i = 0; i < enemies.length; i++){
-            var enemy = new Enemy(this, 256, 256 + i*150, enemies[i].unitName, 1, "Dragon", 50, 3);
-            this.add.existing(enemy);
-            enemy.anims.play(enemies[0].unitAnimations[0], true);
-            this.enemies.push(enemy);
+            if (i === 0 || i === 1){
+                var enemy = new Enemy(this, 256, 256 + i*150, enemies[i].unitName, 1, "Dragon", 50, 3);
+                this.add.existing(enemy);
+                enemy.anims.play(enemies[0].unitAnimations[0], true);
+                this.enemies.push(enemy);
+            }
+            else if (i >= 2){
+                var enemy = new Enemy(this, 256 + 200, 256 + (i-2)*150 + 50, enemies[i].unitName, 1, "Dragon", 50, 3);
+                this.add.existing(enemy);
+                enemy.anims.play(enemies[0].unitAnimations[0], true);
+                this.enemies.push(enemy);
+            }
         }
 
 
@@ -436,7 +452,7 @@ var UIScene = new Phaser.Class({
                 mptext = new UIHPMP(textmp);
                 var textName = this.add.text(760, 1024 - 3*95 - 78 + i*93, players[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
-
+                
 
 
                 player1.setScale(0.8);
@@ -492,10 +508,10 @@ var UIScene = new Phaser.Class({
 
                 player3.on('pointerover', function(pointer){
                     console.log("clicked on player " + players[2].unitName);
-                    this.clearTint(0x87ceeb);
+                    this.setTint(0x87ceeb);
                 });
                 player3.on('pointerout', function(pointer){
-                    this.resetTint();
+                    this.clearTint();
                 });
                 
             }
@@ -533,7 +549,11 @@ var UIScene = new Phaser.Class({
                 //if there is only one enemy
                 var enemy1 = this.add.sprite(58, 1024-3*95-40 + i * 120, enemies[i].unitSprites).setInteractive();
                 hp = new HealthBar(this.scene.get("UIScene"), 158, 1024-3*95-40 + i * 120 - 38, enemies[0].unitStats.hp);
-                enemy_hp_bars.push(hp);
+                //enemy_hp_bars.push(hp);
+                var textName = this.add.text(20, 1024-3*95-40 + 36 + i * 120, enemies[i].unitName,{ color: "#FF0000",fontWegight: 
+                'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+
+
                 enemy1.setScale(0.8);
                 enemy1.on('pointerover', function(pointer){
                     console.log("clicked on enemy " + enemies[0].unitName);
@@ -547,7 +567,9 @@ var UIScene = new Phaser.Class({
                 var enemy2 = this.add.sprite(58, 1024-3*95-40 + i * 120, enemies[i].unitSprites).setInteractive();
                 enemy2.setScale(0.8);
                 hp = new HealthBar(this.scene.get("UIScene"), 158, 1024-3*95-40 + i * 120 - 38, enemies[1].unitStats.hp);
-                enemy_hp_bars.push(hp);
+                var textName = this.add.text(20, 1024-3*95-40 + 36 + i * 120, enemies[i].unitName,{ color: "#FF0000",fontWegight: 
+                'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+
                 enemy2.on('pointerover', function(pointer){
                     console.log("clicked on enemy " + enemies[1].unitName);
                     this.setTint(0xff0000);
@@ -561,7 +583,8 @@ var UIScene = new Phaser.Class({
                 var enemy3 = this.add.sprite(58, 1024-3*95-40 + i * 120, enemies[i].unitSprites).setInteractive();
                 enemy3.setScale(0.8);
                 hp = new HealthBar(this.scene.get("UIScene"), 158, 1024-3*95-40 + i * 120 - 38, enemies[2].unitStats.hp);
-                enemy_hp_bars.push(hp);
+                var textName = this.add.text(20, 1024-3*95-40 + 36 + i * 120, enemies[i].unitName,{ color: "#FF0000",fontWegight: 
+                'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                 enemy3.on('pointerover', function(pointer){
                     console.log("clicked on enemy " + enemies[2].unitName);
                     this.setTint(0xff0000);
