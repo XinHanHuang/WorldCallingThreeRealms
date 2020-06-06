@@ -423,10 +423,22 @@ var UIScene = new Phaser.Class({
             if (i === 0){
                 //if there is only 1 player
                 var player1 = this.add.sprite(1280 - 95, 1024 - 3*95 - 40 + i*93, players[i].unitSprites).setInteractive();
+
                 hp1 = new HealthBar(this.scene.get("UIScene"), 1280 - 95*4, 1024 - 3*95 - 78 + i*93, players[0].unitStats.hp);
                 mp = new MagicBar(this.scene.get("UIScene"), 1280 - 95*4, 1024 - 3*95 - 78 + i*93 + 24, players[0].unitStats.mp);
-                mp_bars.push(mp);
-                hp_bars.push(hp1); //push the new health bar into the health bar array for easy manipulation
+                var texthp = this.add.text(980, 1024 - 3*95 - 78 + i*93, "hp_player1",{ color: "#000000", align: "center",fontWegight: 
+                'bold',font: '13px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                texthp.setText(players[0].unitStats.hp + "/" + players[0].unitStats.maxHP);
+                hptext = new UIHPMP(texthp);
+                var textmp = this.add.text(980, 1024 - 3*95 - 78 + i*93 + 24, "mp_player1",{ color: "#000000", align: "center",fontWegight: 
+                'bold',font: '13px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                textmp.setText(players[0].unitStats.mp + "/" + players[0].unitStats.maxMP);
+                mptext = new UIHPMP(textmp);
+                var textName = this.add.text(760, 1024 - 3*95 - 78 + i*93, players[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+
+
+
                 player1.setScale(0.8);
                 player1.on('pointerover', function(pointer){
                     console.log("clicked on player " + players[0].unitName);
@@ -442,8 +454,17 @@ var UIScene = new Phaser.Class({
                 player2.setScale(0.8);
                 hp2 = new HealthBar(this.scene.get("UIScene"), 1280 - 95*4, 1024 - 3*95 - 78 + i*93, players[1].unitStats.hp);
                 mp = new MagicBar(this.scene.get("UIScene"), 1280 - 95*4, 1024 - 3*95 - 78 + i*93 + 24, players[1].unitStats.mp);
-                mp_bars.push(mp);
-                hp_bars.push(hp2); //push the new health bar into the health bar array for easy manipulation
+                var texthp = this.add.text(980, 1024 - 3*95 - 78 + i*93, "hp_player1",{ color: "#000000", align: "center",fontWegight: 
+                'bold',font: '13px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                texthp.setText(players[1].unitStats.hp + "/" + players[1].unitStats.maxHP);
+                hptext = new UIHPMP(texthp);
+                var textmp = this.add.text(980, 1024 - 3*95 - 78 + i*93 + 24, "mp_player1",{ color: "#000000", align: "center",fontWegight: 
+                'bold',font: '13px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                textmp.setText(players[1].unitStats.mp + "/" + players[1].unitStats.maxMP);
+                mptext = new UIHPMP(textmp);
+                var textName = this.add.text(760, 1024 - 3*95 - 78 + i*93, players[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+
                 player2.on('pointerover', function(pointer){
                     console.log("clicked on player " + players[1].unitName);
                     this.setTint(0x87ceeb);
@@ -458,8 +479,17 @@ var UIScene = new Phaser.Class({
                 player3.setScale(0.8);
                 hp3 = new HealthBar(this.scene.get("UIScene"), 1280 - 95*4, 1024 - 3*95 - 78 + i*93, players[2].unitStats.hp);
                 mp = new MagicBar(this.scene.get("UIScene"), 1280 - 95*4, 1024 - 3*95 - 78 + i*93 + 24, players[2].unitStats.mp);
-                mp_bars.push(mp);
-                hp_bars.push(hp3); //push the new health bar into the health bar array for easy manipulation
+                var texthp = this.add.text(980, 1024 - 3*95 - 78 + i*93, "hp_player1",{ color: "#000000", align: "center",fontWegight: 
+                'bold',font: '13px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                texthp.setText(players[2].unitStats.hp + "/" + players[2].unitStats.maxHP);
+                hptext = new UIHPMP(texthp);
+                var textmp = this.add.text(980, 1024 - 3*95 - 78 + i*93 + 24, "mp_player1",{ color: "#000000", align: "center",fontWegight: 
+                'bold',font: '13px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                textmp.setText(players[2].unitStats.mp + "/" + players[2].unitStats.maxMP);
+                mptext = new UIHPMP(textmp);
+                var textName = this.add.text(760, 1024 - 3*95 - 78 + i*93, players[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+
                 player3.on('pointerover', function(pointer){
                     console.log("clicked on player " + players[2].unitName);
                     this.clearTint(0x87ceeb);
@@ -474,8 +504,18 @@ var UIScene = new Phaser.Class({
                 var player4 = this.add.sprite(1280 - 95, 1024 - 3*95 - 40 + i*93, players[i].unitSprites).setInteractive();
                 hp4 = new HealthBar(this.scene.get("UIScene"), 1280 - 95*4, 1024 - 3*95 - 78 + i*93, players[3].unitStats.hp);
                 mp = new MagicBar(this.scene.get("UIScene"), 1280 - 95*4, 1024 - 3*95 - 78 + i*93 + 24, players[3].unitStats.mp);
-                mp_bars.push(mp);
-                hp_bars.push(hp4); //push the new health bar into the health bar array for easy manipulation
+                var texthp = this.add.text(980, 1024 - 3*95 - 78 + i*93, "hp_player1",{ color: "#000000", align: "center",fontWegight: 
+                'bold',font: '13px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                texthp.setText(players[3].unitStats.hp + "/" + players[3].unitStats.maxHP);
+                hptext = new UIHPMP(texthp);
+                var textmp = this.add.text(980, 1024 - 3*95 - 78 + i*93 + 24, "mp_player1",{ color: "#000000", align: "center",fontWegight: 
+                'bold',font: '13px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                textmp.setText(players[3].unitStats.mp + "/" + players[3].unitStats.maxMP);
+                mptext = new UIHPMP(textmp);
+                var textName = this.add.text(760, 1024 - 3*95 - 78 + i*93, players[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                //mp_bars.push(mp);
+                //hp_bars.push(hp4); //push the new health bar into the health bar array for easy manipulation
                 player4.setScale(0.8);
                 player4.on('pointerover', function(pointer){
                     console.log("clicked on player " + players[3].unitName);
@@ -750,23 +790,106 @@ keeps track of the player's skills (with additional information relating to thos
 keeps track of the current status effects that gets added or removed
 */
 class UIinformation {
-    constructor (animations, sprites, hp_bar, mp_bar, hp_count, mp_count, battleSkills, skills, status_effects)
+    constructor (name, sprites, hp_bar, mp_bar, hp_count, mp_count, battleSkills, skills, status_effects)
     {
-        this.animations = animations;
+        //this.animations = animations;
+        this.name = name; //the name of the characer 
         this.sprites = sprites;
-        this.hp_bar = hp_bar;
-        this.mp_bar = mp_bar;
+        this.hp_bar = hp_bar; //hp bar and mp bars already have their respective classes
+        this.mp_bar = mp_bar; //hp bar and mp bars already have their respective classes
         this.hp_count = hp_count;
         this.mp_count = mp_count;
         this.battleSkills = battleSkills;
-        this.skills = skills;
-         this.status_effects = status_effects;
+        this.skills = skills; //don't need class for that, just pass in the skill icon object, shouldn't change
+        this.status_effects = status_effects;
+    }
+
+}
+
+//Action taken means that the sprite should turn grey/fade upon player taking their action already
+//sprites is the sprite object to be taken in
+class UIsprites{
+    constructor(sprite){
+        this.sprite = sprite;
+        this.actionTaken = false;
+    }
+
+    takenAction(){
+        //fades the sprite color
+    }
+
+    resetSprites(){
+        //resets the sprite colors after the fade 
     }
 }
 
+//HP and MP number indicators
+class UIHPMP{
+    constructor(textObject){
+        this.textObject = textObject;
+    }
+
+    editText(text){
+
+    }
+}
+
+class UIbattleSkills{
+    constructor(skillIcon){
+        this.skillIcon = skillIcon;
+        this.skillAvaliable = true; // All skills are available by default
+    }
+
+    skillUnavaliable(){
+        //fade in the skill icon.
+    }
+
+    skillAvaliable(){
+        //makes skills avaliable, regains color
+    }
+}
+
+//the status effects appear and disappear accordingly
+class statusEffect{
+    constructor(statusIcon, statusDescription){
+        this.statusIcon = statusIcon;
+        this.statusDescription = statusDescription;
+    }
+}
+
+class UIStatusEffect{
+    constructor(){
+        this.statusActive = []; //the default number of active status effects is 0
+    }
+
+    addStatus(status){
+        //add a status to the status array
+    }
+
+    removeStatus(status){
+        //removes a status from the status array
+    }
+
+    clearAllStatus(){
+        this.statusActive = [];
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 //same but for enemies that do not have mp bar and such
 class EnemyUIinformation{
-    constructor(animations, sprites, hp_bar, hp_count, battleSkills, skills, status_effects){
+    constructor(name, animations, sprites, hp_bar, hp_count, battleSkills, skills, status_effects){
+        this.name = name; //the name of the character 
         this.animations = animations;
         this.sprites = sprites;
         this.hp_bar = hp_bar;

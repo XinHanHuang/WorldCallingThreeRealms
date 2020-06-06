@@ -336,7 +336,9 @@ class unitStats{
     constructor (HP, MP, ATK, DEF, RES, SPEED, LUCK)
     {
         this.hp = HP;
+        this.maxHP = HP;
         this.mp = MP;
+        this.maxMP = MP;
         this.atk = ATK;
         this.def = DEF;
         this.res = RES
