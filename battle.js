@@ -471,16 +471,66 @@ var UIScene = new Phaser.Class({
                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
 
                 for (var j = 0; j < players[i].unitSkills.length; j++){
+                    if(j === 0){
                     var skill = this.add.sprite(1280 - 192 - j*36, 1024 - 3*95 - 78 + 60 + i*93, players[i].unitSkills[j].spriteName).setInteractive();
-                    console.log(players[i].unitSkills[j].spriteName)
+                    
+                    var graphics = this.scene.get("UIScene").add.graphics();
+                    graphics.lineStyle(1, 0xffffff, 0.8);
+                    graphics.fillStyle(0x000000, 1);        
+                    graphics.strokeRect(1280 - 406 - j*36 + 30, 1024 - 3*95 - 236 + i*93, 180, 200);
+                    graphics.fillRect(1280 - 406 - j*36 + 30, 1024 - 3*95 - 236 + i*93, 180, 200);
+                    graphics.visible = false;
+
+                    var text = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
+                        1024 - 3*95 - 236 + i*93, players[i].unitSkills[0].skillName +
+                        ": " + players[i].unitSkills[0].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                        'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                    text.visible = false;
+                    
+
                     skill.setScale(0.9); 
                     skill.on('pointerover', function(pointer){
                         console.log("clicked on skill");
                         this.setTint(0x87ceeb);
+                        text.visible = true;
+                        graphics.visible = true;
                     })
                     skill.on('pointerout', function(pointer){
                         this.clearTint();
+                        text.visible = false;
+                        graphics.visible = false;
+                        
                     });
+                    }
+                    if (j === 1){
+                        var skill = this.add.sprite(1280 - 192 - j*36, 1024 - 3*95 - 78 + 60 + i*93, players[i].unitSkills[j].spriteName).setInteractive();
+
+                        var graphics1 = this.scene.get("UIScene").add.graphics();
+                        graphics1.lineStyle(1, 0xffffff, 0.8);
+                        graphics1.fillStyle(0x000000, 1);        
+                        graphics1.strokeRect(1280 - 406 - j*36 + 30, 1024 - 3*95 - 236 + i*93, 180, 200);
+                        graphics1.fillRect(1280 - 406 - j*36 + 30, 1024 - 3*95 - 236 + i*93, 180, 200);
+                        graphics1.visible = false;
+
+                        var text1 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
+                            1024 - 3*95 - 236 + i*93, players[i].unitSkills[1].skillName +
+                            ": " + players[i].unitSkills[1].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                        text1.visible = false;
+    
+                        skill.setScale(0.9); 
+                        skill.on('pointerover', function(pointer){
+                            console.log("clicked on skill");
+                            this.setTint(0x87ceeb);
+                            text1.visible = true;
+                            graphics1.visible = true;
+                        })
+                        skill.on('pointerout', function(pointer){
+                            this.clearTint();
+                            text1.visible = false;
+                            graphics1.visible = false;
+                        });
+                    }
                 }
 
 
@@ -553,6 +603,7 @@ var UIScene = new Phaser.Class({
                     skill.setScale(0.9); 
                     skill.on('pointerover', function(pointer){
                         console.log("clicked on skill");
+
                         this.setTint(0x87ceeb);
                     })
                     skill.on('pointerout', function(pointer){
@@ -800,6 +851,10 @@ var Message = new Phaser.Class({
         this.visible = false;
     }
 });
+
+
+
+
 
 class HealthBar {
 
