@@ -7,6 +7,7 @@ mp_bars = []; //global mp bars to keep track of mp in the UI scene
 enemy_hp_bars = [];
 UIarray = []; //this array keeps track of all the UIs for every character on the map
 EnemyUIarray = []; //this array keeps track of all the UIs for every enemy on the map
+menus = []; //keeps track of menus
 
 
 
@@ -37,6 +38,13 @@ var BootScene = new Phaser.Class({
         this.load.image("reenasprite", "assets/sprites/Reena.png");
         this.load.image("alyenesprite", "assets/sprites/Alyene.png");
         
+        //load menu items
+        this.load.image('attack', "assets/menu/attack.png");
+        this.load.image('escape', "assets/menu/escape.png");
+        this.load.image('guard', "assets/menu/guard.png");
+        this.load.image('items', 'assets/menu/items.png');
+        this.load.image('skill', 'assets/menu/skill.png');
+        this.load.image('skip', 'assets/menu/skip.png');
 
         // player 
         this.load.spritesheet('Reena', 'assets/Character Design/main.png', {frameWidth: 128, frameHeight: 128});
@@ -51,6 +59,8 @@ var BootScene = new Phaser.Class({
         this.load.image('almightygod', 'assets/skills/almightygod.png');
         this.load.image('dragonskin', 'assets/skills/dragonskin.png');
         this.load.image('angelictruth', 'assets/skills/angelictruth.png');
+
+        
 
     },
 

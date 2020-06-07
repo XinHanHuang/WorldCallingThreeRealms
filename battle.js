@@ -13,6 +13,7 @@ var BattleScene = new Phaser.Class({
     {    
         // change the background to green
         // create the map according to the battle scene (if statements)
+        menus = ['attack', 'guard', 'skill', 'items','skip','escape'];
         if (battlescenemap === "heaven"){
             var level0 = this.make.tilemap({ key: 'level0' });
             var tiles = level0.addTilesetImage('Mapset', 'tiles');
@@ -423,6 +424,7 @@ var UIScene = new Phaser.Class({
         this.add.existing(this.message);        
         this.createMenu();     
         this.createBattleSprites();
+        this.createMenuOptions();
     },
     createMenu: function() {
         // map hero menu items to heroes
@@ -431,6 +433,21 @@ var UIScene = new Phaser.Class({
         this.remapEnemies();
         // first move
         this.battleScene.nextTurn(); 
+    },
+    createMenuOptions: function() {
+        //this method creates the main menu functionalies
+        //right now I'll just have image place holders in place
+        for (var i = 0; i < 6; i++){
+            var temp = this.add.sprite(560, 1024 - 3*95 - 58 + i*60, menus[i]).setInteractive();
+            temp.setScale(0.25);
+            temp.on('pointerover', function(pointer){
+                console.log("clicked on skill");
+                this.setTint(0x87ceeb);
+            })
+            temp.on('pointerout', function(pointer){
+                this.clearTint();
+            });
+        }  
     },
     createBattleSprites: function(){
         //loop through all player sprites and create them
