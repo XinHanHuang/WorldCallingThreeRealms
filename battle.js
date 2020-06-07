@@ -613,14 +613,36 @@ var UIScene = new Phaser.Class({
                     }
                 }
 
+                //create the information display pannel
+                var spritegraphics = this.scene.get("UIScene").add.graphics();
+                spritegraphics.lineStyle(1, 0xffffff, 0.8);
+                spritegraphics.fillStyle(0x000000, 1);
+                spritegraphics.strokeRect(1280 - 300, 1024 - 3*95 - 340 + i*93, 180, 280);
+                spritegraphics.fillRect(1280 - 300, 1024 - 3*95 - 340 + i*93, 180, 280);
+                spritegraphics.visible = false;
+                var textsprite= this.scene.get("UIScene").add.text(1280 - 265, 
+                    1024 - 3*95 - 340 + i*93, players[0].unitName + "\n" + 
+                    "HP: " + players[0].unitStats.hp + "/" + players[0].unitStats.maxHP + "\n" +
+                    "MP: " + players[0].unitStats.mp + "/" + players[0].unitStats.maxMP + "\n" +
+                    "ATK: " + players[0].unitStats.atk + "\n" +
+                    "DEF: " + players[0].unitStats.def + "\n" +
+                    "RES: " + players[0].unitStats.res + "\n" +
+                    "SPD: " + players[0].unitStats.spd + "\n" +
+                    "LUCK: " + players[0].unitStats.luck, { color: "#ff2f2f", align: "center", fontWegight: 
+                    'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                textsprite.visible = false;
 
                 player1.setScale(0.8);
                 player1.on('pointerover', function(pointer){
                     console.log("clicked on player " + players[0].unitName);
                     this.setTint(0x87ceeb);
+                    spritegraphics.visible = true;
+                    textsprite.visible = true;
                 });
                 player1.on('pointerout', function(pointer){
                     this.clearTint();
+                    spritegraphics.visible = false;
+                    textsprite.visible = false;
                 });
             }
             else if (i === 1){
@@ -789,12 +811,34 @@ var UIScene = new Phaser.Class({
                             });
                         }
                 }
+                //create the information display pannel
+                var spritegraphics2 = this.scene.get("UIScene").add.graphics();
+                spritegraphics2.lineStyle(1, 0xffffff, 0.8);
+                spritegraphics2.fillStyle(0x000000, 1);
+                spritegraphics2.strokeRect(1280 - 300, 1024 - 3*95 - 340 + i*93, 180, 280);
+                spritegraphics2.fillRect(1280 - 300, 1024 - 3*95 - 340 + i*93, 180, 280);
+                spritegraphics2.visible = false;
+                var textsprite2= this.scene.get("UIScene").add.text(1280 - 265, 
+                    1024 - 3*95 - 340 + i*93, players[1].unitName + "\n" + 
+                    "HP: " + players[1].unitStats.hp + "/" + players[1].unitStats.maxHP + "\n" +
+                    "MP: " + players[1].unitStats.mp + "/" + players[1].unitStats.maxMP + "\n" +
+                    "ATK: " + players[1].unitStats.atk + "\n" +
+                    "DEF: " + players[1].unitStats.def + "\n" +
+                    "RES: " + players[1].unitStats.res + "\n" +
+                    "SPD: " + players[1].unitStats.spd + "\n" +
+                    "LUCK: " + players[1].unitStats.luck, { color: "#ff2f2f", align: "center", fontWegight: 
+                    'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                textsprite2.visible = false;
+
                 player2.on('pointerover', function(pointer){
-                    console.log("clicked on player " + players[1].unitName);
                     this.setTint(0x87ceeb);
+                    spritegraphics2.visible = true;
+                    textsprite2.visible = true;
                 });
                 player2.on('pointerout', function(pointer){
                     this.clearTint();
+                    spritegraphics2.visible = false;
+                    textsprite2.visible = false;
                 });
             }
             else if (i === 2){
@@ -963,12 +1007,33 @@ var UIScene = new Phaser.Class({
                             });
                         }
                 }
+                //create the information display pannel
+                var spritegraphics3 = this.scene.get("UIScene").add.graphics();
+                spritegraphics3.lineStyle(1, 0xffffff, 0.8);
+                spritegraphics3.fillStyle(0x000000, 1);
+                spritegraphics3.strokeRect(1280 - 300, 1024 - 3*95 - 340 + i*93, 180, 280);
+                spritegraphics3.fillRect(1280 - 300, 1024 - 3*95 - 340 + i*93, 180, 280);
+                spritegraphics3.visible = false;
+                var textsprite3= this.scene.get("UIScene").add.text(1280 - 265, 
+                    1024 - 3*95 - 340 + i*93, players[2].unitName + "\n" + 
+                    "HP: " + players[2].unitStats.hp + "/" + players[2].unitStats.maxHP + "\n" +
+                    "MP: " + players[2].unitStats.mp + "/" + players[2].unitStats.maxMP + "\n" +
+                    "ATK: " + players[2].unitStats.atk + "\n" +
+                    "DEF: " + players[2].unitStats.def + "\n" +
+                    "RES: " + players[2].unitStats.res + "\n" +
+                    "SPD: " + players[2].unitStats.spd + "\n" +
+                    "LUCK: " + players[2].unitStats.luck, { color: "#ff2f2f", align: "center", fontWegight: 
+                    'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                textsprite3.visible = false;
                 player3.on('pointerover', function(pointer){
-                    console.log("clicked on player " + players[2].unitName);
                     this.setTint(0x87ceeb);
+                    spritegraphics3.visible = true;
+                    textsprite3.visible = true;
                 });
                 player3.on('pointerout', function(pointer){
                     this.clearTint();
+                    spritegraphics3.visible = false;
+                    textsprite3.visible = false;
                 });
                 
             }
@@ -1137,12 +1202,33 @@ var UIScene = new Phaser.Class({
                             });
                         }
                 }
+                //create the information display pannel
+                var spritegraphics4 = this.scene.get("UIScene").add.graphics();
+                spritegraphics4.lineStyle(1, 0xffffff, 0.8);
+                spritegraphics4.fillStyle(0x000000, 1);
+                spritegraphics4.strokeRect(1280 - 300, 1024 - 3*95 - 340 + i*93, 180, 280);
+                spritegraphics4.fillRect(1280 - 300, 1024 - 3*95 - 340 + i*93, 180, 280);
+                spritegraphics4.visible = false;
+                var textsprite4= this.scene.get("UIScene").add.text(1280 - 265, 
+                    1024 - 3*95 - 340 + i*93, players[3].unitName + "\n" + 
+                    "HP: " + players[3].unitStats.hp + "/" + players[3].unitStats.maxHP + "\n" +
+                    "MP: " + players[3].unitStats.mp + "/" + players[3].unitStats.maxMP + "\n" +
+                    "ATK: " + players[3].unitStats.atk + "\n" +
+                    "DEF: " + players[3].unitStats.def + "\n" +
+                    "RES: " + players[3].unitStats.res + "\n" +
+                    "SPD: " + players[3].unitStats.spd + "\n" +
+                    "LUCK: " + players[3].unitStats.luck, { color: "#ff2f2f", align: "center", fontWegight: 
+                    'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                textsprite4.visible = false;
                 player4.setScale(0.8);
                 player4.on('pointerover', function(pointer){
-                    console.log("clicked on player " + players[3].unitName);
                     this.setTint(0x87ceeb);
+                    spritegraphics4.visible = true;
+                    textsprite4.visible = true;
                 })
                 player4.on('pointerout', function(pointer){
+                    spritegraphics4.visible = false;
+                    textsprite4.visible = false;
                     this.clearTint();
                 });
                 
