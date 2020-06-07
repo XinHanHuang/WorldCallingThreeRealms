@@ -452,7 +452,19 @@ var UIScene = new Phaser.Class({
                 mptext = new UIHPMP(textmp);
                 var textName = this.add.text(760, 1024 - 3*95 - 78 + i*93, players[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
-                
+
+                for (var j = 0; j < players[i].unitSkills.length; j++){
+                    var skill = this.add.sprite(1280 - 192 - j*36, 1024 - 3*95 - 78 + 60 + i*93, players[i].unitSkills[j].spriteName).setInteractive();
+                    console.log(players[i].unitSkills[j].spriteName)
+                    skill.setScale(0.9); 
+                    skill.on('pointerover', function(pointer){
+                        console.log("clicked on skill");
+                        this.setTint(0x87ceeb);
+                    })
+                    skill.on('pointerout', function(pointer){
+                        this.clearTint();
+                    });
+                }
 
 
                 player1.setScale(0.8);
@@ -481,6 +493,18 @@ var UIScene = new Phaser.Class({
                 var textName = this.add.text(760, 1024 - 3*95 - 78 + i*93, players[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
 
+                for (var j = 0; j < players[i].unitSkills.length; j++){
+                    var skill = this.add.sprite(1280 - 192 - j*36, 1024 - 3*95 - 78 + 60 + i*93, players[i].unitSkills[j].spriteName).setInteractive();
+                    console.log(players[j].unitSkills[j].spriteName)
+                    skill.setScale(0.9); 
+                    skill.on('pointerover', function(pointer){
+                        console.log("clicked on skill");
+                        this.setTint(0x87ceeb);
+                    })
+                    skill.on('pointerout', function(pointer){
+                        this.clearTint();
+                    });
+                }
                 player2.on('pointerover', function(pointer){
                     console.log("clicked on player " + players[1].unitName);
                     this.setTint(0x87ceeb);
@@ -506,6 +530,18 @@ var UIScene = new Phaser.Class({
                 var textName = this.add.text(760, 1024 - 3*95 - 78 + i*93, players[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
 
+                for (var j = 0; j < players[i].unitSkills.length; j++){
+                    var skill = this.add.sprite(1280 - 192 - j*36, 1024 - 3*95 - 78 + 60 + i*93, players[i].unitSkills[j].spriteName).setInteractive();
+                    console.log(players[j].unitSkills[j].spriteName)
+                    skill.setScale(0.9); 
+                    skill.on('pointerover', function(pointer){
+                        console.log("clicked on skill");
+                        this.setTint(0x87ceeb);
+                    })
+                    skill.on('pointerout', function(pointer){
+                        this.clearTint();
+                    });
+                }
                 player3.on('pointerover', function(pointer){
                     console.log("clicked on player " + players[2].unitName);
                     this.setTint(0x87ceeb);
@@ -530,8 +566,19 @@ var UIScene = new Phaser.Class({
                 mptext = new UIHPMP(textmp);
                 var textName = this.add.text(760, 1024 - 3*95 - 78 + i*93, players[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
-                //mp_bars.push(mp);
-                //hp_bars.push(hp4); //push the new health bar into the health bar array for easy manipulation
+
+                for (var j = 0; j < players[i].unitSkills.length; j++){
+                    var skill = this.add.sprite(1280 - 192 - j*36, 1024 - 3*95 - 78 + 60 + i*93, players[i].unitSkills[j].spriteName).setInteractive();
+                    console.log(players[j].unitSkills[j].spriteName)
+                    skill.setScale(0.9); 
+                    skill.on('pointerover', function(pointer){
+                        console.log("clicked on skill");
+                        this.setTint(0x87ceeb);
+                    })
+                    skill.on('pointerout', function(pointer){
+                        this.clearTint();
+                    });
+                }
                 player4.setScale(0.8);
                 player4.on('pointerover', function(pointer){
                     console.log("clicked on player " + players[3].unitName);
@@ -552,7 +599,18 @@ var UIScene = new Phaser.Class({
                 //enemy_hp_bars.push(hp);
                 var textName = this.add.text(20, 1024-3*95-40 + 36 + i * 120, enemies[i].unitName,{ color: "#FF0000",fontWegight: 
                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
-
+                for (var j = 0; j < enemies[i].unitSkills.length; j++){
+                    var skill = this.add.sprite(180 + j*36, 1024 - 3*95 - 78 + 35 + i*120, enemies[i].unitSkills[j].spriteName).setInteractive();
+                    console.log(enemies[j].unitSkills[j].spriteName)
+                    skill.setScale(0.9); 
+                    skill.on('pointerover', function(pointer){
+                        console.log("clicked on skill");
+                        this.setTint(0x87ceeb);
+                    })
+                    skill.on('pointerout', function(pointer){
+                        this.clearTint();
+                    });
+                }
 
                 enemy1.setScale(0.8);
                 enemy1.on('pointerover', function(pointer){
@@ -569,7 +627,18 @@ var UIScene = new Phaser.Class({
                 hp = new HealthBar(this.scene.get("UIScene"), 158, 1024-3*95-40 + i * 120 - 38, enemies[1].unitStats.hp);
                 var textName = this.add.text(20, 1024-3*95-40 + 36 + i * 120, enemies[i].unitName,{ color: "#FF0000",fontWegight: 
                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
-
+                for (var j = 0; j < enemies[i].unitSkills.length; j++){
+                    var skill = this.add.sprite(180 + j*36, 1024 - 3*95 - 78 + 35 + i*120, enemies[i].unitSkills[j].spriteName).setInteractive();
+                    console.log(enemies[j].unitSkills[j].spriteName)
+                    skill.setScale(0.9); 
+                    skill.on('pointerover', function(pointer){
+                        console.log("clicked on skill");
+                        this.setTint(0x87ceeb);
+                    })
+                    skill.on('pointerout', function(pointer){
+                        this.clearTint();
+                    });
+                }
                 enemy2.on('pointerover', function(pointer){
                     console.log("clicked on enemy " + enemies[1].unitName);
                     this.setTint(0xff0000);
@@ -585,6 +654,18 @@ var UIScene = new Phaser.Class({
                 hp = new HealthBar(this.scene.get("UIScene"), 158, 1024-3*95-40 + i * 120 - 38, enemies[2].unitStats.hp);
                 var textName = this.add.text(20, 1024-3*95-40 + 36 + i * 120, enemies[i].unitName,{ color: "#FF0000",fontWegight: 
                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                for (var j = 0; j < enemies[i].unitSkills.length; j++){
+                    var skill = this.add.sprite(180 + j*36, 1024 - 3*95 - 78 + 35 + i*120, enemies[i].unitSkills[j].spriteName).setInteractive();
+                    console.log(enemies[j].unitSkills[j].spriteName)
+                    skill.setScale(0.9); 
+                    skill.on('pointerover', function(pointer){
+                        console.log("clicked on skill");
+                        this.setTint(0x87ceeb);
+                    })
+                    skill.on('pointerout', function(pointer){
+                        this.clearTint();
+                    });
+                }
                 enemy3.on('pointerover', function(pointer){
                     console.log("clicked on enemy " + enemies[2].unitName);
                     this.setTint(0xff0000);
@@ -599,6 +680,18 @@ var UIScene = new Phaser.Class({
                 enemy4.setScale(0.8);
                 hp = new HealthBar(this.scene.get("UIScene"), 158, 1024-3*95-40 + i * 120 - 38, enemies[3].unitStats.hp);
                 enemy_hp_bars.push(hp);
+                for (var j = 0; j < enemies[i].unitSkills.length; j++){
+                    var skill = this.add.sprite(180 + j*36, 1024 - 3*95 - 78 + 35 + i*120, enemies[i].unitSkills[j].spriteName).setInteractive();
+                    console.log(enemies[j].unitSkills[j].spriteName)
+                    skill.setScale(0.9); 
+                    skill.on('pointerover', function(pointer){
+                        console.log("clicked on skill");
+                        this.setTint(0x87ceeb);
+                    })
+                    skill.on('pointerout', function(pointer){
+                        this.clearTint();
+                    });
+                }
                 enemy4.on('pointerover', function(pointer){
                     console.log("clicked on enemy " + enemies[3].unitName);
                     this.setTint(0xff0000);

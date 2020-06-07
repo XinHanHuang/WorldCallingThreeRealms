@@ -45,6 +45,13 @@ var BootScene = new Phaser.Class({
         this.load.spritesheet('Alyene', 'assets/Character Design/main_chara.png', {frameWidth: 128, frameHeight: 128});
         this.load.spritesheet('Yune', 'assets/Character Design/younger.png', {frameWidth: 128, frameHeight: 128});
 
+        //load battle skills
+        this.load.image('rightfulgod', 'assets/skills/rightfulgod.png');    
+        this.load.image('cloudnine', 'assets/skills/cloudnine.png');
+        this.load.image('almightygod', 'assets/skills/almightygod.png');
+        this.load.image('dragonskin', 'assets/skills/dragonskin.png');
+        this.load.image('angelictruth', 'assets/skills/angelictruth.png');
+
     },
 
     create: function ()
@@ -160,14 +167,14 @@ var WorldScene = new Phaser.Class({
         this.cameras.main.startFollow(this.reena);
         this.cameras.main.roundPixels = true; // avoid tile bleed
 
-        unitReenaSkills1 = new unitSkills("Rightful God","Negates the damage bonus from enemy critical hits");
-        unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10%");
+        unitReenaSkills1 = new unitSkills("Rightful God","Negates the damage bonus from enemy critical hits", "rightfulgod");
+        unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10%", "cloudnine");
         unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
         unitReenaStats = new unitStats(28, 20, 30, 16, 30, 20, 7); //this is Reena's current stats
         reenaAnimations = ['left', 'right'];
         //create a new unit information that stores all of Reena's information 
-        unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single");
-        unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x physical damage to opponent", 10, "physical", "single");
+        unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
+        unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x physical damage to opponent", 10, "physical", "single", "purehalo");
         unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2];
 
         //create a new unit information that stores all of Reena's information 
@@ -175,14 +182,14 @@ var WorldScene = new Phaser.Class({
         this.reena.anims.play('up', true);
         players.push(unitReena);
 
-        unitReenaSkills1 = new unitSkills("Rightful God","Negates the damage bonus from enemy critical hits");
-        unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10%");
+        unitReenaSkills1 = new unitSkills("Rightful God","Negates the damage bonus from enemy critical hits", "rightfulgod");
+        unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10%", "cloudnine");
         unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
         unitReenaStats = new unitStats(28, 20, 30, 16, 30, 20, 7); //this is Reena's current stats
         reenaAnimations = ['left', 'right'];
         //create a new unit information that stores all of Reena's information 
-        unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single");
-        unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x physical damage to opponent", 10, "physical", "single");
+        unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
+        unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x physical damage to opponent", 10, "physical", "single", "purehalo");
         unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2];
 
         //create a new unit information that stores all of Reena's information 
@@ -191,14 +198,14 @@ var WorldScene = new Phaser.Class({
         players.push(unitReena);
 
 
-        unitReenaSkills1 = new unitSkills("Rightful God","Negates the damage bonus from enemy critical hits");
-        unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10%");
+        unitReenaSkills1 = new unitSkills("Rightful God","Negates the damage bonus from enemy critical hits", "rightfulgod");
+        unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10%", "cloudnine");
         unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
         unitReenaStats = new unitStats(28, 20, 30, 16, 30, 20, 7); //this is Reena's current stats
         reenaAnimations = ['left', 'right'];
         //create a new unit information that stores all of Reena's information 
-        unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single");
-        unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x physical damage to opponent", 10, "physical", "single");
+        unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
+        unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x physical damage to opponent", 10, "physical", "single", "purehalo");
         unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2];
 
         //create a new unit information that stores all of Reena's information 
@@ -207,14 +214,14 @@ var WorldScene = new Phaser.Class({
         players.push(unitReena);
 
         
-        unitReenaSkills1 = new unitSkills("Rightful God","Negates the damage bonus from enemy critical hits");
-        unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10%");
+        unitReenaSkills1 = new unitSkills("Rightful God","Negates the damage bonus from enemy critical hits", "rightfulgod");
+        unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10%", "cloudnine");
         unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
         unitReenaStats = new unitStats(28, 20, 30, 16, 30, 20, 7); //this is Reena's current stats
         reenaAnimations = ['left', 'right'];
         //create a new unit information that stores all of Reena's information 
-        unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single");
-        unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x physical damage to opponent", 10, "physical", "single");
+        unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
+        unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x physical damage to opponent", 10, "physical", "single", "purehalo");
         unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2];
 
         //create a new unit information that stores all of Reena's information 
@@ -285,9 +292,9 @@ var WorldScene = new Phaser.Class({
         console.log(npc.texture.key);
         if (npc.texture.key === "Alyene"){
 
-            unitAlyeneSkills1 = new unitSkills("Almighty God","Negates damage bonus from enemy critical hits, damage from opponent's attacks reduced by 50%");
-            unitAlyeneSkills2 = new unitSkills("Dragon Skin", "Negates the effects of all non-damaging status effects. Nullifies poison damage");
-            unitAlyeneSkills3 = new unitSkills("Angelic Truth", "Halves skill damage received");
+            unitAlyeneSkills1 = new unitSkills("Almighty God","Negates damage bonus from enemy critical hits, damage from opponent's attacks reduced by 50%", "almightygod");
+            unitAlyeneSkills2 = new unitSkills("Dragon Skin", "Negates the effects of all non-damaging status effects. Nullifies poison damage", "dragonskin");
+            unitAlyeneSkills3 = new unitSkills("Angelic Truth", "Halves skill damage received", "angelictruth");
             unitAlyeneSkillArray = [unitAlyeneSkills1, unitAlyeneSkills2, unitAlyeneSkills3];
             unitAlyeneStats = new unitStats(30, 30, 30, 30, 30, 30, 30); //this is Alyene's current stats
             alyeneAnimations = ['rightalyene', 'leftalyene'];
@@ -297,9 +304,9 @@ var WorldScene = new Phaser.Class({
             unitAlyene = new unitInformation(this.alyene, "Alyene", alyeneAnimations, "alyenesprite", unitAlyeneSkillArray, unitAlyeneStats, [], unitAyleneBattleSkllArray);
             enemies.push(unitAlyene);
 
-            unitAlyeneSkills1 = new unitSkills("Almighty God","Negates damage bonus from enemy critical hits, damage from opponent's attacks reduced by 50%");
-            unitAlyeneSkills2 = new unitSkills("Dragon Skin", "Negates the effects of all non-damaging status effects. Nullifies poison damage");
-            unitAlyeneSkills3 = new unitSkills("Angelic Truth", "Halves skill damage received");
+            unitAlyeneSkills1 = new unitSkills("Almighty God","Negates damage bonus from enemy critical hits, damage from opponent's attacks reduced by 50%", "almightygod");
+            unitAlyeneSkills2 = new unitSkills("Dragon Skin", "Negates the effects of all non-damaging status effects. Nullifies poison damage", "dragonskin");
+            unitAlyeneSkills3 = new unitSkills("Angelic Truth", "Halves skill damage received", "angelictruth");
             unitAlyeneSkillArray = [unitAlyeneSkills1, unitAlyeneSkills2, unitAlyeneSkills3];
             unitAlyeneStats = new unitStats(30, 30, 30, 30, 30, 30, 30); //this is Alyene's current stats
             alyeneAnimations = ['rightalyene', 'leftalyene'];
@@ -309,9 +316,9 @@ var WorldScene = new Phaser.Class({
             unitAlyene = new unitInformation(this.alyene, "Alyene", alyeneAnimations, "alyenesprite", unitAlyeneSkillArray, unitAlyeneStats, [], unitAyleneBattleSkllArray);
             enemies.push(unitAlyene);
 
-            unitAlyeneSkills1 = new unitSkills("Almighty God","Negates damage bonus from enemy critical hits, damage from opponent's attacks reduced by 50%");
-            unitAlyeneSkills2 = new unitSkills("Dragon Skin", "Negates the effects of all non-damaging status effects. Nullifies poison damage");
-            unitAlyeneSkills3 = new unitSkills("Angelic Truth", "Halves skill damage received");
+            unitAlyeneSkills1 = new unitSkills("Almighty God","Negates damage bonus from enemy critical hits, damage from opponent's attacks reduced by 50%", "almightygod");
+            unitAlyeneSkills2 = new unitSkills("Dragon Skin", "Negates the effects of all non-damaging status effects. Nullifies poison damage", "dragonskin");
+            unitAlyeneSkills3 = new unitSkills("Angelic Truth", "Halves skill damage received", "angelictruth");
             unitAlyeneSkillArray = [unitAlyeneSkills1, unitAlyeneSkills2, unitAlyeneSkills3];
             unitAlyeneStats = new unitStats(30, 30, 30, 30, 30, 30, 30); //this is Alyene's current stats
             alyeneAnimations = ['rightalyene', 'leftalyene'];
@@ -383,10 +390,11 @@ var WorldScene = new Phaser.Class({
 
 //Unit skills consist of skill names and a description, and the skillname will be checked to see the skill effect in the battle method
 class unitSkills{
-    constructor (skillName, description)
+    constructor (skillName, description, spriteName)
     {
         this.skillName = skillName;
         this.description = description; //description and skill names are both strings
+        this.spriteName = spriteName;
     }
 }
 
