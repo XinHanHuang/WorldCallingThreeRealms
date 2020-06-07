@@ -531,6 +531,93 @@ var UIScene = new Phaser.Class({
                             graphics1.visible = false;
                         });
                     }
+                    if (j === 2){
+                        var skill = this.add.sprite(1280 - 192 - j*36, 1024 - 3*95 - 78 + 60 + i*93, players[i].unitSkills[j].spriteName).setInteractive();
+
+                        var graphics2 = this.scene.get("UIScene").add.graphics();
+                        graphics2.lineStyle(1, 0xffffff, 0.8);
+                        graphics2.fillStyle(0x000000, 1);        
+                        graphics2.strokeRect(1280 - 406 - j*36 + 30, 1024 - 3*95 - 236 + i*93, 180, 200);
+                        graphics2.fillRect(1280 - 406 - j*36 + 30, 1024 - 3*95 - 236 + i*93, 180, 200);
+                        graphics2.visible = false;
+
+                        var text2 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
+                            1024 - 3*95 - 236 + i*93, players[i].unitSkills[2].skillName +
+                            ": " + players[i].unitSkills[2].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                        text2.visible = false;
+    
+                        skill.setScale(0.9); 
+                        skill.on('pointerover', function(pointer){
+                            console.log("clicked on skill");
+                            this.setTint(0x87ceeb);
+                            text2.visible = true;
+                            graphics2.visible = true;
+                        })
+                        skill.on('pointerout', function(pointer){
+                            this.clearTint();
+                            text2.visible = false;
+                            graphics2.visible = false;
+                        });
+                    }
+                    if (j === 3){
+                        var skill = this.add.sprite(1280 - 192 - j*36, 1024 - 3*95 - 78 + 60 + i*93, players[i].unitSkills[j].spriteName).setInteractive();
+
+                        var graphics3 = this.scene.get("UIScene").add.graphics();
+                        graphics3.lineStyle(1, 0xffffff, 0.8);
+                        graphics3.fillStyle(0x000000, 1);        
+                        graphics3.strokeRect(1280 - 406 - j*36 + 30, 1024 - 3*95 - 236 + i*93, 180, 200);
+                        graphics3.fillRect(1280 - 406 - j*36 + 30, 1024 - 3*95 - 236 + i*93, 180, 200);
+                        graphics3.visible = false;
+
+                        var text3 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
+                            1024 - 3*95 - 236 + i*93, players[i].unitSkills[3].skillName +
+                            ": " + players[i].unitSkills[3].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                        text3.visible = false;
+    
+                        skill.setScale(0.9); 
+                        skill.on('pointerover', function(pointer){
+                            console.log("clicked on skill");
+                            this.setTint(0x87ceeb);
+                            text3.visible = true;
+                            graphics3.visible = true;
+                        })
+                        skill.on('pointerout', function(pointer){
+                            this.clearTint();
+                            text3.visible = false;
+                            graphics3.visible = false;
+                        });
+                    }
+                    if (j === 4){
+                        var skill = this.add.sprite(1280 - 192 - j*36, 1024 - 3*95 - 78 + 60 + i*93, players[i].unitSkills[j].spriteName).setInteractive();
+
+                        var graphics4 = this.scene.get("UIScene").add.graphics();
+                        graphics4.lineStyle(1, 0xffffff, 0.8);
+                        graphics4.fillStyle(0x000000, 1);        
+                        graphics4.strokeRect(1280 - 406 - j*36 + 30, 1024 - 3*95 - 236 + i*93, 180, 200);
+                        graphics4.fillRect(1280 - 406 - j*36 + 30, 1024 - 3*95 - 236 + i*93, 180, 200);
+                        graphics4.visible = false;
+
+                        var text4 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
+                            1024 - 3*95 - 236 + i*93, players[i].unitSkills[4].skillName +
+                            ": " + players[i].unitSkills[4].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                        text4.visible = false;
+    
+                        skill.setScale(0.9); 
+                        skill.on('pointerover', function(pointer){
+                            console.log("clicked on skill");
+                            this.setTint(0x87ceeb);
+                            text4.visible = true;
+                            graphics4.visible = true;
+                        })
+                        skill.on('pointerout', function(pointer){
+                            this.clearTint();
+                            text4.visible = false;
+                            graphics4.visible = false;
+                        });
+                    }
                 }
 
 
@@ -561,16 +648,153 @@ var UIScene = new Phaser.Class({
                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
 
                 for (var j = 0; j < players[i].unitSkills.length; j++){
-                    var skill = this.add.sprite(1280 - 192 - j*36, 1024 - 3*95 - 78 + 60 + i*93, players[i].unitSkills[j].spriteName).setInteractive();
-                    console.log(players[j].unitSkills[j].spriteName)
-                    skill.setScale(0.9); 
-                    skill.on('pointerover', function(pointer){
-                        console.log("clicked on skill");
-                        this.setTint(0x87ceeb);
-                    })
-                    skill.on('pointerout', function(pointer){
-                        this.clearTint();
-                    });
+                    if(j === 0){
+                        var skill = this.add.sprite(1280 - 192 - j*36, 1024 - 3*95 - 78 + 60 + i*93, players[i].unitSkills[j].spriteName).setInteractive();
+                        
+                        var graphics5 = this.scene.get("UIScene").add.graphics();
+                        graphics5.lineStyle(1, 0xffffff, 0.8);
+                        graphics5.fillStyle(0x000000, 1);        
+                        graphics5.strokeRect(1280 - 406 - j*36 + 30, 1024 - 3*95 - 236 + i*93, 180, 200);
+                        graphics5.fillRect(1280 - 406 - j*36 + 30, 1024 - 3*95 - 236 + i*93, 180, 200);
+                        graphics5.visible = false;
+    
+                        var text5 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
+                            1024 - 3*95 - 236 + i*93, players[i].unitSkills[0].skillName +
+                            ": " + players[i].unitSkills[0].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                        text5.visible = false;
+                        
+    
+                        skill.setScale(0.9); 
+                        skill.on('pointerover', function(pointer){
+                            console.log("clicked on skill");
+                            this.setTint(0x87ceeb);
+                            text5.visible = true;
+                            graphics5.visible = true;
+                        })
+                        skill.on('pointerout', function(pointer){
+                            this.clearTint();
+                            text5.visible = false;
+                            graphics5.visible = false;
+                            
+                        });
+                        }
+                        if (j === 1){
+                            var skill = this.add.sprite(1280 - 192 - j*36, 1024 - 3*95 - 78 + 60 + i*93, players[i].unitSkills[j].spriteName).setInteractive();
+    
+                            var graphics6 = this.scene.get("UIScene").add.graphics();
+                            graphics6.lineStyle(1, 0xffffff, 0.8);
+                            graphics6.fillStyle(0x000000, 1);        
+                            graphics6.strokeRect(1280 - 406 - j*36 + 30, 1024 - 3*95 - 236 + i*93, 180, 200);
+                            graphics6.fillRect(1280 - 406 - j*36 + 30, 1024 - 3*95 - 236 + i*93, 180, 200);
+                            graphics6.visible = false;
+    
+                            var text6 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
+                                1024 - 3*95 - 236 + i*93, players[i].unitSkills[1].skillName +
+                                ": " + players[i].unitSkills[1].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                                'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                            text6.visible = false;
+        
+                            skill.setScale(0.9); 
+                            skill.on('pointerover', function(pointer){
+                                console.log("clicked on skill");
+                                this.setTint(0x87ceeb);
+                                text6.visible = true;
+                                graphics6.visible = true;
+                            })
+                            skill.on('pointerout', function(pointer){
+                                this.clearTint();
+                                text6.visible = false;
+                                graphics6.visible = false;
+                            });
+                        }
+                        if (j === 2){
+                            var skill = this.add.sprite(1280 - 192 - j*36, 1024 - 3*95 - 78 + 60 + i*93, players[i].unitSkills[j].spriteName).setInteractive();
+    
+                            var graphics2 = this.scene.get("UIScene").add.graphics();
+                            graphics2.lineStyle(1, 0xffffff, 0.8);
+                            graphics2.fillStyle(0x000000, 1);        
+                            graphics2.strokeRect(1280 - 406 - j*36 + 30, 1024 - 3*95 - 236 + i*93, 180, 200);
+                            graphics2.fillRect(1280 - 406 - j*36 + 30, 1024 - 3*95 - 236 + i*93, 180, 200);
+                            graphics2.visible = false;
+    
+                            var text2 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
+                                1024 - 3*95 - 236 + i*93, players[i].unitSkills[2].skillName +
+                                ": " + players[i].unitSkills[2].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                                'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                            text2.visible = false;
+        
+                            skill.setScale(0.9); 
+                            skill.on('pointerover', function(pointer){
+                                console.log("clicked on skill");
+                                this.setTint(0x87ceeb);
+                                text2.visible = true;
+                                graphics2.visible = true;
+                            })
+                            skill.on('pointerout', function(pointer){
+                                this.clearTint();
+                                text2.visible = false;
+                                graphics2.visible = false;
+                            });
+                        }
+                        if (j === 3){
+                            var skill = this.add.sprite(1280 - 192 - j*36, 1024 - 3*95 - 78 + 60 + i*93, players[i].unitSkills[j].spriteName).setInteractive();
+    
+                            var graphics3 = this.scene.get("UIScene").add.graphics();
+                            graphics3.lineStyle(1, 0xffffff, 0.8);
+                            graphics3.fillStyle(0x000000, 1);        
+                            graphics3.strokeRect(1280 - 406 - j*36 + 30, 1024 - 3*95 - 236 + i*93, 180, 200);
+                            graphics3.fillRect(1280 - 406 - j*36 + 30, 1024 - 3*95 - 236 + i*93, 180, 200);
+                            graphics3.visible = false;
+    
+                            var text3 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
+                                1024 - 3*95 - 236 + i*93, players[i].unitSkills[3].skillName +
+                                ": " + players[i].unitSkills[3].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                                'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                            text3.visible = false;
+        
+                            skill.setScale(0.9); 
+                            skill.on('pointerover', function(pointer){
+                                console.log("clicked on skill");
+                                this.setTint(0x87ceeb);
+                                text3.visible = true;
+                                graphics3.visible = true;
+                            })
+                            skill.on('pointerout', function(pointer){
+                                this.clearTint();
+                                text3.visible = false;
+                                graphics3.visible = false;
+                            });
+                        }
+                        if (j === 4){
+                            var skill = this.add.sprite(1280 - 192 - j*36, 1024 - 3*95 - 78 + 60 + i*93, players[i].unitSkills[j].spriteName).setInteractive();
+    
+                            var graphics4 = this.scene.get("UIScene").add.graphics();
+                            graphics4.lineStyle(1, 0xffffff, 0.8);
+                            graphics4.fillStyle(0x000000, 1);        
+                            graphics4.strokeRect(1280 - 406 - j*36 + 30, 1024 - 3*95 - 236 + i*93, 180, 200);
+                            graphics4.fillRect(1280 - 406 - j*36 + 30, 1024 - 3*95 - 236 + i*93, 180, 200);
+                            graphics4.visible = false;
+    
+                            var text4 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
+                                1024 - 3*95 - 236 + i*93, players[i].unitSkills[4].skillName +
+                                ": " + players[i].unitSkills[4].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                                'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                            text4.visible = false;
+        
+                            skill.setScale(0.9); 
+                            skill.on('pointerover', function(pointer){
+                                console.log("clicked on skill");
+                                this.setTint(0x87ceeb);
+                                text4.visible = true;
+                                graphics4.visible = true;
+                            })
+                            skill.on('pointerout', function(pointer){
+                                this.clearTint();
+                                text4.visible = false;
+                                graphics4.visible = false;
+                            });
+                        }
                 }
                 player2.on('pointerover', function(pointer){
                     console.log("clicked on player " + players[1].unitName);
