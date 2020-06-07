@@ -1099,12 +1099,12 @@ var UIScene = new Phaser.Class({
                                 console.log("clicked on skill");
                                 this.setTint(0x87ceeb);
                                 text18.visible = true;
-                                graphics13.visible = true;
+                                graphics18.visible = true;
                             })
                             skill.on('pointerout', function(pointer){
                                 this.clearTint();
                                 text18.visible = false;
-                                graphics13.visible = false;
+                                graphics18.visible = false;
                             });
                         }
                         if (j === 4){
@@ -1154,21 +1154,162 @@ var UIScene = new Phaser.Class({
             if (i == 0){
                 //if there is only one enemy
                 var enemy1 = this.add.sprite(58, 1024-3*95-40 + i * 120, enemies[i].unitSprites).setInteractive();
-                hp = new HealthBar(this.scene.get("UIScene"), 158, 1024-3*95-40 + i * 120 - 38, enemies[0].unitStats.hp);
-                //enemy_hp_bars.push(hp);
+                hp_enemy1 = new HealthBar(this.scene.get("UIScene"), 158, 1024-3*95-40 + i * 120 - 38, enemies[0].unitStats.hp);
                 var textName = this.add.text(20, 1024-3*95-40 + 36 + i * 120, enemies[i].unitName,{ color: "#FF0000",fontWegight: 
                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                 for (var j = 0; j < enemies[i].unitSkills.length; j++){
-                    var skill = this.add.sprite(180 + j*36, 1024 - 3*95 - 78 + 35 + i*120, enemies[i].unitSkills[j].spriteName).setInteractive();
-                    console.log(enemies[i].unitSkills[j].spriteName)
-                    skill.setScale(0.9); 
-                    skill.on('pointerover', function(pointer){
-                        console.log("clicked on skill");
-                        this.setTint(0x87ceeb);
-                    })
-                    skill.on('pointerout', function(pointer){
-                        this.clearTint();
-                    });
+                    if (j === 0){
+                        var skill = this.add.sprite(180 + j*36, 1024 - 3*95 - 78 + 35 + i*120, enemies[i].unitSkills[j].spriteName).setInteractive();
+
+                        var graphics20 = this.scene.get("UIScene").add.graphics();
+                        graphics20.lineStyle(1, 0xffffff, 0.8);
+                        graphics20.fillStyle(0x000000, 1);        
+                        graphics20.strokeRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics20.fillRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics20.visible = false;
+
+                        var text20 = this.scene.get("UIScene").add.text(180 + j*36, 
+                            1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[0].skillName +
+                            ": " + enemies[i].unitSkills[0].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                        text20.visible = false;
+
+                        skill.setScale(0.9); 
+                        skill.on('pointerover', function(pointer){
+                            console.log("clicked on skill");
+                            graphics20.visible = true;
+                            text20.visible = true;
+                            this.setTint(0x87ceeb);
+
+                        })
+                        skill.on('pointerout', function(pointer){
+                            this.clearTint();
+                            graphics20.visible = false;
+                            text20.visible = false;
+                        });
+                    }
+                    if (j === 1){
+                        var skill = this.add.sprite(180 + j*36, 1024 - 3*95 - 78 + 35 + i*120, enemies[i].unitSkills[j].spriteName).setInteractive();
+
+                        var graphics21 = this.scene.get("UIScene").add.graphics();
+                        graphics21.lineStyle(1, 0xffffff, 0.8);
+                        graphics21.fillStyle(0x000000, 1);        
+                        graphics21.strokeRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics21.fillRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics21.visible = false;
+
+                        var text21 = this.scene.get("UIScene").add.text(180 + j*36, 
+                            1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[1].skillName +
+                            ": " + enemies[i].unitSkills[1].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                        text21.visible = false;
+
+                        skill.setScale(0.9); 
+                        skill.on('pointerover', function(pointer){
+                            console.log("clicked on skill");
+                            graphics21.visible = true;
+                            text21.visible = true;
+                            this.setTint(0x87ceeb);
+
+                        })
+                        skill.on('pointerout', function(pointer){
+                            this.clearTint();
+                            graphics21.visible = false;
+                            text21.visible = false;
+                        });
+                    }
+                    if (j === 2){
+                        var skill = this.add.sprite(180 + j*36, 1024 - 3*95 - 78 + 35 + i*120, enemies[i].unitSkills[j].spriteName).setInteractive();
+
+                        var graphics22 = this.scene.get("UIScene").add.graphics();
+                        graphics22.lineStyle(1, 0xffffff, 0.8);
+                        graphics22.fillStyle(0x000000, 1);        
+                        graphics22.strokeRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics22.fillRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics22.visible = false;
+
+                        var text22 = this.scene.get("UIScene").add.text(180 + j*36, 
+                            1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[2].skillName +
+                            ": " + enemies[i].unitSkills[2].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                        text22.visible = false;
+
+                        skill.setScale(0.9); 
+                        skill.on('pointerover', function(pointer){
+                            console.log("clicked on skill");
+                            graphics22.visible = true;
+                            text22.visible = true;
+                            this.setTint(0x87ceeb);
+
+                        })
+                        skill.on('pointerout', function(pointer){
+                            this.clearTint();
+                            graphics22.visible = false;
+                            text22.visible = false;
+                        });
+                    }
+                    if (j === 3){
+                        var skill = this.add.sprite(180 + j*36, 1024 - 3*95 - 78 + 35 + i*120, enemies[i].unitSkills[j].spriteName).setInteractive();
+
+                        var graphics23 = this.scene.get("UIScene").add.graphics();
+                        graphics23.lineStyle(1, 0xffffff, 0.8);
+                        graphics23.fillStyle(0x000000, 1);        
+                        graphics23.strokeRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics23.fillRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics23.visible = false;
+
+                        var text23 = this.scene.get("UIScene").add.text(180 + j*36, 
+                            1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[3].skillName +
+                            ": " + enemies[i].unitSkills[3].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                        text23.visible = false;
+
+                        skill.setScale(0.9); 
+                        skill.on('pointerover', function(pointer){
+                            console.log("clicked on skill");
+                            graphics23.visible = true;
+                            text23.visible = true;
+                            this.setTint(0x87ceeb);
+
+                        })
+                        skill.on('pointerout', function(pointer){
+                            this.clearTint();
+                            graphics23.visible = false;
+                            text23.visible = false;
+                        });
+                    }
+                    if (j === 4){
+                        var skill = this.add.sprite(180 + j*36, 1024 - 3*95 - 78 + 35 + i*120, enemies[i].unitSkills[j].spriteName).setInteractive();
+
+                        var graphics24 = this.scene.get("UIScene").add.graphics();
+                        graphics24.lineStyle(1, 0xffffff, 0.8);
+                        graphics24.fillStyle(0x000000, 1);        
+                        graphics24.strokeRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics24.fillRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics24.visible = false;
+
+                        var text24 = this.scene.get("UIScene").add.text(180 + j*36, 
+                            1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[4].skillName +
+                            ": " + enemies[i].unitSkills[4].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                        text24.visible = false;
+
+                        skill.setScale(0.9); 
+                        skill.on('pointerover', function(pointer){
+                            console.log("clicked on skill");
+                            graphics24.visible = true;
+                            text24.visible = true;
+                            this.setTint(0x87ceeb);
+
+                        })
+                        skill.on('pointerout', function(pointer){
+                            this.clearTint();
+                            graphics24.visible = false;
+                            text24.visible = false;
+                        });
+                    }
+
+
                 }
 
                 enemy1.setScale(0.8);
@@ -1183,20 +1324,160 @@ var UIScene = new Phaser.Class({
             else if (i === 1){
                 var enemy2 = this.add.sprite(58, 1024-3*95-40 + i * 120, enemies[i].unitSprites).setInteractive();
                 enemy2.setScale(0.8);
-                hp = new HealthBar(this.scene.get("UIScene"), 158, 1024-3*95-40 + i * 120 - 38, enemies[1].unitStats.hp);
+                hp_enemy2 = new HealthBar(this.scene.get("UIScene"), 158, 1024-3*95-40 + i * 120 - 38, enemies[1].unitStats.hp);
                 var textName = this.add.text(20, 1024-3*95-40 + 36 + i * 120, enemies[i].unitName,{ color: "#FF0000",fontWegight: 
                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                 for (var j = 0; j < enemies[i].unitSkills.length; j++){
-                    var skill = this.add.sprite(180 + j*36, 1024 - 3*95 - 78 + 35 + i*120, enemies[i].unitSkills[j].spriteName).setInteractive();
-                    console.log(enemies[i].unitSkills[j].spriteName)
-                    skill.setScale(0.9); 
-                    skill.on('pointerover', function(pointer){
-                        console.log("clicked on skill");
-                        this.setTint(0x87ceeb);
-                    })
-                    skill.on('pointerout', function(pointer){
-                        this.clearTint();
-                    });
+                    if (j === 0){
+                        var skill = this.add.sprite(180 + j*36, 1024 - 3*95 - 78 + 35 + i*120, enemies[i].unitSkills[j].spriteName).setInteractive();
+
+                        var graphics25 = this.scene.get("UIScene").add.graphics();
+                        graphics25.lineStyle(1, 0xffffff, 0.8);
+                        graphics25.fillStyle(0x000000, 1);        
+                        graphics25.strokeRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics25.fillRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics25.visible = false;
+
+                        var text25 = this.scene.get("UIScene").add.text(180 + j*36, 
+                            1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[0].skillName +
+                            ": " + enemies[i].unitSkills[0].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                        text25.visible = false;
+
+                        skill.setScale(0.9); 
+                        skill.on('pointerover', function(pointer){
+                            console.log("clicked on skill");
+                            graphics25.visible = true;
+                            text25.visible = true;
+                            this.setTint(0x87ceeb);
+
+                        })
+                        skill.on('pointerout', function(pointer){
+                            this.clearTint();
+                            graphics25.visible = false;
+                            text25.visible = false;
+                        });
+                    }
+                    if (j === 1){
+                        var skill = this.add.sprite(180 + j*36, 1024 - 3*95 - 78 + 35 + i*120, enemies[i].unitSkills[j].spriteName).setInteractive();
+
+                        var graphics26 = this.scene.get("UIScene").add.graphics();
+                        graphics26.lineStyle(1, 0xffffff, 0.8);
+                        graphics26.fillStyle(0x000000, 1);        
+                        graphics26.strokeRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics26.fillRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics26.visible = false;
+
+                        var text26 = this.scene.get("UIScene").add.text(180 + j*36, 
+                            1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[1].skillName +
+                            ": " + enemies[i].unitSkills[1].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                        text26.visible = false;
+
+                        skill.setScale(0.9); 
+                        skill.on('pointerover', function(pointer){
+                            console.log("clicked on skill");
+                            graphics26.visible = true;
+                            text26.visible = true;
+                            this.setTint(0x87ceeb);
+
+                        })
+                        skill.on('pointerout', function(pointer){
+                            this.clearTint();
+                            graphics26.visible = false;
+                            text26.visible = false;
+                        });
+                    }
+                    if (j === 2){
+                        var skill = this.add.sprite(180 + j*36, 1024 - 3*95 - 78 + 35 + i*120, enemies[i].unitSkills[j].spriteName).setInteractive();
+
+                        var graphics27 = this.scene.get("UIScene").add.graphics();
+                        graphics27.lineStyle(1, 0xffffff, 0.8);
+                        graphics27.fillStyle(0x000000, 1);        
+                        graphics27.strokeRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics27.fillRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics27.visible = false;
+
+                        var text27 = this.scene.get("UIScene").add.text(180 + j*36, 
+                            1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[2].skillName +
+                            ": " + enemies[i].unitSkills[2].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                        text27.visible = false;
+
+                        skill.setScale(0.9); 
+                        skill.on('pointerover', function(pointer){
+                            console.log("clicked on skill");
+                            graphics27.visible = true;
+                            text27.visible = true;
+                            this.setTint(0x87ceeb);
+
+                        })
+                        skill.on('pointerout', function(pointer){
+                            this.clearTint();
+                            graphics27.visible = false;
+                            text27.visible = false;
+                        });
+                    }
+                    if (j === 3){
+                        var skill = this.add.sprite(180 + j*36, 1024 - 3*95 - 78 + 35 + i*120, enemies[i].unitSkills[j].spriteName).setInteractive();
+
+                        var graphics28 = this.scene.get("UIScene").add.graphics();
+                        graphics28.lineStyle(1, 0xffffff, 0.8);
+                        graphics28.fillStyle(0x000000, 1);        
+                        graphics28.strokeRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics28.fillRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics28.visible = false;
+
+                        var text28 = this.scene.get("UIScene").add.text(180 + j*36, 
+                            1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[3].skillName +
+                            ": " + enemies[i].unitSkills[3].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                        text28.visible = false;
+
+                        skill.setScale(0.9); 
+                        skill.on('pointerover', function(pointer){
+                            console.log("clicked on skill");
+                            graphics28.visible = true;
+                            text28.visible = true;
+                            this.setTint(0x87ceeb);
+
+                        })
+                        skill.on('pointerout', function(pointer){
+                            this.clearTint();
+                            graphics28.visible = false;
+                            text28.visible = false;
+                        });
+                    }
+                    if (j === 4){
+                        var skill = this.add.sprite(180 + j*36, 1024 - 3*95 - 78 + 35 + i*120, enemies[i].unitSkills[j].spriteName).setInteractive();
+
+                        var graphics29 = this.scene.get("UIScene").add.graphics();
+                        graphics29.lineStyle(1, 0xffffff, 0.8);
+                        graphics29.fillStyle(0x000000, 1);        
+                        graphics29.strokeRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics29.fillRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics29.visible = false;
+
+                        var text29 = this.scene.get("UIScene").add.text(180 + j*36, 
+                            1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[4].skillName +
+                            ": " + enemies[i].unitSkills[4].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                        text29.visible = false;
+
+                        skill.setScale(0.9); 
+                        skill.on('pointerover', function(pointer){
+                            console.log("clicked on skill");
+                            graphics29.visible = true;
+                            text29.visible = true;
+                            this.setTint(0x87ceeb);
+
+                        })
+                        skill.on('pointerout', function(pointer){
+                            this.clearTint();
+                            graphics29.visible = false;
+                            text29.visible = false;
+                        });
+                    }
                 }
                 enemy2.on('pointerover', function(pointer){
                     console.log("clicked on enemy " + enemies[1].unitName);
@@ -1210,20 +1491,160 @@ var UIScene = new Phaser.Class({
             else if (i === 2){
                 var enemy3 = this.add.sprite(58, 1024-3*95-40 + i * 120, enemies[i].unitSprites).setInteractive();
                 enemy3.setScale(0.8);
-                hp = new HealthBar(this.scene.get("UIScene"), 158, 1024-3*95-40 + i * 120 - 38, enemies[2].unitStats.hp);
+                hp_enemy3 = new HealthBar(this.scene.get("UIScene"), 158, 1024-3*95-40 + i * 120 - 38, enemies[2].unitStats.hp);
                 var textName = this.add.text(20, 1024-3*95-40 + 36 + i * 120, enemies[i].unitName,{ color: "#FF0000",fontWegight: 
                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                 for (var j = 0; j < enemies[i].unitSkills.length; j++){
-                    var skill = this.add.sprite(180 + j*36, 1024 - 3*95 - 78 + 35 + i*120, enemies[i].unitSkills[j].spriteName).setInteractive();
-                    console.log(enemies[i].unitSkills[j].spriteName)
-                    skill.setScale(0.9); 
-                    skill.on('pointerover', function(pointer){
-                        console.log("clicked on skill");
-                        this.setTint(0x87ceeb);
-                    })
-                    skill.on('pointerout', function(pointer){
-                        this.clearTint();
-                    });
+                    if (j === 0){
+                        var skill = this.add.sprite(180 + j*36, 1024 - 3*95 - 78 + 35 + i*120, enemies[i].unitSkills[j].spriteName).setInteractive();
+
+                        var graphics30 = this.scene.get("UIScene").add.graphics();
+                        graphics30.lineStyle(1, 0xffffff, 0.8);
+                        graphics30.fillStyle(0x000000, 1);        
+                        graphics30.strokeRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics30.fillRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics30.visible = false;
+
+                        var text30 = this.scene.get("UIScene").add.text(180 + j*36, 
+                            1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[0].skillName +
+                            ": " + enemies[i].unitSkills[0].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                        text30.visible = false;
+
+                        skill.setScale(0.9); 
+                        skill.on('pointerover', function(pointer){
+                            console.log("clicked on skill");
+                            graphics30.visible = true;
+                            text30.visible = true;
+                            this.setTint(0x87ceeb);
+
+                        })
+                        skill.on('pointerout', function(pointer){
+                            this.clearTint();
+                            graphics30.visible = false;
+                            text30.visible = false;
+                        });
+                    }
+                    if (j === 1){
+                        var skill = this.add.sprite(180 + j*36, 1024 - 3*95 - 78 + 35 + i*120, enemies[i].unitSkills[j].spriteName).setInteractive();
+
+                        var graphics31 = this.scene.get("UIScene").add.graphics();
+                        graphics31.lineStyle(1, 0xffffff, 0.8);
+                        graphics31.fillStyle(0x000000, 1);        
+                        graphics31.strokeRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics31.fillRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics31.visible = false;
+
+                        var text31 = this.scene.get("UIScene").add.text(180 + j*36, 
+                            1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[1].skillName +
+                            ": " + enemies[i].unitSkills[1].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                        text31.visible = false;
+
+                        skill.setScale(0.9); 
+                        skill.on('pointerover', function(pointer){
+                            console.log("clicked on skill");
+                            graphics31.visible = true;
+                            text31.visible = true;
+                            this.setTint(0x87ceeb);
+
+                        })
+                        skill.on('pointerout', function(pointer){
+                            this.clearTint();
+                            graphics31.visible = false;
+                            text31.visible = false;
+                        });
+                    }
+                    if (j === 2){
+                        var skill = this.add.sprite(180 + j*36, 1024 - 3*95 - 78 + 35 + i*120, enemies[i].unitSkills[j].spriteName).setInteractive();
+
+                        var graphics32 = this.scene.get("UIScene").add.graphics();
+                        graphics32.lineStyle(1, 0xffffff, 0.8);
+                        graphics32.fillStyle(0x000000, 1);        
+                        graphics32.strokeRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics32.fillRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics32.visible = false;
+
+                        var text32 = this.scene.get("UIScene").add.text(180 + j*36, 
+                            1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[2].skillName +
+                            ": " + enemies[i].unitSkills[2].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                        text32.visible = false;
+
+                        skill.setScale(0.9); 
+                        skill.on('pointerover', function(pointer){
+                            console.log("clicked on skill");
+                            graphics32.visible = true;
+                            text32.visible = true;
+                            this.setTint(0x87ceeb);
+
+                        })
+                        skill.on('pointerout', function(pointer){
+                            this.clearTint();
+                            graphics32.visible = false;
+                            text32.visible = false;
+                        });
+                    }
+                    if (j === 3){
+                        var skill = this.add.sprite(180 + j*36, 1024 - 3*95 - 78 + 35 + i*120, enemies[i].unitSkills[j].spriteName).setInteractive();
+
+                        var graphics33 = this.scene.get("UIScene").add.graphics();
+                        graphics33.lineStyle(1, 0xffffff, 0.8);
+                        graphics33.fillStyle(0x000000, 1);        
+                        graphics33.strokeRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics33.fillRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics33.visible = false;
+
+                        var text33 = this.scene.get("UIScene").add.text(180 + j*36, 
+                            1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[3].skillName +
+                            ": " + enemies[i].unitSkills[3].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                        text33.visible = false;
+
+                        skill.setScale(0.9); 
+                        skill.on('pointerover', function(pointer){
+                            console.log("clicked on skill");
+                            graphics33.visible = true;
+                            text33.visible = true;
+                            this.setTint(0x87ceeb);
+
+                        })
+                        skill.on('pointerout', function(pointer){
+                            this.clearTint();
+                            graphics33.visible = false;
+                            text33.visible = false;
+                        });
+                    }
+                    if (j === 4){
+                        var skill = this.add.sprite(180 + j*36, 1024 - 3*95 - 78 + 35 + i*120, enemies[i].unitSkills[j].spriteName).setInteractive();
+
+                        var graphics34 = this.scene.get("UIScene").add.graphics();
+                        graphics34.lineStyle(1, 0xffffff, 0.8);
+                        graphics34.fillStyle(0x000000, 1);        
+                        graphics34.strokeRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics34.fillRect(180 + j*36, 1024 - 3*95 - 378 + 35 + i*120, 180, 280);
+                        graphics34.visible = false;
+
+                        var text34 = this.scene.get("UIScene").add.text(180 + j*36, 
+                            1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[4].skillName +
+                            ": " + enemies[i].unitSkills[4].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+                        text34.visible = false;
+
+                        skill.setScale(0.9); 
+                        skill.on('pointerover', function(pointer){
+                            console.log("clicked on skill");
+                            graphics34.visible = true;
+                            text34.visible = true;
+                            this.setTint(0x87ceeb);
+
+                        })
+                        skill.on('pointerout', function(pointer){
+                            this.clearTint();
+                            graphics34.visible = false;
+                            text34.visible = false;
+                        });
+                    }
                 }
                 enemy3.on('pointerover', function(pointer){
                     console.log("clicked on enemy " + enemies[2].unitName);
@@ -1234,31 +1655,7 @@ var UIScene = new Phaser.Class({
                 });
 
             }
-            else if (i === 3){
-                var enemy4 = this.add.sprite(58, 1024-3*95-40 + i * 120, enemies[i].unitSprites).setInteractive();
-                enemy4.setScale(0.8);
-                hp = new HealthBar(this.scene.get("UIScene"), 158, 1024-3*95-40 + i * 120 - 38, enemies[3].unitStats.hp);
-                enemy_hp_bars.push(hp);
-                for (var j = 0; j < enemies[i].unitSkills.length; j++){
-                    var skill = this.add.sprite(180 + j*36, 1024 - 3*95 - 78 + 35 + i*120, enemies[i].unitSkills[j].spriteName).setInteractive();
-                    console.log(enemies[i].unitSkills[j].spriteName)
-                    skill.setScale(0.9); 
-                    skill.on('pointerover', function(pointer){
-                        console.log("clicked on skill");
-                        this.setTint(0x87ceeb);
-                    })
-                    skill.on('pointerout', function(pointer){
-                        this.clearTint();
-                    });
-                }
-                enemy4.on('pointerover', function(pointer){
-                    console.log("clicked on enemy " + enemies[3].unitName);
-                    this.setTint(0xff0000);
-                })
-                enemy4.on('pointerout', function(pointer){
-                    this.clearTint();
-                });
-            }
+            //there can only be 3 enemies at a time MAX
         }
     },
 

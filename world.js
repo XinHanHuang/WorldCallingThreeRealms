@@ -309,7 +309,9 @@ var WorldScene = new Phaser.Class({
             unitAlyeneSkills1 = new unitSkills("Almighty God","Negates damage bonus from enemy critical hits, damage from opponent's attacks reduced by 50%", "almightygod");
             unitAlyeneSkills2 = new unitSkills("Dragon Skin", "Negates the effects of all non-damaging status effects. Nullifies poison damage", "dragonskin");
             unitAlyeneSkills3 = new unitSkills("Angelic Truth", "Halves skill damage received", "angelictruth");
-            unitAlyeneSkillArray = [unitAlyeneSkills1, unitAlyeneSkills2, unitAlyeneSkills3];
+            unitAlyeneSkills4 = new unitSkills("Angelic Truth", "Halves skill damage received", "angelictruth");
+            unitAlyeneSkills5 = new unitSkills("Angelic Truth", "Halves skill damage received", "angelictruth");
+            unitAlyeneSkillArray = [unitAlyeneSkills1, unitAlyeneSkills2, unitAlyeneSkills3, unitAlyeneSkills4, unitAlyeneSkills5];
             unitAlyeneStats = new unitStats(30, 30, 30, 30, 30, 30, 30); //this is Alyene's current stats
             alyeneAnimations = ['rightalyene', 'leftalyene'];
             unitAlyeneBattleSkills1 = new unitBattleSkills("Alyene is waiting for you to make a move", "Alyene is waiting for you to make a move", "null", "single");
@@ -327,7 +329,7 @@ var WorldScene = new Phaser.Class({
             unitAlyeneBattleSkills1 = new unitBattleSkills("Alyene is waiting for you to make a move", "Alyene is waiting for you to make a move", "null", "single");
             unitAyleneBattleSkllArray = [unitAlyeneBattleSkills1];
 
-            unitAlyene = new unitInformation(this.alyene, "Alyene", alyeneAnimations, "alyenesprite", unitAlyeneSkillArray, unitAlyeneStats, [], unitAyleneBattleSkllArray);
+            unitAlyene = new unitInformation(this.alyene, "Alyene Shadow", alyeneAnimations, "alyenesprite", unitAlyeneSkillArray, unitAlyeneStats, [], unitAyleneBattleSkllArray);
             enemies.push(unitAlyene);
 
 
