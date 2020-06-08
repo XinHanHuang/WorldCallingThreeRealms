@@ -444,7 +444,6 @@ var UIScene = new Phaser.Class({
                             var escapetext1 = this.add.text(410, 1024 - 3*95 - 58 + i*80, "BACK",{ color: "#ffa500", align: "center",fontWegight: 
                             'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                             escapetext1.on('pointerdown', (pointer)=>{
-                                escapetext1.setTint(0x87ceebb);
                                 for (var i = 0; i < enemyTexts.length; i++){
                                     enemyTexts[i].destroy();
                                 }
@@ -453,18 +452,48 @@ var UIScene = new Phaser.Class({
                                 }
                             });
                             enemyTexts.push(escapetext1);
-
                         }
                         else if (i === 0){
                             var enemytext1 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
                             'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                             enemytext1.on('pointerdown', (pointer)=>{
-                                enemytext1.setTint(0x87ceebb);
                                 this.battle(currentPlayer.playerInformation, enemies[0], "attack");
+                                for (var i = 0; i < enemyTexts.length; i++){
+                                    enemyTexts[i].destroy();
+                                }
+                                for (var i = 0; i < menuBackup.length; i++){
+                                    menuBackup[i].setActive(true).setVisible(true);
+                                }
                             });
                             enemyTexts.push(enemytext1);
-                            
-                            
+                        }
+                        else if (i === 1){
+                            var enemytext2 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                            'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
+                            enemytext2.on('pointerdown', (pointer)=>{
+                                this.battle(currentPlayer.playerInformation, enemies[1], "attack");
+                                for (var i = 0; i < enemyTexts.length; i++){
+                                    enemyTexts[i].destroy();
+                                }
+                                for (var i = 0; i < menuBackup.length; i++){
+                                    menuBackup[i].setActive(true).setVisible(true);
+                                }
+                            });
+                            enemyTexts.push(enemytext2);
+                        }
+                        else if (i === 2){
+                            var enemytext3 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                            'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
+                            enemytext3.on('pointerdown', (pointer)=>{
+                                this.battle(currentPlayer.playerInformation, enemies[2], "attack");
+                                for (var i = 0; i < enemyTexts.length; i++){
+                                    enemyTexts[i].destroy();
+                                }
+                                for (var i = 0; i < menuBackup.length; i++){
+                                    menuBackup[i].setActive(true).setVisible(true);
+                                }
+                            });
+                            enemyTexts.push(enemytext3);
                         }
                     }
                 })
@@ -477,7 +506,7 @@ var UIScene = new Phaser.Class({
                 var temp = this.add.sprite(560, 1024 - 3*95 - 58 + i*60, menus[i]).setInteractive();
                 temp.setScale(0.25);
                 temp.on('pointerdown', function(pointer){
-                    this.setTint(0x87ceeb);
+
                     //alert(currentPlayer.playerInformation.unitName);
                 })
                 temp.on('pointerout', function(pointer){
@@ -489,7 +518,7 @@ var UIScene = new Phaser.Class({
                 var temp = this.add.sprite(560, 1024 - 3*95 - 58 + i*60, menus[i]).setInteractive();
                 temp.setScale(0.25);
                 temp.on('pointerdown', function(pointer){
-                    this.setTint(0x87ceeb);
+
                     //alert(currentPlayer.playerInformation.unitName);
                 })
                 temp.on('pointerout', function(pointer){
@@ -501,7 +530,7 @@ var UIScene = new Phaser.Class({
                 var temp = this.add.sprite(560, 1024 - 3*95 - 58 + i*60, menus[i]).setInteractive();
                 temp.setScale(0.25);
                 temp.on('pointerdown', function(pointer){
-                    this.setTint(0x87ceeb);
+
                     //alert(currentPlayer.playerInformation.unitName);
                 })
                 temp.on('pointerout', function(pointer){
@@ -513,7 +542,7 @@ var UIScene = new Phaser.Class({
                 var temp = this.add.sprite(560, 1024 - 3*95 - 58 + i*60, menus[i]).setInteractive();
                 temp.setScale(0.25);
                 temp.on('pointerdown', function(pointer){
-                    this.setTint(0x87ceeb);
+
                     //alert(currentPlayer.playerInformation.unitName);
                 })
                 temp.on('pointerout', function(pointer){
@@ -525,7 +554,6 @@ var UIScene = new Phaser.Class({
                 var temp = this.add.sprite(560, 1024 - 3*95 - 58 + i*60, menus[i]).setInteractive();
                 temp.setScale(0.25);
                 temp.on('pointerdown', function(pointer){
-                    this.setTint(0x87ceeb);
                     //alert(currentPlayer.playerInformation.unitName);
                 })
                 temp.on('pointerout', function(pointer){
@@ -535,8 +563,11 @@ var UIScene = new Phaser.Class({
             }
         }  
     },
-    battle: function(){
-        alert("battle");
+    battle: function(player, target, method_of_attack){
+        //simple attack
+        if (method_of_attack === "attack"){
+            this.scene.get("BattleScene").updateMessageBox(player.unitName + " attacks " + target.unitName);
+        }
     },
     createBattleSprites: function(){
         //loop through all player sprites and create them
