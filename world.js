@@ -179,10 +179,10 @@ var WorldScene = new Phaser.Class({
         this.cameras.main.roundPixels = true; // avoid tile bleed
 
         unitReenaSkills1 = new unitSkills("Rightful God","Negates the damage bonus from enemy critical hits", "rightfulgod");
-        unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10%", "cloudnine");
+        unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
         unitReenaSkills3 = new unitSkills("Rightful God","Negates the damage bonus from enemy critical hits", "rightfulgod");
-        unitReenaSkills4 = new unitSkills("Cloud Nine","grants SPD + 10%", "cloudnine");
-        unitReenaSkills5 = new unitSkills("Cloud Nine","grants SPD + 10%", "cloudnine");
+        unitReenaSkills4 = new unitSkills("Cloud Nine","grants SPD + 10% during combat" , "cloudnine");
+        unitReenaSkills5 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
         unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2, unitReenaSkills3, unitReenaSkills4, unitReenaSkills5]; //an array with the two beginning skills
         unitReenaStats = new unitStats(28, 20, 30, 16, 30, 20, 7); //this is Reena's current stats
         reenaAnimations = ['left', 'right'];
@@ -192,12 +192,12 @@ var WorldScene = new Phaser.Class({
         unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2];
 
         //create a new unit information that stores all of Reena's information 
-        unitReena = new unitInformation(this.reena, "Reena", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, [], unitReenaBattleSkillArray); 
+        unitReena = new unitInformation(this.reena, "Reena", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray); 
         this.reena.anims.play('up', true);
         players.push(unitReena);
 
-        unitReenaSkills1 = new unitSkills("Cloud Nine","grants SPD + 10%", "cloudnine");
-        unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10%", "cloudnine");
+        unitReenaSkills1 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
+        unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
         unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
         unitReenaStats = new unitStats(28, 20, 30, 16, 30, 20, 7); //this is Reena's current stats
         reenaAnimations = ['left', 'right'];
@@ -207,7 +207,7 @@ var WorldScene = new Phaser.Class({
         unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2];
 
         //create a new unit information that stores all of Reena's information 
-        unitReena = new unitInformation(this.reena, "Reena", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, [], unitReenaBattleSkillArray); 
+        unitReena = new unitInformation(this.reena, "Reena", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray); 
         this.reena.anims.play('up', true);
         players.push(unitReena);
 
@@ -223,7 +223,7 @@ var WorldScene = new Phaser.Class({
         unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2];
 
         //create a new unit information that stores all of Reena's information 
-        unitReena = new unitInformation(this.reena, "Reena", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, [], unitReenaBattleSkillArray); 
+        unitReena = new unitInformation(this.reena, "Reena", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray); 
         this.reena.anims.play('up', true);
         players.push(unitReena);
 
@@ -239,7 +239,7 @@ var WorldScene = new Phaser.Class({
         unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2];
 
         //create a new unit information that stores all of Reena's information 
-        unitReena = new unitInformation(this.reena, "Reena", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, [], unitReenaBattleSkillArray); 
+        unitReena = new unitInformation(this.reena, "Reena", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray); 
         this.reena.anims.play('up', true);
         players.push(unitReena);
         
@@ -317,7 +317,7 @@ var WorldScene = new Phaser.Class({
             unitAlyeneBattleSkills1 = new unitBattleSkills("Alyene is waiting for you to make a move", "Alyene is waiting for you to make a move", "null", "single");
             unitAyleneBattleSkllArray = [unitAlyeneBattleSkills1];
 
-            unitAlyene = new unitInformation(this.alyene, "Alyene", alyeneAnimations, "alyenesprite", unitAlyeneSkillArray, unitAlyeneStats, [], unitAyleneBattleSkllArray);
+            unitAlyene = new unitInformation(this.alyene, "Alyene", alyeneAnimations, "alyenesprite", unitAlyeneSkillArray, unitAlyeneStats, null, unitAyleneBattleSkllArray);
             enemies.push(unitAlyene);
 
             unitAlyeneSkills1 = new unitSkills("Angelic Truth", "Halves skill damage received", "angelictruth");
@@ -329,7 +329,7 @@ var WorldScene = new Phaser.Class({
             unitAlyeneBattleSkills1 = new unitBattleSkills("Alyene is waiting for you to make a move", "Alyene is waiting for you to make a move", "null", "single");
             unitAyleneBattleSkllArray = [unitAlyeneBattleSkills1];
 
-            unitAlyene = new unitInformation(this.alyene, "Alyene Shadow", alyeneAnimations, "alyenesprite", unitAlyeneSkillArray, unitAlyeneStats, [], unitAyleneBattleSkllArray);
+            unitAlyene = new unitInformation(this.alyene, "Alyene Shadow", alyeneAnimations, "alyenesprite", unitAlyeneSkillArray, unitAlyeneStats, null, unitAyleneBattleSkllArray);
             enemies.push(unitAlyene);
 
 

@@ -644,6 +644,12 @@ var UIScene = new Phaser.Class({
                     spritegraphics.visible = false;
                     textsprite.visible = false;
                 });
+
+                playerUI1 = new UIinformation(players[i].unitName, player1, hp1, mp1, players[i].unitBattleSkills,
+                    players[i].unitSkills, null);
+                UIarray.push(playerUI1);
+
+
             }
             else if (i === 1){
                 //if there is only 1 player
@@ -840,6 +846,10 @@ var UIScene = new Phaser.Class({
                     spritegraphics2.visible = false;
                     textsprite2.visible = false;
                 });
+                playerUI2 = new UIinformation(players[i].unitName, player2, hp2, mp2, players[i].unitBattleSkills,
+                    players[i].unitSkills, null);
+                UIarray.push(playerUI2);
+
             }
             else if (i === 2){
                 //if there is only 1 player
@@ -1035,6 +1045,10 @@ var UIScene = new Phaser.Class({
                     spritegraphics3.visible = false;
                     textsprite3.visible = false;
                 });
+
+                playerUI3 = new UIinformation(players[i].unitName, player3, hp3, mp3, players[i].unitBattleSkills,
+                    players[i].unitSkills, null);
+                UIarray.push(playerUI3);
                 
             }
             else if (i === 3){
@@ -1231,7 +1245,10 @@ var UIScene = new Phaser.Class({
                     textsprite4.visible = false;
                     this.clearTint();
                 });
-                
+
+                playerUI4 = new UIinformation(players[i].unitName, player4, hp4, mp4, players[i].unitBattleSkills,
+                    players[i].unitSkills, null);
+                UIarray.push(playerUI4);
             }
         }
 
@@ -1406,6 +1423,10 @@ var UIScene = new Phaser.Class({
                 enemy1.on('pointerout', function(pointer){
                     this.clearTint();
                 });
+
+                enemyUI1 = new EnemyUIinformation(enemies[i].unitName, enemy1, hp_enemy1, enemies[i].unitBattleSkills,
+                   enemies[i].unitSkills, null);
+                EnemyUIarray.push(enemyUI1);
             }
             else if (i === 1){
                 var enemy2 = this.add.sprite(58, 1024-3*95-40 + i * 120, enemies[i].unitSprites).setInteractive();
@@ -1572,6 +1593,9 @@ var UIScene = new Phaser.Class({
                 enemy2.on('pointerout', function(pointer){
                     this.clearTint();
                 });
+                enemyUI2 = new EnemyUIinformation(enemies[i].unitName, enemy2, hp_enemy2, enemies[i].unitBattleSkills,
+                    enemies[i].unitSkills, null);
+                 EnemyUIarray.push(enemyUI2);
 
             }
             else if (i === 2){
@@ -1739,7 +1763,9 @@ var UIScene = new Phaser.Class({
                 enemy3.on('pointerout', function(pointer){
                     this.clearTint();
                 });
-
+                enemyUI3 = new EnemyUIinformation(enemies[i].unitName, enemy3, hp_enemy3, enemies[i].unitBattleSkills,
+                    enemies[i].unitSkills, null);
+                 EnemyUIarray.push(enemyUI3);
             }
             //there can only be 3 enemies at a time MAX
         }
@@ -1952,15 +1978,15 @@ keeps track of the player's skills (with additional information relating to thos
 keeps track of the current status effects that gets added or removed
 */
 class UIinformation {
-    constructor (name, sprites, hp_bar, mp_bar, hp_count, mp_count, battleSkills, skills, status_effects)
+    constructor (name, sprites, hp_bar, mp_bar, battleSkills, skills, status_effects)
     {
         //this.animations = animations;
         this.name = name; //the name of the characer 
         this.sprites = sprites;
         this.hp_bar = hp_bar; //hp bar and mp bars already have their respective classes
         this.mp_bar = mp_bar; //hp bar and mp bars already have their respective classes
-        this.hp_count = hp_count;
-        this.mp_count = mp_count;
+        //this.hp_count = hp_count;
+        //this.mp_count = mp_count;
         this.battleSkills = battleSkills;
         this.skills = skills; //don't need class for that, just pass in the skill icon object, shouldn't change
         this.status_effects = status_effects;
@@ -2050,12 +2076,12 @@ class UIStatusEffect{
 
 //same but for enemies that do not have mp bar and such
 class EnemyUIinformation{
-    constructor(name, animations, sprites, hp_bar, hp_count, battleSkills, skills, status_effects){
+    constructor(name, sprites, hp_bar, battleSkills, skills, status_effects){
         this.name = name; //the name of the character 
-        this.animations = animations;
+        //this.animations = animations;
         this.sprites = sprites;
         this.hp_bar = hp_bar;
-        this.hp_count = hp_count;
+        //this.hp_count = hp_count;
         this.battleSkills = battleSkills;
         this.skills = skills;
         this.status_effects = status_effects;
