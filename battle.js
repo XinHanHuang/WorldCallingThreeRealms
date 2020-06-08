@@ -646,7 +646,7 @@ var UIScene = new Phaser.Class({
                 });
 
                 playerUI1 = new UIinformation(players[i].unitName, player1, hp1, mp1, players[i].unitBattleSkills,
-                    players[i].unitSkills, null);
+                    players[i].unitSkills, null, hptext1, mptext1);
                 UIarray.push(playerUI1);
 
 
@@ -847,7 +847,7 @@ var UIScene = new Phaser.Class({
                     textsprite2.visible = false;
                 });
                 playerUI2 = new UIinformation(players[i].unitName, player2, hp2, mp2, players[i].unitBattleSkills,
-                    players[i].unitSkills, null);
+                    players[i].unitSkills, null, hptext2, mptext2);
                 UIarray.push(playerUI2);
 
             }
@@ -1047,7 +1047,7 @@ var UIScene = new Phaser.Class({
                 });
 
                 playerUI3 = new UIinformation(players[i].unitName, player3, hp3, mp3, players[i].unitBattleSkills,
-                    players[i].unitSkills, null);
+                    players[i].unitSkills, null, hptext3, mptext3);
                 UIarray.push(playerUI3);
                 
             }
@@ -1247,7 +1247,7 @@ var UIScene = new Phaser.Class({
                 });
 
                 playerUI4 = new UIinformation(players[i].unitName, player4, hp4, mp4, players[i].unitBattleSkills,
-                    players[i].unitSkills, null);
+                    players[i].unitSkills, null, hptext4, mptext4);
                 UIarray.push(playerUI4);
             }
         }
@@ -1978,7 +1978,7 @@ keeps track of the player's skills (with additional information relating to thos
 keeps track of the current status effects that gets added or removed
 */
 class UIinformation {
-    constructor (name, sprites, hp_bar, mp_bar, battleSkills, skills, status_effects)
+    constructor (name, sprites, hp_bar, mp_bar, battleSkills, skills, status_effects, hp_text, mp_text)
     {
         //this.animations = animations;
         this.name = name; //the name of the characer 
@@ -1990,6 +1990,8 @@ class UIinformation {
         this.battleSkills = battleSkills;
         this.skills = skills; //don't need class for that, just pass in the skill icon object, shouldn't change
         this.status_effects = status_effects;
+        this.hp_text = hp_text; //THE ACTUAL HP TEXT
+        this.mp_text = mp_text;
     }
 
 }
