@@ -1,3 +1,5 @@
+currentPlayer = null;
+currentEnemy = null; //keeps track of current player and enemy
 var BattleScene = new Phaser.Class({
 
     Extends: Phaser.Scene,
@@ -13,7 +15,10 @@ var BattleScene = new Phaser.Class({
     {    
         // change the background to green
         // create the map according to the battle scene (if statements)
+
         menus = ['attack', 'guard', 'skill', 'items','skip','escape'];
+        menuBackup = []
+        textTurn = ""; //keeps track of the text
         if (battlescenemap === "heaven"){
             var level0 = this.make.tilemap({ key: 'level0' });
             var tiles = level0.addTilesetImage('Mapset', 'tiles');
@@ -36,13 +41,13 @@ var BattleScene = new Phaser.Class({
         for (var i = 0; i < players.length; i++){
             //for each for loop we are gonna generate new fighting sprites 
             if (i === 0 || i === 1){
-                var player = new PlayerCharacter(this, 1280-256, 256 + i*130, players[i].unitName, 1, "Warrior", 100, 20);
+                var player = new PlayerCharacter(this, 1280-256, 256 + i*130, players[i].unitName, 1, "Warrior", 100, players[i]);
                 this.add.existing(player);
                 player.anims.play(players[0].unitAnimations[0], true);
                 this.heroes.push(player);
             }
             else if (i >= 2){
-                var player = new PlayerCharacter(this, 1280-256 - 200, 256 + (i-2)*130 + 50, players[i].unitName, 1, "Warrior", 100, 20);
+                var player = new PlayerCharacter(this, 1280-256 - 200, 256 + (i-2)*130 + 50, players[i].unitName, 1, "Warrior", 100, players[i]);
                 this.add.existing(player);
                 player.anims.play(players[0].unitAnimations[0], true);
                 this.heroes.push(player);
@@ -67,6 +72,8 @@ var BattleScene = new Phaser.Class({
 
         // array with both parties, who will attack
         this.units = this.heroes.concat(this.enemies);
+
+        this.createMessageBox();
         
         this.index = -1; // currently active unit
         
@@ -89,19 +96,40 @@ var BattleScene = new Phaser.Class({
         // if its player hero
         if(this.units[this.index] instanceof PlayerCharacter) {
             // we need the player to select action and then enemy
-            this.events.emit("PlayerSelect", this.index);
+            currentPlayer = this.units[this.index];
+            //this.events.emit("PlayerSelect", this.index);
+            //display current player's information in a message box
+            this.updateMessageBox(this.units[this.index].playerInformation.unitName + "'s Turn");
+
         } else { // else if its enemy unit
             // pick random living hero to be attacked
             var r;
             do {
                 r = Math.floor(Math.random() * this.heroes.length);
             } while(!this.heroes[r].living) 
+            this.updateMessageBox(this.units[this.index].playerInformation.unitName + "'s Turn");
             // call the enemy's attack function 
             this.units[this.index].attack(this.heroes[r]);  
             // add timer for the next turn, so will have smooth gameplay
             this.time.addEvent({ delay: 3000, callback: this.nextTurn, callbackScope: this });
         }
     },     
+    createMessageBox: function(){
+        var graphics = this.scene.get("BattleScene").add.graphics();
+        graphics.lineStyle(1, 0xffffff, 0.8);
+        graphics.fillStyle(0x000000, 0.3);        
+        graphics.strokeRect(1280/2 - 220, 1024/2 + 60, 300, 60);
+        graphics.fillRect(1280/2 - 220, 1024/2 + 60, 300, 60);
+
+        var text = this.scene.get("BattleScene").add.text(1280/2 - 140, 
+            1024/2 + 60, "dd", { color: "#000000", align: "center", fontWegight: 
+            'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
+        this.scene.get("BattleScene").textTurn = text;
+
+    },
+    updateMessageBox: function(updatedText){
+        this.scene.get("BattleScene").textTurn.setText(updatedText);
+    },
     // check for game over or victory
     checkEndBattle: function() {        
         var victory = true;
@@ -149,14 +177,13 @@ var Unit = new Phaser.Class({
 
     initialize:
 
-    function Unit(scene, x, y, texture, frame, type, hp, damage) {
+    function Unit(scene, x, y, texture, frame, type, hp, playerInformation) {
         Phaser.GameObjects.Sprite.call(this, scene, x, y, texture, frame)
         this.type = type;
         this.maxHp = this.hp = hp;
-        this.damage = damage; // default damage     
         this.living = true;         
         this.menuItem = null;
-        
+        this.playerInformation = playerInformation;
 
     },
     // we will use this to notify the menu item when the unit is dead
@@ -378,36 +405,10 @@ var UIScene = new Phaser.Class({
         this.hp;
 
         
-        // basic container to hold all menus
-        this.menus = this.add.container();
-                
-        this.heroesMenu = new HeroesMenu(195, 153, this);           
-        this.actionsMenu = new ActionsMenu(100, 153, this);            
-        this.enemiesMenu = new EnemiesMenu(8, 153, this);   
-        
-        // the currently selected menu 
-        this.currentMenu = this.actionsMenu;
-        
-        // add menus to the container
-        this.menus.add(this.heroesMenu);
-        this.menus.add(this.actionsMenu);
-        this.menus.add(this.enemiesMenu);
 
                 
         this.battleScene = this.scene.get("BattleScene");                         
         
-        // listen for keyboard events
-        this.input.keyboard.on("keydown", this.onKeyInput, this);   
-        
-        // when its player cunit turn to move
-        this.battleScene.events.on("PlayerSelect", this.onPlayerSelect, this);
-        
-        // when the action on the menu is selected
-        // for now we have only one action so we dont send and action id
-        this.events.on("SelectedAction", this.onSelectedAction, this);
-        
-        // an enemy is selected
-        this.events.on("Enemy", this.onEnemy, this);
         
         // when the scene receives wake event
         this.sys.events.on('wake', this.createMenu, this);
@@ -420,27 +421,122 @@ var UIScene = new Phaser.Class({
         this.createMenuOptions();
     },
     createMenu: function() {
-        // map hero menu items to heroes
-        this.remapHeroes();
-        // map enemies menu items to enemies
-        this.remapEnemies();
         // first move
         this.battleScene.nextTurn(); 
     },
     createMenuOptions: function() {
         //this method creates the main menu functionalies
         //right now I'll just have image place holders in place
+        var enemyTexts = [];
         for (var i = 0; i < 6; i++){
-            var temp = this.add.sprite(560, 1024 - 3*95 - 58 + i*60, menus[i]).setInteractive();
-            temp.setScale(0.25);
-            temp.on('pointerover', function(pointer){
-                console.log("clicked on skill");
-                this.setTint(0x87ceeb);
-            })
-            temp.on('pointerout', function(pointer){
-                this.clearTint();
-            });
+            if (menus[i] === "attack"){
+                var temp = this.add.sprite(560, 1024 - 3*95 - 58 + i*60, menus[i]).setInteractive();
+                temp.setScale(0.25);
+                temp.on('pointerdown', (pointer)=>{
+                    temp.setTint(0x87ceeb);
+                    //alert(currentPlayer.playerInformation.unitName);
+                    for (var i = 0; i < menuBackup.length; i++){
+                        menuBackup[i].setActive(false).setVisible(false);
+                    }
+                    for (var i = 0; i < enemies.length + 1; i++){
+                        if(i === enemies.length){
+                            //if this is the last index, create an escape button
+                            var escapetext1 = this.add.text(410, 1024 - 3*95 - 58 + i*80, "BACK",{ color: "#ffa500", align: "center",fontWegight: 
+                            'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
+                            escapetext1.on('pointerdown', (pointer)=>{
+                                escapetext1.setTint(0x87ceebb);
+                                for (var i = 0; i < enemyTexts.length; i++){
+                                    enemyTexts[i].destroy();
+                                }
+                                for (var i = 0; i < menuBackup.length; i++){
+                                    menuBackup[i].setActive(true).setVisible(true);
+                                }
+                            });
+                            enemyTexts.push(escapetext1);
+
+                        }
+                        else if (i === 0){
+                            var enemytext1 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                            'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
+                            enemytext1.on('pointerdown', (pointer)=>{
+                                enemytext1.setTint(0x87ceebb);
+                                this.battle(currentPlayer.playerInformation, enemies[0], "attack");
+                            });
+                            enemyTexts.push(enemytext1);
+                            
+                            
+                        }
+                    }
+                })
+                temp.on('pointerout', function(pointer){
+                    this.clearTint();
+                });
+                menuBackup.push(temp);
+            }
+            if (menus[i] === "guard"){
+                var temp = this.add.sprite(560, 1024 - 3*95 - 58 + i*60, menus[i]).setInteractive();
+                temp.setScale(0.25);
+                temp.on('pointerdown', function(pointer){
+                    this.setTint(0x87ceeb);
+                    //alert(currentPlayer.playerInformation.unitName);
+                })
+                temp.on('pointerout', function(pointer){
+                    this.clearTint();
+                });
+                menuBackup.push(temp);
+            }
+            if (menus[i] === "skill"){
+                var temp = this.add.sprite(560, 1024 - 3*95 - 58 + i*60, menus[i]).setInteractive();
+                temp.setScale(0.25);
+                temp.on('pointerdown', function(pointer){
+                    this.setTint(0x87ceeb);
+                    //alert(currentPlayer.playerInformation.unitName);
+                })
+                temp.on('pointerout', function(pointer){
+                    this.clearTint();
+                });
+                menuBackup.push(temp);
+            }
+            if (menus[i] === "items"){
+                var temp = this.add.sprite(560, 1024 - 3*95 - 58 + i*60, menus[i]).setInteractive();
+                temp.setScale(0.25);
+                temp.on('pointerdown', function(pointer){
+                    this.setTint(0x87ceeb);
+                    //alert(currentPlayer.playerInformation.unitName);
+                })
+                temp.on('pointerout', function(pointer){
+                    this.clearTint();
+                });
+                menuBackup.push(temp);
+            }
+            if (menus[i] === "skip"){
+                var temp = this.add.sprite(560, 1024 - 3*95 - 58 + i*60, menus[i]).setInteractive();
+                temp.setScale(0.25);
+                temp.on('pointerdown', function(pointer){
+                    this.setTint(0x87ceeb);
+                    //alert(currentPlayer.playerInformation.unitName);
+                })
+                temp.on('pointerout', function(pointer){
+                    this.clearTint();
+                });
+                menuBackup.push(temp);
+            }
+            if (menus[i] === "escape"){
+                var temp = this.add.sprite(560, 1024 - 3*95 - 58 + i*60, menus[i]).setInteractive();
+                temp.setScale(0.25);
+                temp.on('pointerdown', function(pointer){
+                    this.setTint(0x87ceeb);
+                    //alert(currentPlayer.playerInformation.unitName);
+                })
+                temp.on('pointerout', function(pointer){
+                    this.clearTint();
+                });
+                menuBackup.push(temp);
+            }
         }  
+    },
+    battle: function(){
+        alert("battle");
     },
     createBattleSprites: function(){
         //loop through all player sprites and create them
@@ -1790,33 +1886,7 @@ var UIScene = new Phaser.Class({
         this.actionsMenu.select(0);
         this.currentMenu = this.actionsMenu;
     },
-    // we have action selected and we make the enemies menu active
-    // the player needs to choose an enemy to attack
-    onSelectedAction: function() {
-        this.currentMenu = this.enemiesMenu;
-        this.enemiesMenu.select(0);
-    },
-    remapHeroes: function() {
-        var heroes = this.battleScene.heroes;
-        this.heroesMenu.remap(heroes);
-    },
-    remapEnemies: function() {
-        var enemies = this.battleScene.enemies;
-        this.enemiesMenu.remap(enemies);
-    },
-    onKeyInput: function(event) {
-        if(this.currentMenu && this.currentMenu.selected) {
-            if(event.code === "ArrowUp") {
-                this.currentMenu.moveSelectionUp();
-            } else if(event.code === "ArrowDown") {
-                this.currentMenu.moveSelectionDown();
-            } else if(event.code === "ArrowRight" || event.code === "Shift") {
 
-            } else if(event.code === "Space" || event.code === "ArrowLeft") {
-                this.currentMenu.confirm();
-            } 
-        }
-    },
 });
 
 // the message class extends containter 
