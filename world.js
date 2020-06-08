@@ -454,6 +454,7 @@ class unitInformation {
         this.unitStats = unitStats;
         this.unitStatus = unitStatus;
         this.unitBattleSkills = unitBattleSkills;
+        this.isGuarding = false;
     }
 
 }

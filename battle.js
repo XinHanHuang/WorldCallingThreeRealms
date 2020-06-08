@@ -502,12 +502,13 @@ var UIScene = new Phaser.Class({
                 });
                 menuBackup.push(temp);
             }
+            //if guard, send isguarding to true
             if (menus[i] === "guard"){
                 var temp = this.add.sprite(560, 1024 - 3*95 - 58 + i*60, menus[i]).setInteractive();
                 temp.setScale(0.25);
-                temp.on('pointerdown', function(pointer){
-
-                    //alert(currentPlayer.playerInformation.unitName);
+                temp.on('pointerdown', (pointer) =>{
+                    currentPlayer.playerInformation.isGuarding = true;
+                    this.battle(currentPlayer.playerInformation, null, "guard");
                 })
                 temp.on('pointerout', function(pointer){
                     this.clearTint();
@@ -567,6 +568,10 @@ var UIScene = new Phaser.Class({
         //simple attack
         if (method_of_attack === "attack"){
             this.scene.get("BattleScene").updateMessageBox(player.unitName + " attacks " + target.unitName);
+        }
+        if (method_of_attack === "guard"){
+            //if the player is guarding
+            this.scene.get("BattleScene").updateMessageBox(player.unitName + " has put up a shield");
         }
     },
     createBattleSprites: function(){
