@@ -159,6 +159,8 @@ var BattleScene = new Phaser.Class({
         this.heroes.length = 0;
         this.enemies.length = 0;
         enemies.length = 0;
+        UIarray.length = 0;
+        enemyUIarray.length = 0;
         for(var i = 0; i < this.units.length; i++) {
             // link item
             this.units[i].destroy();            
@@ -450,6 +452,7 @@ var UIScene = new Phaser.Class({
                                 for (var i = 0; i < enemyTexts.length; i++){
                                     enemyTexts[i].destroy();
                                 }
+                                enemyTexts.length = 0;
                                 for (var i = 0; i < menuBackup.length; i++){
                                     menuBackup[i].setActive(true).setVisible(true);
                                 }
@@ -464,6 +467,7 @@ var UIScene = new Phaser.Class({
                                 for (var i = 0; i < enemyTexts.length; i++){
                                     enemyTexts[i].destroy();
                                 }
+                                enemyTexts.length = 0;
                                 for (var i = 0; i < menuBackup.length; i++){
                                     menuBackup[i].setActive(true).setVisible(true);
                                 }
@@ -478,6 +482,7 @@ var UIScene = new Phaser.Class({
                                 for (var i = 0; i < enemyTexts.length; i++){
                                     enemyTexts[i].destroy();
                                 }
+                                enemyTexts.length = 0;
                                 for (var i = 0; i < menuBackup.length; i++){
                                     menuBackup[i].setActive(true).setVisible(true);
                                 }
@@ -492,6 +497,7 @@ var UIScene = new Phaser.Class({
                                 for (var i = 0; i < enemyTexts.length; i++){
                                     enemyTexts[i].destroy();
                                 }
+                                enemyTexts.length = 0;
                                 for (var i = 0; i < menuBackup.length; i++){
                                     menuBackup[i].setActive(true).setVisible(true);
                                 }
@@ -574,6 +580,7 @@ var UIScene = new Phaser.Class({
                                         for (var i = 0; i < enemyTexts.length; i++){
                                             enemyTexts[i].destroy();
                                         }
+                                        enemyTexts.length = 0;
                                         for (var i = 0; i < menuBackup.length; i++){
                                             menuBackup[i].setActive(true).setVisible(true);
                                         }
@@ -588,6 +595,7 @@ var UIScene = new Phaser.Class({
                                         for (var i = 0; i < enemyTexts.length; i++){
                                             enemyTexts[i].destroy();
                                         }
+                                        enemyTexts.length = 0;
                                         for (var i = 0; i < menuBackup.length; i++){
                                             menuBackup[i].setActive(true).setVisible(true);
                                         }
@@ -602,6 +610,7 @@ var UIScene = new Phaser.Class({
                                         for (var i = 0; i < enemyTexts.length; i++){
                                             enemyTexts[i].destroy();
                                         }
+                                        enemyTexts.length = 0;
                                         for (var i = 0; i < menuBackup.length; i++){
                                             menuBackup[i].setActive(true).setVisible(true);
                                         }
@@ -617,6 +626,7 @@ var UIScene = new Phaser.Class({
                                         for (var i = 0; i < enemyTexts.length; i++){
                                             enemyTexts[i].destroy();
                                         }
+                                        enemyTexts.length = 0;
                                         for (var i = 0; i < menuBackup.length; i++){
                                             menuBackup[i].setActive(true).setVisible(true);
                                         }
@@ -657,6 +667,7 @@ var UIScene = new Phaser.Class({
                                             for (var i = 0; i < enemyTexts.length; i++){
                                                 enemyTexts[i].destroy();
                                             }
+                                            enemyTexts.length = 0;
                                             for (var i = 0; i < menuBackup.length; i++){
                                                 menuBackup[i].setActive(true).setVisible(true);
                                             }
@@ -671,6 +682,7 @@ var UIScene = new Phaser.Class({
                                             for (var i = 0; i < enemyTexts.length; i++){
                                                 enemyTexts[i].destroy();
                                             }
+                                            enemyTexts.length = 0;
                                             for (var i = 0; i < menuBackup.length; i++){
                                                 menuBackup[i].setActive(true).setVisible(true);
                                             }
@@ -685,6 +697,7 @@ var UIScene = new Phaser.Class({
                                             for (var i = 0; i < enemyTexts.length; i++){
                                                 enemyTexts[i].destroy();
                                             }
+                                            enemyTexts.length = 0;
                                             for (var i = 0; i < menuBackup.length; i++){
                                                 menuBackup[i].setActive(true).setVisible(true);
                                             }
@@ -700,6 +713,7 @@ var UIScene = new Phaser.Class({
                                             for (var i = 0; i < enemyTexts.length; i++){
                                                 enemyTexts[i].destroy();
                                             }
+                                            enemyTexts.length = 0;
                                             for (var i = 0; i < menuBackup.length; i++){
                                                 menuBackup[i].setActive(true).setVisible(true);
                                             }
@@ -741,6 +755,7 @@ var UIScene = new Phaser.Class({
                                             for (var i = 0; i < enemyTexts.length; i++){
                                                 enemyTexts[i].destroy();
                                             }
+                                            enemyTexts.length = 0;
                                             for (var i = 0; i < menuBackup.length; i++){
                                                 menuBackup[i].setActive(true).setVisible(true);
                                             }
@@ -755,6 +770,7 @@ var UIScene = new Phaser.Class({
                                             for (var i = 0; i < enemyTexts.length; i++){
                                                 enemyTexts[i].destroy();
                                             }
+                                            enemyTexts.length = 0;
                                             for (var i = 0; i < menuBackup.length; i++){
                                                 menuBackup[i].setActive(true).setVisible(true);
                                             }
@@ -769,6 +785,7 @@ var UIScene = new Phaser.Class({
                                             for (var i = 0; i < enemyTexts.length; i++){
                                                 enemyTexts[i].destroy();
                                             }
+                                            enemyTexts.length = 0;
                                             for (var i = 0; i < menuBackup.length; i++){
                                                 menuBackup[i].setActive(true).setVisible(true);
                                             }
@@ -784,6 +801,7 @@ var UIScene = new Phaser.Class({
                                             for (var i = 0; i < enemyTexts.length; i++){
                                                 enemyTexts[i].destroy();
                                             }
+                                            enemyTexts.length = 0;
                                             for (var i = 0; i < menuBackup.length; i++){
                                                 menuBackup[i].setActive(true).setVisible(true);
                                             }
@@ -825,6 +843,7 @@ var UIScene = new Phaser.Class({
                                             for (var i = 0; i < enemyTexts.length; i++){
                                                 enemyTexts[i].destroy();
                                             }
+                                            enemyTexts.length = 0;
                                             for (var i = 0; i < menuBackup.length; i++){
                                                 menuBackup[i].setActive(true).setVisible(true);
                                             }
@@ -839,6 +858,7 @@ var UIScene = new Phaser.Class({
                                             for (var i = 0; i < enemyTexts.length; i++){
                                                 enemyTexts[i].destroy();
                                             }
+                                            enemyTexts.length = 0;
                                             for (var i = 0; i < menuBackup.length; i++){
                                                 menuBackup[i].setActive(true).setVisible(true);
                                             }
@@ -853,6 +873,7 @@ var UIScene = new Phaser.Class({
                                             for (var i = 0; i < enemyTexts.length; i++){
                                                 enemyTexts[i].destroy();
                                             }
+                                            enemyTexts.length = 0;
                                             for (var i = 0; i < menuBackup.length; i++){
                                                 menuBackup[i].setActive(true).setVisible(true);
                                             }
@@ -868,6 +889,7 @@ var UIScene = new Phaser.Class({
                                             for (var i = 0; i < enemyTexts.length; i++){
                                                 enemyTexts[i].destroy();
                                             }
+                                            enemyTexts.length = 0;
                                             for (var i = 0; i < menuBackup.length; i++){
                                                 menuBackup[i].setActive(true).setVisible(true);
                                             }

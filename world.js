@@ -2,10 +2,8 @@ players = [];
 enemies = []; //rule is that special enemies will always appear in the first 0, 1, and 3rd index of the array 
 playerInventory = []; //inventory to hold items, additional classes will be implemented for skill scrolls
 battlescenemap = 'heaven'; //default is heaven, this global variable determines the battle scene map to load
-hp_bars = []; //global hp bars to keep track of in the UI scene
-mp_bars = []; //global mp bars to keep track of mp in the UI scene
 enemy_hp_bars = [];
-UIarray = []; //this array keeps track of all the UIs for every character on the map
+UIarray = []; //this array keeps track of all the UIs for every character on the map. Needs to be cleared
 EnemyUIarray = []; //this array keeps track of all the UIs for every enemy on the map
 menus = []; //keeps track of menus
 
