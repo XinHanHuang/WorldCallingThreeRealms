@@ -97,6 +97,7 @@ var BattleScene = new Phaser.Class({
         if(this.units[this.index] instanceof PlayerCharacter) {
             // we need the player to select action and then enemy
             currentPlayer = this.units[this.index];
+            //alert(currentPlayer.playerInformation.unitName);
             //this.events.emit("PlayerSelect", this.index);
             //display current player's information in a message box
             this.updateMessageBox(this.units[this.index].playerInformation.unitName + "'s Turn");
@@ -122,7 +123,7 @@ var BattleScene = new Phaser.Class({
         graphics.fillRect(1280/2 - 220, 1024/2 + 60, 400, 60);
 
         var text = this.scene.get("BattleScene").add.text(1280/2 - 170, 
-            1024/2 + 60, "dd", { color: "#000000", align: "center", fontWegight: 
+            1024/2 + 60, "", { color: "#000000", align: "center", fontWegight: 
             'bold',font: '24px Arial', wordWrap: { width: 300, useAdvancedWrap: true }});
         this.scene.get("BattleScene").textTurn = text;
 
@@ -913,9 +914,8 @@ var UIScene = new Phaser.Class({
             if (menus[i] === "items"){
                 var temp = this.add.sprite(560, 1024 - 3*95 - 58 + i*60, menus[i]).setInteractive();
                 temp.setScale(0.25);
-                temp.on('pointerdown', function(pointer){
-
-                    //alert(currentPlayer.playerInformation.unitName);
+                temp.on('pointerdown', (pointer)=>{
+                    this.battle(currentPlayer.playerInformation, null, "item", null);
                 })
                 temp.on('pointerout', function(pointer){
                     this.clearTint();
@@ -925,9 +925,8 @@ var UIScene = new Phaser.Class({
             if (menus[i] === "skip"){
                 var temp = this.add.sprite(560, 1024 - 3*95 - 58 + i*60, menus[i]).setInteractive();
                 temp.setScale(0.25);
-                temp.on('pointerdown', function(pointer){
-
-                    //alert(currentPlayer.playerInformation.unitName);
+                temp.on('pointerdown', (pointer)=>{
+                    this.battle(currentPlayer.playerInformation, null, "skip", null);
                 })
                 temp.on('pointerout', function(pointer){
                     this.clearTint();
@@ -937,8 +936,8 @@ var UIScene = new Phaser.Class({
             if (menus[i] === "escape"){
                 var temp = this.add.sprite(560, 1024 - 3*95 - 58 + i*60, menus[i]).setInteractive();
                 temp.setScale(0.25);
-                temp.on('pointerdown', function(pointer){
-                    //alert(currentPlayer.playerInformation.unitName);
+                temp.on('pointerdown', (pointer)=>{
+                    this.battle(currentPlayer.playerInformation, null, "escape", null);
                 })
                 temp.on('pointerout', function(pointer){
                     this.clearTint();
@@ -947,17 +946,49 @@ var UIScene = new Phaser.Class({
             }
         }  
     },
+    //battle is the main function that handles going to the next turn as well as damage updates/scene updates 
     battle: function(player, target, method_of_attack, skillName){
         //simple attack
         if (method_of_attack === "attack"){
             this.scene.get("BattleScene").updateMessageBox(player.unitName + " attacks " + target.unitName);
+            var damagedelt = player.unitStats.atk - target.unitStats.def;
+            if (damagedelt < 0){
+                damagedelt = 0;
+            }
+            //now we search for the target's HP bar 
+            for (var i = 0; i < EnemyUIarray.length; i++){
+                if (EnemyUIarray[i].name === target.unitName){
+                    EnemyUIarray[i].hp_bar.decrease(damagedelt);
+                }
+            }
+            for (var i = 0; i < this.battleScene.heroes.length; i++){
+                if (player === this.battleScene.heroes[i].playerInformation){
+                    this.battleScene.heroes[i].anims.play(player.unitAnimations[2], false);
+                    hero = this.battleScene.heroes[i];
+                    this.battleScene.heroes[i].on("animationcomplete", 
+                    ()=>{hero.anims.play(player.unitAnimations[0], true)});
+                }
+            }
+ 
+            this.time.addEvent({ delay: 2000, callback: this.battleScene.nextTurn, callbackScope: this.battleScene});   
+
+
         }
         if (method_of_attack === "guard"){
             //if the player is guarding
-            this.scene.get("BattleScene").updateMessageBox(player.unitName + " has put up a shield");
+            this.scene.get("BattleScene").updateMessageBox(player.unitName + " gets ready for an incoming attack");
         }
         if (method_of_attack === "skill"){
             this.scene.get("BattleScene").updateMessageBox(player.unitName + " casts " + skillName + " on " + target.unitName);
+        }
+        if (method_of_attack === "item"){
+            this.scene.get("BattleScene").updateMessageBox("There are currently no useable items!");
+        }
+        if (method_of_attack === "skip"){
+            this.scene.get("BattleScene").updateMessageBox(player.unitName + " has chosen not to act")
+        }
+        if (method_of_attack === "escape"){
+            this.scene.get("BattleScene").updateMessageBox(player.unitName + "'s group attempts to escape!")
         }
     },
     createBattleSprites: function(){
@@ -2400,7 +2431,7 @@ class HealthBar {
             this.bar.fillStyle(0x00ff00);
         }
 
-        var d = Math.floor(this.value/this.maxHP) * 2 * 100;
+        var d = (this.value/this.maxHP) * 2 * 100;
 
         this.bar.fillRect(this.x + 2, this.y + 2, d, 12);
     }
@@ -2450,7 +2481,7 @@ class MagicBar {
         this.bar.fillStyle(0xffffff);
         this.bar.fillRect(this.x + 2, this.y + 2, 196, 12);
         this.bar.fillStyle(0x00f5ff);
-        var d = Math.floor(this.value/this.maxHP) * 2 * 100;
+        var d = (this.value/this.maxHP) * 2 * 100;
 
         this.bar.fillRect(this.x + 2, this.y + 2, d, 12);
     }
