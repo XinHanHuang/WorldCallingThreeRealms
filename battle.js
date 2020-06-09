@@ -81,6 +81,7 @@ var BattleScene = new Phaser.Class({
     },
     nextTurn: function() {  
         // if we have victory or game over
+        this.scene.resume("UIScene");
         if(this.checkEndBattle()) {           
             this.endBattle();
             return;
@@ -969,9 +970,9 @@ var UIScene = new Phaser.Class({
                     ()=>{hero.anims.play(player.unitAnimations[0], true)});
                 }
             }
- 
-            this.time.addEvent({ delay: 2000, callback: this.battleScene.nextTurn, callbackScope: this.battleScene});   
-
+            this.scene.get('BattleScene').time.addEvent({ delay: 2000, callback: this.battleScene.nextTurn, callbackScope: this.battleScene});   
+            //stopping player from clicking on any buttons during animation
+            this.scene.pause('UIScene');
 
         }
         if (method_of_attack === "guard"){
