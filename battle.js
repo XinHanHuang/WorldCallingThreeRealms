@@ -37,17 +37,17 @@ var BattleScene = new Phaser.Class({
     startBattle: function() {
         // player character - warrior
         this.heroes = [];
-        this.enemies = [];
+        this.enemiesArray = [];
         for (var i = 0; i < players.length; i++){
             //for each for loop we are gonna generate new fighting sprites 
             if (i === 0 || i === 1){
-                var player = new PlayerCharacter(this, 1280-256, 256 + i*130, players[i].unitName, 1, "Warrior", 100, players[i]);
+                var player = new PlayerCharacter(this, 1280-256, 256 + i*130, players[i].unitName, 1, "Warrior", players[i].unitStats.hp, players[i]);
                 this.add.existing(player);
                 player.anims.play(players[0].unitAnimations[0], true);
                 this.heroes.push(player);
             }
             else if (i >= 2){
-                var player = new PlayerCharacter(this, 1280-256 - 200, 256 + (i-2)*130 + 50, players[i].unitName, 1, "Warrior", 100, players[i]);
+                var player = new PlayerCharacter(this, 1280-256 - 200, 256 + (i-2)*130 + 50, players[i].unitName, 1, "Warrior", players[i].unitStats.hp, players[i]);
                 this.add.existing(player);
                 player.anims.play(players[0].unitAnimations[0], true);
                 this.heroes.push(player);
@@ -56,22 +56,22 @@ var BattleScene = new Phaser.Class({
 
         for (var i = 0; i < enemies.length; i++){
             if (i === 0 || i === 1){
-                var enemy = new Enemy(this, 256, 256 + i*150, enemies[i].unitName, 1, "Dragon", 50, 3);
+                var enemy = new Enemy(this, 256, 256 + i*150, enemies[i].unitName, 1, "Dragon", 50, enemies[i]);
                 this.add.existing(enemy);
                 enemy.anims.play(enemies[0].unitAnimations[0], true);
-                this.enemies.push(enemy);
+                this.enemiesArray.push(enemy);
             }
             else if (i >= 2){
-                var enemy = new Enemy(this, 256 + 200, 256 + (i-2)*150 + 50, enemies[i].unitName, 1, "Dragon", 50, 3);
+                var enemy = new Enemy(this, 256 + 200, 256 + (i-2)*150 + 50, enemies[i].unitName, 1, "Dragon", 50, enemies[i]);
                 this.add.existing(enemy);
                 enemy.anims.play(enemies[0].unitAnimations[0], true);
-                this.enemies.push(enemy);
+                this.enemiesArray.push(enemy);
             }
         }
 
 
         // array with both parties, who will attack
-        this.units = this.heroes.concat(this.enemies);
+        this.units = this.heroes.concat(this.enemiesArray);
 
         this.createMessageBox();
         
@@ -103,17 +103,20 @@ var BattleScene = new Phaser.Class({
             //display current player's information in a message box
             this.updateMessageBox(this.units[this.index].playerInformation.unitName + "'s Turn");
 
-        } else { // else if its enemy unit
+        } else { // else if its enemy unit, we attack according to enemy's AI, or random AI
+            currentEnemy = this.units[this.index];
             // pick random living hero to be attacked
             var r;
             do {
                 r = Math.floor(Math.random() * this.heroes.length);
             } while(!this.heroes[r].living) 
-            this.updateMessageBox(this.units[this.index].playerInformation.unitName + "'s Turn");
+
+            //this.updateMessageBox(this.units[this.index].playerInformation.unitName + "'s Turn");
             // call the enemy's attack function 
-            this.units[this.index].attack(this.heroes[r]);  
+            //this.units[this.index].attack(this.heroes[r]);  
             // add timer for the next turn, so will have smooth gameplay
-            this.time.addEvent({ delay: 3000, callback: this.nextTurn, callbackScope: this });
+           // this.time.addEvent({ delay: 2000, callback: this.nextTurn, callbackScope: this });
+           this.scene.get('UIScene').battle(this.units[this.index].playerInformation, this.heroes[r].playerInformation, "attack", null);
         }
     },     
     createMessageBox: function(){
@@ -136,8 +139,8 @@ var BattleScene = new Phaser.Class({
     checkEndBattle: function() {        
         var victory = true;
         // if all enemies are dead we have victory
-        for(var i = 0; i < this.enemies.length; i++) {
-            if(this.enemies[i].living)
+        for(var i = 0; i < this.enemiesArray.length; i++) {
+            if(this.enemiesArray[i].living)
                 victory = false;
         }
         var gameOver = true;
@@ -163,6 +166,11 @@ var BattleScene = new Phaser.Class({
         enemies.length = 0;
         UIarray.length = 0;
         enemyUIarray.length = 0;
+        for (var i = 0; i < players.length; i++){
+            players[i].unitStats.hp = players[i].unitStats.maxHP;
+            players[i].unitStats.mp = players[i].unitStats.maxMP;
+            players[i].stats = null;
+        }
         for(var i = 0; i < this.units.length; i++) {
             // link item
             this.units[i].destroy();            
@@ -184,7 +192,8 @@ var Unit = new Phaser.Class({
     function Unit(scene, x, y, texture, frame, type, hp, playerInformation) {
         Phaser.GameObjects.Sprite.call(this, scene, x, y, texture, frame)
         this.type = type;
-        this.maxHp = this.hp = hp;
+        this.maxHP = hp;
+        this.hp = hp;
         this.living = true;         
         this.menuItem = null;
         this.playerInformation = playerInformation;
@@ -950,9 +959,20 @@ var UIScene = new Phaser.Class({
     //battle is the main function that handles going to the next turn as well as damage updates/scene updates 
     battle: function(player, target, method_of_attack, skillName){
         //simple attack
+        console.log(player);
+        var damagedelt = player.unitStats.atk - target.unitStats.def;
+        console.log(damagedelt);
         if (method_of_attack === "attack"){
             this.scene.get("BattleScene").updateMessageBox(player.unitName + " attacks " + target.unitName);
-            var damagedelt = player.unitStats.atk - target.unitStats.def;
+            //now check for skills for damage reduction lmao 
+            for (var i = 0; i < target.unitSkills.length; i++){
+                if (target.unitSkills[i].skillName === "Almighty God"){
+                    damagedelt = Math.floor(damagedelt/2);
+                }
+                if (target.unitSkills[i].skillName === "Angelic Truth"){
+                    damagedelt = Math.floor(damagedelt/2);
+                }
+            }
             if (damagedelt < 0){
                 damagedelt = 0;
             }
@@ -962,12 +982,28 @@ var UIScene = new Phaser.Class({
                     EnemyUIarray[i].hp_bar.decrease(damagedelt);
                 }
             }
+            target.unitStats.hp = target.unitStats.hp - damagedelt;
+            if (target.unitStats.hp < 0){
+                target.unitStats.hp = 0;
+            }
             for (var i = 0; i < this.battleScene.heroes.length; i++){
                 if (player === this.battleScene.heroes[i].playerInformation){
                     this.battleScene.heroes[i].anims.play(player.unitAnimations[2], false);
                     hero = this.battleScene.heroes[i];
                     this.battleScene.heroes[i].on("animationcomplete", 
                     ()=>{hero.anims.play(player.unitAnimations[0], true)});
+                }
+            }
+            //for heroes taking damage
+            for (var i = 0; i < UIarray.length; i++){
+                if (UIarray[i].name === target.unitName){
+                    UIarray[i].hp_bar.decrease(damagedelt);
+                    if (target.unitStats.hp === 0){
+                        UIarray[i].hp_text.setText("");
+                    }
+                    else{
+                        UIarray[i].hp_text.setText(target.unitStats.hp.toString() + "/" + target.unitStats.maxHP.toString());
+                    }
                 }
             }
             this.scene.get('BattleScene').time.addEvent({ delay: 2000, callback: this.battleScene.nextTurn, callbackScope: this.battleScene});   
@@ -1196,7 +1232,7 @@ var UIScene = new Phaser.Class({
                 });
 
                 playerUI1 = new UIinformation(players[i].unitName, player1, hp1, mp1, players[i].unitBattleSkills,
-                    players[i].unitSkills, null, hptext1, mptext1);
+                    players[i].unitSkills, null, texthp1, textmp1);
                 UIarray.push(playerUI1);
 
 
@@ -1397,7 +1433,7 @@ var UIScene = new Phaser.Class({
                     textsprite2.visible = false;
                 });
                 playerUI2 = new UIinformation(players[i].unitName, player2, hp2, mp2, players[i].unitBattleSkills,
-                    players[i].unitSkills, null, hptext2, mptext2);
+                    players[i].unitSkills, null, texthp2, textmp2);
                 UIarray.push(playerUI2);
 
             }
@@ -1597,7 +1633,7 @@ var UIScene = new Phaser.Class({
                 });
 
                 playerUI3 = new UIinformation(players[i].unitName, player3, hp3, mp3, players[i].unitBattleSkills,
-                    players[i].unitSkills, null, hptext3, mptext3);
+                    players[i].unitSkills, null, texthp3, textmp3);
                 UIarray.push(playerUI3);
                 
             }
@@ -1797,7 +1833,7 @@ var UIScene = new Phaser.Class({
                 });
 
                 playerUI4 = new UIinformation(players[i].unitName, player4, hp4, mp4, players[i].unitBattleSkills,
-                    players[i].unitSkills, null, hptext4, mptext4);
+                    players[i].unitSkills, null, texthp4, textmp4);
                 UIarray.push(playerUI4);
             }
         }
@@ -1840,6 +1876,7 @@ var UIScene = new Phaser.Class({
                             graphics20.visible = false;
                             text20.visible = false;
                         });
+
                     }
                     if (j === 1){
                         var skill = this.add.sprite(180 + j*36, 1024 - 3*95 - 78 + 35 + i*120, enemies[i].unitSkills[j].spriteName).setInteractive();
@@ -1870,6 +1907,7 @@ var UIScene = new Phaser.Class({
                             graphics21.visible = false;
                             text21.visible = false;
                         });
+
                     }
                     if (j === 2){
                         var skill = this.add.sprite(180 + j*36, 1024 - 3*95 - 78 + 35 + i*120, enemies[i].unitSkills[j].spriteName).setInteractive();
@@ -2433,6 +2471,12 @@ class HealthBar {
         }
 
         var d = (this.value/this.maxHP) * 2 * 100;
+        if (d <= 0){
+            d = 2;
+        }
+        if (d%2>0){
+            d = d + 1;
+        }
 
         this.bar.fillRect(this.x + 2, this.y + 2, d, 12);
     }
@@ -2483,7 +2527,12 @@ class MagicBar {
         this.bar.fillRect(this.x + 2, this.y + 2, 196, 12);
         this.bar.fillStyle(0x00f5ff);
         var d = (this.value/this.maxHP) * 2 * 100;
-
+        if (d <= 0){
+            d = 2;
+        }
+        if (d%2>0){
+            d = d + 1;
+        }
         this.bar.fillRect(this.x + 2, this.y + 2, d, 12);
     }
 
@@ -2603,6 +2652,7 @@ class UIStatusEffect{
 //same but for enemies that do not have mp bar and such
 class EnemyUIinformation{
     constructor(name, sprites, hp_bar, battleSkills, skills, status_effects){
+
         this.name = name; //the name of the character 
         //this.animations = animations;
         this.sprites = sprites;
