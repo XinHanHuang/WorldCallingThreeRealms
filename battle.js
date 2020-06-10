@@ -984,12 +984,13 @@ var UIScene = new Phaser.Class({
                 }
             }
             this.damageText = null;
-
+            //damage text indicators
             for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
                 if (target === this.battleScene.enemiesArray[i].playerInformation){
                     this.damageText = this.battleScene.add.text(this.battleScene.enemiesArray[i].x - 20,this.battleScene.enemiesArray[i].y - 100, "-" + damagedelt,
                     { color: "#ff0000", align: "center",fontWegight: 
                     'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }});
+                    timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
                 }
             }
             for (var i = 0; i <this.battleScene.heroes.length; i++){
@@ -997,8 +998,10 @@ var UIScene = new Phaser.Class({
                     this.damageText = this.battleScene.add.text(this.battleScene.heroes[i].x - 20, this.battleScene.heroes[i].y - 100, "-" + damagedelt,
                     { color: "#ff0000", align: "center",fontWegight: 
                     'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }});
+                    timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
                 }
             }
+            
             //now we decrease the hp
             target.unitStats.hp = target.unitStats.hp - damagedelt;
             if (target.unitStats.hp < 0){
@@ -1046,6 +1049,11 @@ var UIScene = new Phaser.Class({
             this.scene.get("BattleScene").updateMessageBox(player.unitName + "'s group attempts to escape!")
         }
     },
+    //deletes the damage text
+    deleteDamageIndicator: function(){
+        this.damageText.destroy();
+    },
+
     createBattleSprites: function(){
         //loop through all player sprites and create them
         var incrY = 94; //increment y axis by intervals of 94 
