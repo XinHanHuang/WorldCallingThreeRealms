@@ -1203,13 +1203,11 @@ var UIScene = new Phaser.Class({
                 var spritegraphics = this.scene.get("UIScene").add.graphics();
                 spritegraphics.lineStyle(1, 0xffffff, 0.8);
                 spritegraphics.fillStyle(0x000000, 1);
-                spritegraphics.strokeRect(1280 - 300, 1024 - 3*95 - 340 + i*93, 180, 280);
-                spritegraphics.fillRect(1280 - 300, 1024 - 3*95 - 340 + i*93, 180, 280);
+                spritegraphics.strokeRect(1280 - 300, 1024 - 3*95 - 260 + i*93, 180, 200);
+                spritegraphics.fillRect(1280 - 300, 1024 - 3*95 - 260 + i*93, 180, 200);
                 spritegraphics.visible = false;
                 var textsprite= this.scene.get("UIScene").add.text(1280 - 265, 
-                    1024 - 3*95 - 340 + i*93, players[0].unitName + "\n" + 
-                    "HP: " + players[0].unitStats.hp + "/" + players[0].unitStats.maxHP + "\n" +
-                    "MP: " + players[0].unitStats.mp + "/" + players[0].unitStats.maxMP + "\n" +
+                    1024 - 3*95 - 260 + i*93, players[0].unitName + "\n" + "\n" +
                     "ATK: " + players[0].unitStats.atk + "\n" +
                     "DEF: " + players[0].unitStats.def + "\n" +
                     "RES: " + players[0].unitStats.res + "\n" +
@@ -1407,13 +1405,11 @@ var UIScene = new Phaser.Class({
                 var spritegraphics2 = this.scene.get("UIScene").add.graphics();
                 spritegraphics2.lineStyle(1, 0xffffff, 0.8);
                 spritegraphics2.fillStyle(0x000000, 1);
-                spritegraphics2.strokeRect(1280 - 300, 1024 - 3*95 - 340 + i*93, 180, 280);
-                spritegraphics2.fillRect(1280 - 300, 1024 - 3*95 - 340 + i*93, 180, 280);
+                spritegraphics2.strokeRect(1280 - 300, 1024 - 3*95 - 260 + i*93, 180, 200);
+                spritegraphics2.fillRect(1280 - 300, 1024 - 3*95 - 260 + i*93, 180, 200);
                 spritegraphics2.visible = false;
                 var textsprite2= this.scene.get("UIScene").add.text(1280 - 265, 
-                    1024 - 3*95 - 340 + i*93, players[1].unitName + "\n" + 
-                    "HP: " + players[1].unitStats.hp + "/" + players[1].unitStats.maxHP + "\n" +
-                    "MP: " + players[1].unitStats.mp + "/" + players[1].unitStats.maxMP + "\n" +
+                    1024 - 3*95 - 260 + i*93, players[1].unitName + "\n" + "\n" +
                     "ATK: " + players[1].unitStats.atk + "\n" +
                     "DEF: " + players[1].unitStats.def + "\n" +
                     "RES: " + players[1].unitStats.res + "\n" +
@@ -1607,13 +1603,11 @@ var UIScene = new Phaser.Class({
                 var spritegraphics3 = this.scene.get("UIScene").add.graphics();
                 spritegraphics3.lineStyle(1, 0xffffff, 0.8);
                 spritegraphics3.fillStyle(0x000000, 1);
-                spritegraphics3.strokeRect(1280 - 300, 1024 - 3*95 - 340 + i*93, 180, 280);
-                spritegraphics3.fillRect(1280 - 300, 1024 - 3*95 - 340 + i*93, 180, 280);
+                spritegraphics3.strokeRect(1280 - 300, 1024 - 3*95 - 260 + i*93, 180, 200);
+                spritegraphics3.fillRect(1280 - 300, 1024 - 3*95 - 260 + i*93, 180, 200);
                 spritegraphics3.visible = false;
                 var textsprite3= this.scene.get("UIScene").add.text(1280 - 265, 
-                    1024 - 3*95 - 340 + i*93, players[2].unitName + "\n" + 
-                    "HP: " + players[2].unitStats.hp + "/" + players[2].unitStats.maxHP + "\n" +
-                    "MP: " + players[2].unitStats.mp + "/" + players[2].unitStats.maxMP + "\n" +
+                    1024 - 3*95 - 260 + i*93, players[2].unitName + "\n" + "\n" +
                     "ATK: " + players[2].unitStats.atk + "\n" +
                     "DEF: " + players[2].unitStats.def + "\n" +
                     "RES: " + players[2].unitStats.res + "\n" +
@@ -1806,13 +1800,11 @@ var UIScene = new Phaser.Class({
                 var spritegraphics4 = this.scene.get("UIScene").add.graphics();
                 spritegraphics4.lineStyle(1, 0xffffff, 0.8);
                 spritegraphics4.fillStyle(0x000000, 1);
-                spritegraphics4.strokeRect(1280 - 300, 1024 - 3*95 - 340 + i*93, 180, 280);
-                spritegraphics4.fillRect(1280 - 300, 1024 - 3*95 - 340 + i*93, 180, 280);
+                spritegraphics4.strokeRect(1280 - 300, 1024 - 3*95 - 260 + i*93, 180, 200);
+                spritegraphics4.fillRect(1280 - 300, 1024 - 3*95 - 260 + i*93, 180, 200);
                 spritegraphics4.visible = false;
                 var textsprite4= this.scene.get("UIScene").add.text(1280 - 265, 
-                    1024 - 3*95 - 340 + i*93, players[3].unitName + "\n" + 
-                    "HP: " + players[3].unitStats.hp + "/" + players[3].unitStats.maxHP + "\n" +
-                    "MP: " + players[3].unitStats.mp + "/" + players[3].unitStats.maxMP + "\n" +
+                    1024 - 3*95 - 260 + i*93, players[3].unitName + "\n" + "\n" +
                     "ATK: " + players[3].unitStats.atk + "\n" +
                     "DEF: " + players[3].unitStats.def + "\n" +
                     "RES: " + players[3].unitStats.res + "\n" +
