@@ -19,6 +19,7 @@ var BattleScene = new Phaser.Class({
         menus = ['attack', 'guard', 'skill', 'items','skip','escape'];
         menuBackup = []
         textTurn = ""; //keeps track of the text
+        this.messagebox = null;
         if (battlescenemap === "heaven"){
             var level0 = this.make.tilemap({ key: 'level0' });
             var tiles = level0.addTilesetImage('Mapset', 'tiles');
@@ -26,7 +27,6 @@ var BattleScene = new Phaser.Class({
             this.traverse = level0.createStaticLayer('traverse', tiles, 0, 0);
             this.blocked = level0.createStaticLayer('blocked', tiles, 0, 0);
         }
-
 
         this.startBattle();
         // on wake event we call startBattle too
@@ -43,13 +43,13 @@ var BattleScene = new Phaser.Class({
             if (i === 0 || i === 1){
                 var player = new PlayerCharacter(this, 1280-256, 256 + i*130, players[i].unitName, 1, "Warrior", players[i].unitStats.hp, players[i]);
                 this.add.existing(player);
-                player.anims.play(players[0].unitAnimations[0], true);
+                player.anims.play(players[i].unitAnimations[0], true);
                 this.heroes.push(player);
             }
             else if (i >= 2){
                 var player = new PlayerCharacter(this, 1280-256 - 200, 256 + (i-2)*130 + 50, players[i].unitName, 1, "Warrior", players[i].unitStats.hp, players[i]);
                 this.add.existing(player);
-                player.anims.play(players[0].unitAnimations[0], true);
+                player.anims.play(players[i].unitAnimations[0], true);
                 this.heroes.push(player);
             }
         }
@@ -58,13 +58,13 @@ var BattleScene = new Phaser.Class({
             if (i === 0 || i === 1){
                 var enemy = new Enemy(this, 256, 256 + i*150, enemies[i].unitName, 1, "Dragon", 50, enemies[i]);
                 this.add.existing(enemy);
-                enemy.anims.play(enemies[0].unitAnimations[0], true);
+                enemy.anims.play(enemies[i].unitAnimations[0], true);
                 this.enemiesArray.push(enemy);
             }
             else if (i >= 2){
                 var enemy = new Enemy(this, 256 + 200, 256 + (i-2)*150 + 50, enemies[i].unitName, 1, "Dragon", 50, enemies[i]);
                 this.add.existing(enemy);
-                enemy.anims.play(enemies[0].unitAnimations[0], true);
+                enemy.anims.play(enemies[i].unitAnimations[0], true);
                 this.enemiesArray.push(enemy);
             }
         }
@@ -125,7 +125,7 @@ var BattleScene = new Phaser.Class({
         graphics.fillStyle(0x000000, 0.3);        
         graphics.strokeRect(1280/2 - 220, 1024/2 + 60, 400, 60);
         graphics.fillRect(1280/2 - 220, 1024/2 + 60, 400, 60);
-
+        this.scene.get("BattleScene").messagebox = graphics;
         var text = this.scene.get("BattleScene").add.text(1280/2 - 170, 
             1024/2 + 60, "", { color: "#000000", align: "center", fontWegight: 
             'bold',font: '24px Arial', wordWrap: { width: 300, useAdvancedWrap: true }});
@@ -134,6 +134,11 @@ var BattleScene = new Phaser.Class({
     },
     updateMessageBox: function(updatedText){
         this.scene.get("BattleScene").textTurn.setText(updatedText);
+    },
+
+    destroyMessageBox: function(){
+        this.scene.get("BattleScene").textTurn.destroy();
+        this.scene.get("BattleScene").messagebox.destroy();
     },
     // check for game over or victory
     checkEndBattle: function() {        
@@ -161,15 +166,29 @@ var BattleScene = new Phaser.Class({
     },    
     endBattle: function() {       
         // clear state, remove sprites
+        for (var i = 0; i < this.heroes.length; i++){
+            this.heroes[i] = null;
+        }
+        for (var i = 0; i < this.enemiesArray.length; i++){
+            this.enemiesArray[i] = null;
+        }
+        for (var i = 0; i < enemies.length; i++){
+            enemies[i] = null;
+        }
+        for (var i = 0; i < UIarray.length; i++){
+            UIarray[i] = null;
+        }
+        for (var i = 0; i < EnemyUIarray.length; i++){
+            EnemyUIarray[i] = null;
+        }
         this.heroes.length = 0;
-        this.enemies.length = 0;
+        this.enemiesArray.length = 0;
         enemies.length = 0;
         UIarray.length = 0;
-        enemyUIarray.length = 0;
+        EnemyUIarray.length = 0;
         for (var i = 0; i < players.length; i++){
             players[i].unitStats.hp = players[i].unitStats.maxHP;
             players[i].unitStats.mp = players[i].unitStats.maxMP;
-            players[i].stats = null;
         }
         for(var i = 0; i < this.units.length; i++) {
             // link item
@@ -177,7 +196,10 @@ var BattleScene = new Phaser.Class({
         }
         this.units.length = 0;
         // sleep the UI
-        this.scene.sleep('UIScene');
+        //this.scene.sleep('UIScene');
+        this.scene.get('UIScene').scene.stop('UIScene');
+        this.destroyMessageBox();
+        //this.scene.get('BattleScene').scene.stop('BattleScene');
         // return to WorldScene and sleep current BattleScene
         this.scene.switch('WorldScene');
     }
@@ -1021,6 +1043,18 @@ var UIScene = new Phaser.Class({
                     UIarray[i].hp_bar.decrease(damagedelt);
                     if (target.unitStats.hp === 0){
                         UIarray[i].hp_text.setText("");
+                        for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
+                            if (this.battleScene.enemiesArray[i].playerInformation === target){
+                                this.battleScene.enemiesArray[i].living = false;
+                                this.battleScene.enemiesArray[i].anims.play(target.unitAnimations[3], true);
+                            }
+                        }
+                        for (var i = 0; i < this.battleScene.heroes.length; i++){
+                            if(this.battleScene.heroes[i].playerInformation === target){
+                                this.battleScene.heroes[i].living = false;
+                                this.battleScene.heroes[i].anims.play(target.unitAnimations[3], true);
+                            }
+                        }
                     }
                     else{
                         UIarray[i].hp_text.setText(target.unitStats.hp.toString() + "/" + target.unitStats.maxHP.toString());
