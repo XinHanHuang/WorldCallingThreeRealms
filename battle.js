@@ -556,7 +556,8 @@ var UIScene = new Phaser.Class({
 
                         var text = this.scene.get("UIScene").add.text(410, 
                             1024 - 3*95 - 258 + i*80, currentPlayer.playerInformation.unitBattleSkills[i].battleSkillName +
-                            ": " + currentPlayer.playerInformation.unitBattleSkills[i].battleSkillDescription, { color: "#ff2f2f", align: "center", fontWegight: 
+                            ": " + "(cost: " + currentPlayer.playerInformation.unitBattleSkills[i].mpRequired + " MP)" + "\n" +
+                            currentPlayer.playerInformation.unitBattleSkills[i].battleSkillDescription, { color: "#ff2f2f", align: "center", fontWegight: 
                             'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                         text.visible = false;
                         textsArray.push(text);
@@ -982,6 +983,23 @@ var UIScene = new Phaser.Class({
                     EnemyUIarray[i].hp_bar.decrease(damagedelt);
                 }
             }
+            this.damageText = null;
+
+            for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
+                if (target === this.battleScene.enemiesArray[i].playerInformation){
+                    this.damageText = this.battleScene.add.text(this.battleScene.enemiesArray[i].x - 20,this.battleScene.enemiesArray[i].y - 100, "-" + damagedelt,
+                    { color: "#ff0000", align: "center",fontWegight: 
+                    'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }});
+                }
+            }
+            for (var i = 0; i <this.battleScene.heroes.length; i++){
+                if (target === this.battleScene.heroes[i].playerInformation){
+                    this.damageText = this.battleScene.add.text(this.battleScene.heroes[i].x - 20, this.battleScene.heroes[i].y - 100, "-" + damagedelt,
+                    { color: "#ff0000", align: "center",fontWegight: 
+                    'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }});
+                }
+            }
+            //now we decrease the hp
             target.unitStats.hp = target.unitStats.hp - damagedelt;
             if (target.unitStats.hp < 0){
                 target.unitStats.hp = 0;
