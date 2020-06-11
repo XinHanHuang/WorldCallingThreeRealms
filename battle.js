@@ -98,6 +98,7 @@ var BattleScene = new Phaser.Class({
         if(this.units[this.index] instanceof PlayerCharacter) {
             // we need the player to select action and then enemy
             currentPlayer = this.units[this.index];
+            this.units[this.index].playerInformation.isGuarding = false;
             //alert(currentPlayer.playerInformation.unitName);
             //this.events.emit("PlayerSelect", this.index);
             //display current player's information in a message box
@@ -1074,7 +1075,6 @@ var UIScene = new Phaser.Class({
             //for heroes taking damage. needs to do for enemies taking damage too boi
             for (var i = 0; i < UIarray.length; i++){
                 if (UIarray[i].name === target.unitName){
-                    target.isGuarding = false;
                     UIarray[i].hp_bar.decrease(damagedelt);
                     if (target.unitStats.hp === 0){
                         UIarray[i].hp_text.setText(target.unitStats.hp.toString() + "/" + target.unitStats.maxHP.toString());
@@ -1104,7 +1104,6 @@ var UIScene = new Phaser.Class({
                     }
                 }
             }
-
             this.scene.get('BattleScene').time.addEvent({ delay: 2000, callback: this.battleScene.nextTurn, callbackScope: this.battleScene});   
             //stopping player from clicking on any buttons during animation
             this.scene.pause('UIScene');
