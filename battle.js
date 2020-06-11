@@ -1000,11 +1000,7 @@ var UIScene = new Phaser.Class({
                 damagedelt = 0;
             }
             //now we search for the target's HP bar 
-            for (var i = 0; i < EnemyUIarray.length; i++){
-                if (EnemyUIarray[i].name === target.unitName){
-                    EnemyUIarray[i].hp_bar.decrease(damagedelt);
-                }
-            }
+
             this.damageText = null;
             //damage text indicators
             for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
@@ -1032,24 +1028,27 @@ var UIScene = new Phaser.Class({
             for (var i = 0; i < this.battleScene.heroes.length; i++){
                 if (player === this.battleScene.heroes[i].playerInformation){
                     this.battleScene.heroes[i].anims.play(player.unitAnimations[2], false);
-                    hero = this.battleScene.heroes[i];
+                    var hero = this.battleScene.heroes[i];
                     this.battleScene.heroes[i].on("animationcomplete", 
                     ()=>{hero.anims.play(player.unitAnimations[0], true)});
                     break;
                 }
             }
-            //for heroes taking damage
+            for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
+                if (player === this.battleScene.enemiesArray[i].playerInformation){
+                    this.battleScene.enemiesArray[i].anims.play(player.unitAnimations[2], false);
+                    var enem = this.battleScene.enemiesArray[i];
+                    this.battleScene.enemiesArray[i].on("animationcomplete", 
+                    ()=>{enem.anims.play(player.unitAnimations[0], true)});
+                    break;
+                }
+            }
+            //for heroes taking damage. needs to do for enemies taking damage too boi
             for (var i = 0; i < UIarray.length; i++){
                 if (UIarray[i].name === target.unitName){
                     UIarray[i].hp_bar.decrease(damagedelt);
                     if (target.unitStats.hp === 0){
                         UIarray[i].hp_text.setText("");
-                        for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
-                            if (this.battleScene.enemiesArray[i].playerInformation === target){
-                                this.battleScene.enemiesArray[i].living = false;
-                                this.battleScene.enemiesArray[i].anims.play(target.unitAnimations[3], false);
-                            }
-                        }
                         for (var i = 0; i < this.battleScene.heroes.length; i++){
                             if(this.battleScene.heroes[i].playerInformation === target){
                                 this.battleScene.heroes[i].living = false;
@@ -1062,6 +1061,21 @@ var UIScene = new Phaser.Class({
                     }
                 }
             }
+
+            for (var i = 0; i < EnemyUIarray.length; i++){
+                if (EnemyUIarray[i].name === target.unitName){
+                    EnemyUIarray[i].hp_bar.decrease(damagedelt);
+                    if (target.unitStats.hp === 0){
+                        for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
+                            if (this.battleScene.enemiesArray[i].playerInformation === target){
+                                this.battleScene.enemiesArray[i].living = false;
+                                this.battleScene.enemiesArray[i].anims.play(target.unitAnimations[3], false);
+                            }
+                        }
+                    }
+                }
+            }
+
             this.scene.get('BattleScene').time.addEvent({ delay: 2000, callback: this.battleScene.nextTurn, callbackScope: this.battleScene});   
             //stopping player from clicking on any buttons during animation
             this.scene.pause('UIScene');
