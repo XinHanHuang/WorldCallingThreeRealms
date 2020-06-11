@@ -989,6 +989,14 @@ var UIScene = new Phaser.Class({
                 damagedelt = Math.floor(damagedelt/2);
             }
             this.scene.get("BattleScene").updateMessageBox(player.unitName + " attacks " + target.unitName);
+            var criticalHit = false;
+            var criticalChance = Math.floor((player.unitStats.spd - target.unitStats.spd) * (player.unitStats.luck/10));
+            var randomNumber = Math.floor(Math.random() * 100) + 1; //1-100random
+            if (randomNumber < criticalChance){
+                //if the random number generated is less than the critical chance 
+                criticalHit = true;
+            }
+
             //now check for skills for damage reduction lmao 
             for (var i = 0; i < target.unitSkills.length; i++){
                 if (target.unitSkills[i].skillName === "Almighty God"){
@@ -1002,23 +1010,40 @@ var UIScene = new Phaser.Class({
                 damagedelt = 0;
             }
 
-            //now we search for the target's HP bar 
+            if (criticalHit === true){
+                damagedelt = damagedelt * 2; //doubles the damage delt
+            }
 
+            //now we search for the target's HP bar 
             this.damageText = null;
             //damage text indicators
             for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
                 if (target === this.battleScene.enemiesArray[i].playerInformation){
+                    if (criticalHit === false){
                     this.damageText = this.battleScene.add.text(this.battleScene.enemiesArray[i].x - 20,this.battleScene.enemiesArray[i].y - 100, "-" + damagedelt,
                     { color: "#ff0000", align: "center",fontWeight: 
-                    'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }});
+                    'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }});}
+                    else if (criticalHit === true){
+                    this.damageText = this.battleScene.add.text(this.battleScene.enemiesArray[i].x - 120,this.battleScene.enemiesArray[i].y - 100, "CRITICAL HIT -" + damagedelt,
+                    { color: "#ff0000", align: "center",fontWeight: 
+                    'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }});   
+                    }
                     timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
                 }
+
             }
             for (var i = 0; i <this.battleScene.heroes.length; i++){
                 if (target === this.battleScene.heroes[i].playerInformation){
+                    if (criticalHit === false){
                     this.damageText = this.battleScene.add.text(this.battleScene.heroes[i].x - 20, this.battleScene.heroes[i].y - 100, "-" + damagedelt,
                     { color: "#ff0000", align: "center",fontWeight: 
                     'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }});
+                    }
+                    else if (criticalHit === true){
+                        this.damageText = this.battleScene.add.text(this.battleScene.heroes[i].x - 120, this.battleScene.heroes[i].y - 100, "CRITICAL HIT -" + damagedelt,
+                        { color: "#ff0000", align: "center",fontWeight: 
+                        'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}); 
+                    }
                     timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
                 }
             }
@@ -1093,6 +1118,8 @@ var UIScene = new Phaser.Class({
             this.scene.pause('UIScene');
         }
         if (method_of_attack === "skill"){
+            var damagedelt = player.units.atk - target.unit.res; //skill is magical damage, calulcated using res instead of def
+
             this.scene.get("BattleScene").updateMessageBox(player.unitName + " casts " + skillName + " on " + target.unitName);
         }
         if (method_of_attack === "item"){

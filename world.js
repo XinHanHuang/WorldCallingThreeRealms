@@ -209,10 +209,7 @@ var WorldScene = new Phaser.Class({
 
         unitReenaSkills1 = new unitSkills("Rightful God","Negates the damage bonus from enemy critical hits", "rightfulgod");
         unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
-        unitReenaSkills3 = new unitSkills("Rightful God","Negates the damage bonus from enemy critical hits", "rightfulgod");
-        unitReenaSkills4 = new unitSkills("Cloud Nine","grants SPD + 10% during combat" , "cloudnine");
-        unitReenaSkills5 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
-        unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2, unitReenaSkills3, unitReenaSkills4, unitReenaSkills5]; //an array with the two beginning skills
+        unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
         unitReenaStats = new unitStats(28, 20, 45, 16, 45, 20, 7); //this is Reena's current stats
         reenaAnimations = ['left', 'right', 'attack', 'defeated'];
         //create a new unit information that stores all of Reena's information 
