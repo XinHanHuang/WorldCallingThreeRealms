@@ -127,7 +127,7 @@ var BattleScene = new Phaser.Class({
         graphics.fillRect(1280/2 - 220, 1024/2 + 60, 400, 60);
         this.scene.get("BattleScene").messagebox = graphics;
         var text = this.scene.get("BattleScene").add.text(1280/2 - 170, 
-            1024/2 + 60, "", { color: "#000000", align: "center", fontWegight: 
+            1024/2 + 60, "", { color: "#000000", align: "center", fontWeight: 
             'bold',font: '24px Arial', wordWrap: { width: 300, useAdvancedWrap: true }});
         this.scene.get("BattleScene").textTurn = text;
 
@@ -479,7 +479,7 @@ var UIScene = new Phaser.Class({
                     for (var i = 0; i < enemies.length + 1; i++){
                         if(i === enemies.length){
                             //if this is the last index, create an escape button
-                            var escapetext1 = this.add.text(410, 1024 - 3*95 - 58 + i*80, "BACK",{ color: "#ffa500", align: "center",fontWegight: 
+                            var escapetext1 = this.add.text(410, 1024 - 3*95 - 58 + i*80, "BACK",{ color: "#ffa500", align: "center",fontWeight: 
                             'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                             escapetext1.on('pointerdown', (pointer)=>{
                                 for (var i = 0; i < enemyTexts.length; i++){
@@ -493,7 +493,7 @@ var UIScene = new Phaser.Class({
                             enemyTexts.push(escapetext1);
                         }
                         else if (i === 0){
-                            var enemytext1 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                            var enemytext1 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                             'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                             enemytext1.on('pointerdown', (pointer)=>{
                                 this.battle(currentPlayer.playerInformation, enemies[0], "attack", null);
@@ -508,7 +508,7 @@ var UIScene = new Phaser.Class({
                             enemyTexts.push(enemytext1);
                         }
                         else if (i === 1){
-                            var enemytext2 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                            var enemytext2 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                             'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                             enemytext2.on('pointerdown', (pointer)=>{
                                 this.battle(currentPlayer.playerInformation, enemies[1], "attack", null);
@@ -523,7 +523,7 @@ var UIScene = new Phaser.Class({
                             enemyTexts.push(enemytext2);
                         }
                         else if (i === 2){
-                            var enemytext3 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                            var enemytext3 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                             'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                             enemytext3.on('pointerdown', (pointer)=>{
                                 this.battle(currentPlayer.playerInformation, enemies[2], "attack", null);
@@ -579,14 +579,14 @@ var UIScene = new Phaser.Class({
                         var text = this.scene.get("UIScene").add.text(410, 
                             1024 - 3*95 - 258 + i*80, currentPlayer.playerInformation.unitBattleSkills[i].battleSkillName +
                             ": " + "(cost: " + currentPlayer.playerInformation.unitBattleSkills[i].mpRequired + " MP)" + "\n" +
-                            currentPlayer.playerInformation.unitBattleSkills[i].battleSkillDescription, { color: "#ff2f2f", align: "center", fontWegight: 
+                            currentPlayer.playerInformation.unitBattleSkills[i].battleSkillDescription, { color: "#ff2f2f", align: "center", fontWeight: 
                             'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                         text.visible = false;
                         textsArray.push(text);
 
                         if (i === 0){
                             var skilltext1 = this.add.text(410, 1024 - 3*95 - 58 + i*80, currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName,
-                                { color: "#ffa500", align: "center",fontWegight: 
+                                { color: "#ffa500", align: "center",fontWeight: 
                             'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                             skilltext1.on('pointerover', (pointer)=>{
                                 graphicsArray[0].visible = true;
@@ -608,7 +608,7 @@ var UIScene = new Phaser.Class({
                             for (var i = 0; i < enemies.length + 1; i++){
                                 if(i === enemies.length){
                                     //if this is the last index, create an escape button
-                                    var escapetext2 = this.add.text(410, 1024 - 3*95 - 58 + i*80, "BACK",{ color: "#ffa500", align: "center",fontWegight: 
+                                    var escapetext2 = this.add.text(410, 1024 - 3*95 - 58 + i*80, "BACK",{ color: "#ffa500", align: "center",fontWeight: 
                                     'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                     escapetext2.on('pointerdown', (pointer)=>{
                                         for (var i = 0; i < enemyTexts.length; i++){
@@ -622,7 +622,7 @@ var UIScene = new Phaser.Class({
                                     enemyTexts.push(escapetext2);
                              }
                                 else if (i === 0){
-                                    var enemytext4 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                                    var enemytext4 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                                     'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                     enemytext4.on('pointerdown', (pointer)=>{
                                         this.battle(currentPlayer.playerInformation, enemies[0], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName);
@@ -637,7 +637,7 @@ var UIScene = new Phaser.Class({
                                     enemyTexts.push(enemytext4);
                                 }
                                 else if (i === 1){
-                                    var enemytext5 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                                    var enemytext5 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                                     'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                     enemytext5.on('pointerdown', (pointer)=>{
                                         this.battle(currentPlayer.playerInformation, enemies[1], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName);
@@ -653,7 +653,7 @@ var UIScene = new Phaser.Class({
                                 }
                             
                                 else if (i === 2){
-                                    var enemytext6 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                                    var enemytext6 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                                     'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                     enemytext6.on('pointerdown', (pointer)=>{
                                         this.battle(currentPlayer.playerInformation, enemies[2], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName);
@@ -673,7 +673,7 @@ var UIScene = new Phaser.Class({
                         }
                         else if (i === 1){
                             var skilltext2 = this.add.text(410, 1024 - 3*95 - 58 + i*80, currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName,
-                                { color: "#ffa500", align: "center",fontWegight: 
+                                { color: "#ffa500", align: "center",fontWeight: 
                             'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                             skilltext2.on('pointerover', (pointer)=>{
                                 graphicsArray[1].visible = true;
@@ -695,7 +695,7 @@ var UIScene = new Phaser.Class({
                                 for (var i = 0; i < enemies.length + 1; i++){
                                     if(i === enemies.length){
                                         //if this is the last index, create an escape button
-                                        var escapetext3 = this.add.text(410, 1024 - 3*95 - 58 + i*80, "BACK",{ color: "#ffa500", align: "center",fontWegight: 
+                                        var escapetext3 = this.add.text(410, 1024 - 3*95 - 58 + i*80, "BACK",{ color: "#ffa500", align: "center",fontWeight: 
                                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                         escapetext3.on('pointerdown', (pointer)=>{
                                             for (var i = 0; i < enemyTexts.length; i++){
@@ -709,7 +709,7 @@ var UIScene = new Phaser.Class({
                                         enemyTexts.push(escapetext3);
                                  }
                                     else if (i === 0){
-                                        var enemytext7 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                                        var enemytext7 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                         enemytext7.on('pointerdown', (pointer)=>{
                                             this.battle(currentPlayer.playerInformation, enemies[0], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName);
@@ -724,7 +724,7 @@ var UIScene = new Phaser.Class({
                                         enemyTexts.push(enemytext7);
                                     }
                                     else if (i === 1){
-                                        var enemytext8 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                                        var enemytext8 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                         enemytext8.on('pointerdown', (pointer)=>{
                                             this.battle(currentPlayer.playerInformation, enemies[1], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName);
@@ -740,7 +740,7 @@ var UIScene = new Phaser.Class({
                                     }
                                 
                                     else if (i === 2){
-                                        var enemytext9 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                                        var enemytext9 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                         enemytext9.on('pointerdown', (pointer)=>{
                                             this.battle(currentPlayer.playerInformation, enemies[2], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName);
@@ -761,7 +761,7 @@ var UIScene = new Phaser.Class({
                         }
                         else if (i === 2){
                             var skilltext3 = this.add.text(410, 1024 - 3*95 - 58 + i*80, currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName,
-                                { color: "#ffa500", align: "center",fontWegight: 
+                                { color: "#ffa500", align: "center",fontWeight: 
                             'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                             skilltext3.on('pointerover', (pointer)=>{
                                 graphicsArray[2].visible = true;
@@ -783,7 +783,7 @@ var UIScene = new Phaser.Class({
                                 for (var i = 0; i < enemies.length + 1; i++){
                                     if(i === enemies.length){
                                         //if this is the last index, create an escape button
-                                        var escapetext3 = this.add.text(410, 1024 - 3*95 - 58 + i*80, "BACK",{ color: "#ffa500", align: "center",fontWegight: 
+                                        var escapetext3 = this.add.text(410, 1024 - 3*95 - 58 + i*80, "BACK",{ color: "#ffa500", align: "center",fontWeight: 
                                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                         escapetext3.on('pointerdown', (pointer)=>{
                                             for (var i = 0; i < enemyTexts.length; i++){
@@ -797,7 +797,7 @@ var UIScene = new Phaser.Class({
                                         enemyTexts.push(escapetext3);
                                  }
                                     else if (i === 0){
-                                        var enemytext10 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                                        var enemytext10 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                         enemytext10.on('pointerdown', (pointer)=>{
                                             this.battle(currentPlayer.playerInformation, enemies[0], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName);
@@ -812,7 +812,7 @@ var UIScene = new Phaser.Class({
                                         enemyTexts.push(enemytext10);
                                     }
                                     else if (i === 1){
-                                        var enemytext11 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                                        var enemytext11 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                         enemytext11.on('pointerdown', (pointer)=>{
                                             this.battle(currentPlayer.playerInformation, enemies[1], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName);
@@ -828,7 +828,7 @@ var UIScene = new Phaser.Class({
                                     }
                                 
                                     else if (i === 2){
-                                        var enemytext12 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                                        var enemytext12 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                         enemytext12.on('pointerdown', (pointer)=>{
                                             this.battle(currentPlayer.playerInformation, enemies[2], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName);
@@ -849,7 +849,7 @@ var UIScene = new Phaser.Class({
                         }
                         else if (i === 3){
                             var skilltext4 = this.add.text(410, 1024 - 3*95 - 58 + i*80, currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName,
-                                { color: "#ffa500", align: "center",fontWegight: 
+                                { color: "#ffa500", align: "center",fontWeight: 
                             'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                             skilltext4.on('pointerover', (pointer)=>{
                                 graphicsArray[3].visible = true;
@@ -871,7 +871,7 @@ var UIScene = new Phaser.Class({
                                 for (var i = 0; i < enemies.length + 1; i++){
                                     if(i === enemies.length){
                                         //if this is the last index, create an escape button
-                                        var escapetext4 = this.add.text(410, 1024 - 3*95 - 58 + i*80, "BACK",{ color: "#ffa500", align: "center",fontWegight: 
+                                        var escapetext4 = this.add.text(410, 1024 - 3*95 - 58 + i*80, "BACK",{ color: "#ffa500", align: "center",fontWeight: 
                                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                         escapetext4.on('pointerdown', (pointer)=>{
                                             for (var i = 0; i < enemyTexts.length; i++){
@@ -885,7 +885,7 @@ var UIScene = new Phaser.Class({
                                         enemyTexts.push(escapetext4);
                                  }
                                     else if (i === 0){
-                                        var enemytext13 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                                        var enemytext13 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                         enemytext13.on('pointerdown', (pointer)=>{
                                             this.battle(currentPlayer.playerInformation, enemies[0], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName);
@@ -900,7 +900,7 @@ var UIScene = new Phaser.Class({
                                         enemyTexts.push(enemytext13);
                                     }
                                     else if (i === 1){
-                                        var enemytext14 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                                        var enemytext14 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                         enemytext14.on('pointerdown', (pointer)=>{
                                             this.battle(currentPlayer.playerInformation, enemies[1], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName);
@@ -916,7 +916,7 @@ var UIScene = new Phaser.Class({
                                     }
                                 
                                     else if (i === 2){
-                                        var enemytext15 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                                        var enemytext15 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                         enemytext15.on('pointerdown', (pointer)=>{
                                             this.battle(currentPlayer.playerInformation, enemies[2], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName);
@@ -1005,7 +1005,7 @@ var UIScene = new Phaser.Class({
             for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
                 if (target === this.battleScene.enemiesArray[i].playerInformation){
                     this.damageText = this.battleScene.add.text(this.battleScene.enemiesArray[i].x - 20,this.battleScene.enemiesArray[i].y - 100, "-" + damagedelt,
-                    { color: "#ff0000", align: "center",fontWegight: 
+                    { color: "#ff0000", align: "center",fontWeight: 
                     'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }});
                     timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
                 }
@@ -1013,7 +1013,7 @@ var UIScene = new Phaser.Class({
             for (var i = 0; i <this.battleScene.heroes.length; i++){
                 if (target === this.battleScene.heroes[i].playerInformation){
                     this.damageText = this.battleScene.add.text(this.battleScene.heroes[i].x - 20, this.battleScene.heroes[i].y - 100, "-" + damagedelt,
-                    { color: "#ff0000", align: "center",fontWegight: 
+                    { color: "#ff0000", align: "center",fontWeight: 
                     'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }});
                     timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
                 }
@@ -1114,15 +1114,15 @@ var UIScene = new Phaser.Class({
 
                 hp1 = new HealthBar(this.scene.get("UIScene"), 1280 - 95*4, 1024 - 3*95 - 78 + i*93, players[0].unitStats.hp);
                 mp1 = new MagicBar(this.scene.get("UIScene"), 1280 - 95*4, 1024 - 3*95 - 78 + i*93 + 24, players[0].unitStats.mp);
-                var texthp1 = this.add.text(980, 1024 - 3*95 - 78 + i*93, "hp_player1",{ color: "#000000", align: "center",fontWegight: 
+                var texthp1 = this.add.text(980, 1024 - 3*95 - 78 + i*93, "hp_player1",{ color: "#000000", align: "center",fontWeight: 
                 'bold',font: '13px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                 texthp1.setText(players[0].unitStats.hp + "/" + players[0].unitStats.maxHP);
                 hptext1 = new UIHPMP(texthp1);
-                var textmp1 = this.add.text(980, 1024 - 3*95 - 78 + i*93 + 24, "mp_player1",{ color: "#000000", align: "center",fontWegight: 
+                var textmp1 = this.add.text(980, 1024 - 3*95 - 78 + i*93 + 24, "mp_player1",{ color: "#000000", align: "center",fontWeight: 
                 'bold',font: '13px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                 textmp1.setText(players[0].unitStats.mp + "/" + players[0].unitStats.maxMP);
                 mptext1 = new UIHPMP(textmp1);
-                var textName = this.add.text(760, 1024 - 3*95 - 78 + i*93, players[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                var textName = this.add.text(760, 1024 - 3*95 - 78 + i*93, players[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
 
                 for (var j = 0; j < players[i].unitSkills.length; j++){
@@ -1138,7 +1138,7 @@ var UIScene = new Phaser.Class({
 
                     var text = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
                         1024 - 3*95 - 236 + i*93, players[i].unitSkills[0].skillName +
-                        ": " + players[i].unitSkills[0].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                        ": " + players[i].unitSkills[0].description, { color: "#ff2f2f", align: "center", fontWeight: 
                         'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                     text.visible = false;
                     
@@ -1169,7 +1169,7 @@ var UIScene = new Phaser.Class({
 
                         var text1 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
                             1024 - 3*95 - 236 + i*93, players[i].unitSkills[1].skillName +
-                            ": " + players[i].unitSkills[1].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            ": " + players[i].unitSkills[1].description, { color: "#ff2f2f", align: "center", fontWeight: 
                             'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                         text1.visible = false;
     
@@ -1198,7 +1198,7 @@ var UIScene = new Phaser.Class({
 
                         var text2 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
                             1024 - 3*95 - 236 + i*93, players[i].unitSkills[2].skillName +
-                            ": " + players[i].unitSkills[2].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            ": " + players[i].unitSkills[2].description, { color: "#ff2f2f", align: "center", fontWeight: 
                             'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                         text2.visible = false;
     
@@ -1227,7 +1227,7 @@ var UIScene = new Phaser.Class({
 
                         var text3 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
                             1024 - 3*95 - 236 + i*93, players[i].unitSkills[3].skillName +
-                            ": " + players[i].unitSkills[3].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            ": " + players[i].unitSkills[3].description, { color: "#ff2f2f", align: "center", fontWeight: 
                             'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                         text3.visible = false;
     
@@ -1256,7 +1256,7 @@ var UIScene = new Phaser.Class({
 
                         var text4 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
                             1024 - 3*95 - 236 + i*93, players[i].unitSkills[4].skillName +
-                            ": " + players[i].unitSkills[4].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            ": " + players[i].unitSkills[4].description, { color: "#ff2f2f", align: "center", fontWeight: 
                             'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                         text4.visible = false;
     
@@ -1288,7 +1288,7 @@ var UIScene = new Phaser.Class({
                     "DEF: " + players[0].unitStats.def + "\n" +
                     "RES: " + players[0].unitStats.res + "\n" +
                     "SPD: " + players[0].unitStats.spd + "\n" +
-                    "LUCK: " + players[0].unitStats.luck, { color: "#ff2f2f", align: "center", fontWegight: 
+                    "LUCK: " + players[0].unitStats.luck, { color: "#ff2f2f", align: "center", fontWeight: 
                     'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                 textsprite.visible = false;
 
@@ -1317,15 +1317,15 @@ var UIScene = new Phaser.Class({
                 player2.setScale(0.8);
                 hp2 = new HealthBar(this.scene.get("UIScene"), 1280 - 95*4, 1024 - 3*95 - 78 + i*93, players[1].unitStats.hp);
                 mp2 = new MagicBar(this.scene.get("UIScene"), 1280 - 95*4, 1024 - 3*95 - 78 + i*93 + 24, players[1].unitStats.mp);
-                var texthp2 = this.add.text(980, 1024 - 3*95 - 78 + i*93, "hp_player1",{ color: "#000000", align: "center",fontWegight: 
+                var texthp2 = this.add.text(980, 1024 - 3*95 - 78 + i*93, "hp_player1",{ color: "#000000", align: "center",fontWeight: 
                 'bold',font: '13px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                 texthp2.setText(players[1].unitStats.hp + "/" + players[1].unitStats.maxHP);
                 hptext2 = new UIHPMP(texthp2);
-                var textmp2 = this.add.text(980, 1024 - 3*95 - 78 + i*93 + 24, "mp_player1",{ color: "#000000", align: "center",fontWegight: 
+                var textmp2 = this.add.text(980, 1024 - 3*95 - 78 + i*93 + 24, "mp_player1",{ color: "#000000", align: "center",fontWeight: 
                 'bold',font: '13px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                 textmp2.setText(players[1].unitStats.mp + "/" + players[1].unitStats.maxMP);
                 mptext2 = new UIHPMP(textmp2);
-                var textName2 = this.add.text(760, 1024 - 3*95 - 78 + i*93, players[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                var textName2 = this.add.text(760, 1024 - 3*95 - 78 + i*93, players[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
 
                 for (var j = 0; j < players[i].unitSkills.length; j++){
@@ -1341,7 +1341,7 @@ var UIScene = new Phaser.Class({
     
                         var text5 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
                             1024 - 3*95 - 236 + i*93, players[i].unitSkills[0].skillName +
-                            ": " + players[i].unitSkills[0].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            ": " + players[i].unitSkills[0].description, { color: "#ff2f2f", align: "center", fontWeight: 
                             'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                         text5.visible = false;
                         
@@ -1372,7 +1372,7 @@ var UIScene = new Phaser.Class({
     
                             var text6 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
                                 1024 - 3*95 - 236 + i*93, players[i].unitSkills[1].skillName +
-                                ": " + players[i].unitSkills[1].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                                ": " + players[i].unitSkills[1].description, { color: "#ff2f2f", align: "center", fontWeight: 
                                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                             text6.visible = false;
         
@@ -1401,7 +1401,7 @@ var UIScene = new Phaser.Class({
     
                             var text7 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
                                 1024 - 3*95 - 236 + i*93, players[i].unitSkills[2].skillName +
-                                ": " + players[i].unitSkills[2].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                                ": " + players[i].unitSkills[2].description, { color: "#ff2f2f", align: "center", fontWeight: 
                                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                             text7.visible = false;
         
@@ -1430,7 +1430,7 @@ var UIScene = new Phaser.Class({
     
                             var text8 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
                                 1024 - 3*95 - 236 + i*93, players[i].unitSkills[3].skillName +
-                                ": " + players[i].unitSkills[3].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                                ": " + players[i].unitSkills[3].description, { color: "#ff2f2f", align: "center", fontWeight: 
                                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                             text8.visible = false;
         
@@ -1459,7 +1459,7 @@ var UIScene = new Phaser.Class({
     
                             var text9 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
                                 1024 - 3*95 - 236 + i*93, players[i].unitSkills[4].skillName +
-                                ": " + players[i].unitSkills[4].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                                ": " + players[i].unitSkills[4].description, { color: "#ff2f2f", align: "center", fontWeight: 
                                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                             text9.visible = false;
         
@@ -1490,7 +1490,7 @@ var UIScene = new Phaser.Class({
                     "DEF: " + players[1].unitStats.def + "\n" +
                     "RES: " + players[1].unitStats.res + "\n" +
                     "SPD: " + players[1].unitStats.spd + "\n" +
-                    "LUCK: " + players[1].unitStats.luck, { color: "#ff2f2f", align: "center", fontWegight: 
+                    "LUCK: " + players[1].unitStats.luck, { color: "#ff2f2f", align: "center", fontWeight: 
                     'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                 textsprite2.visible = false;
 
@@ -1515,15 +1515,15 @@ var UIScene = new Phaser.Class({
                 player3.setScale(0.8);
                 hp3 = new HealthBar(this.scene.get("UIScene"), 1280 - 95*4, 1024 - 3*95 - 78 + i*93, players[2].unitStats.hp);
                 mp3 = new MagicBar(this.scene.get("UIScene"), 1280 - 95*4, 1024 - 3*95 - 78 + i*93 + 24, players[2].unitStats.mp);
-                var texthp3 = this.add.text(980, 1024 - 3*95 - 78 + i*93, "hp_player1",{ color: "#000000", align: "center",fontWegight: 
+                var texthp3 = this.add.text(980, 1024 - 3*95 - 78 + i*93, "hp_player1",{ color: "#000000", align: "center",fontWeight: 
                 'bold',font: '13px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                 texthp3.setText(players[2].unitStats.hp + "/" + players[2].unitStats.maxHP);
                 hptext3 = new UIHPMP(texthp3);
-                var textmp3 = this.add.text(980, 1024 - 3*95 - 78 + i*93 + 24, "mp_player1",{ color: "#000000", align: "center",fontWegight: 
+                var textmp3 = this.add.text(980, 1024 - 3*95 - 78 + i*93 + 24, "mp_player1",{ color: "#000000", align: "center",fontWeight: 
                 'bold',font: '13px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                 textmp3.setText(players[2].unitStats.mp + "/" + players[2].unitStats.maxMP);
                 mptext3 = new UIHPMP(textmp3);
-                var textName3 = this.add.text(760, 1024 - 3*95 - 78 + i*93, players[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                var textName3 = this.add.text(760, 1024 - 3*95 - 78 + i*93, players[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
 
                 for (var j = 0; j < players[i].unitSkills.length; j++){
@@ -1539,7 +1539,7 @@ var UIScene = new Phaser.Class({
     
                         var text10 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
                             1024 - 3*95 - 236 + i*93, players[i].unitSkills[0].skillName +
-                            ": " + players[i].unitSkills[0].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            ": " + players[i].unitSkills[0].description, { color: "#ff2f2f", align: "center", fontWeight: 
                             'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                         text10.visible = false;
                         
@@ -1570,7 +1570,7 @@ var UIScene = new Phaser.Class({
     
                             var text11 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
                                 1024 - 3*95 - 236 + i*93, players[i].unitSkills[1].skillName +
-                                ": " + players[i].unitSkills[1].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                                ": " + players[i].unitSkills[1].description, { color: "#ff2f2f", align: "center", fontWeight: 
                                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                             text11.visible = false;
         
@@ -1599,7 +1599,7 @@ var UIScene = new Phaser.Class({
     
                             var text12 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
                                 1024 - 3*95 - 236 + i*93, players[i].unitSkills[2].skillName +
-                                ": " + players[i].unitSkills[2].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                                ": " + players[i].unitSkills[2].description, { color: "#ff2f2f", align: "center", fontWeight: 
                                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                             text12.visible = false;
         
@@ -1628,7 +1628,7 @@ var UIScene = new Phaser.Class({
     
                             var text13 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
                                 1024 - 3*95 - 236 + i*93, players[i].unitSkills[3].skillName +
-                                ": " + players[i].unitSkills[3].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                                ": " + players[i].unitSkills[3].description, { color: "#ff2f2f", align: "center", fontWeight: 
                                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                             text13.visible = false;
         
@@ -1657,7 +1657,7 @@ var UIScene = new Phaser.Class({
     
                             var text14 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
                                 1024 - 3*95 - 236 + i*93, players[i].unitSkills[4].skillName +
-                                ": " + players[i].unitSkills[4].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                                ": " + players[i].unitSkills[4].description, { color: "#ff2f2f", align: "center", fontWeight: 
                                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                             text14.visible = false;
         
@@ -1688,7 +1688,7 @@ var UIScene = new Phaser.Class({
                     "DEF: " + players[2].unitStats.def + "\n" +
                     "RES: " + players[2].unitStats.res + "\n" +
                     "SPD: " + players[2].unitStats.spd + "\n" +
-                    "LUCK: " + players[2].unitStats.luck, { color: "#ff2f2f", align: "center", fontWegight: 
+                    "LUCK: " + players[2].unitStats.luck, { color: "#ff2f2f", align: "center", fontWeight: 
                     'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                 textsprite3.visible = false;
                 player3.on('pointerover', function(pointer){
@@ -1712,15 +1712,15 @@ var UIScene = new Phaser.Class({
                 var player4 = this.add.sprite(1280 - 95, 1024 - 3*95 - 40 + i*93, players[i].unitSprites).setInteractive();
                 hp4 = new HealthBar(this.scene.get("UIScene"), 1280 - 95*4, 1024 - 3*95 - 78 + i*93, players[3].unitStats.hp);
                 mp4 = new MagicBar(this.scene.get("UIScene"), 1280 - 95*4, 1024 - 3*95 - 78 + i*93 + 24, players[3].unitStats.mp);
-                var texthp4 = this.add.text(980, 1024 - 3*95 - 78 + i*93, "hp_player1",{ color: "#000000", align: "center",fontWegight: 
+                var texthp4 = this.add.text(980, 1024 - 3*95 - 78 + i*93, "hp_player1",{ color: "#000000", align: "center",fontWeight: 
                 'bold',font: '13px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                 texthp4.setText(players[3].unitStats.hp + "/" + players[3].unitStats.maxHP);
                 hptext4 = new UIHPMP(texthp4);
-                var textmp4 = this.add.text(980, 1024 - 3*95 - 78 + i*93 + 24, "mp_player1",{ color: "#000000", align: "center",fontWegight: 
+                var textmp4 = this.add.text(980, 1024 - 3*95 - 78 + i*93 + 24, "mp_player1",{ color: "#000000", align: "center",fontWeight: 
                 'bold',font: '13px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                 textmp4.setText(players[3].unitStats.mp + "/" + players[3].unitStats.maxMP);
                 mptext4 = new UIHPMP(textmp4);
-                var textName4 = this.add.text(760, 1024 - 3*95 - 78 + i*93, players[i].unitName,{ color: "#ffa500", align: "center",fontWegight: 
+                var textName4 = this.add.text(760, 1024 - 3*95 - 78 + i*93, players[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
 
                 for (var j = 0; j < players[i].unitSkills.length; j++){
@@ -1736,7 +1736,7 @@ var UIScene = new Phaser.Class({
     
                         var text15 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
                             1024 - 3*95 - 236 + i*93, players[i].unitSkills[0].skillName +
-                            ": " + players[i].unitSkills[0].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            ": " + players[i].unitSkills[0].description, { color: "#ff2f2f", align: "center", fontWeight: 
                             'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                         text15.visible = false;
                         
@@ -1767,7 +1767,7 @@ var UIScene = new Phaser.Class({
     
                             var text16 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
                                 1024 - 3*95 - 236 + i*93, players[i].unitSkills[1].skillName +
-                                ": " + players[i].unitSkills[1].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                                ": " + players[i].unitSkills[1].description, { color: "#ff2f2f", align: "center", fontWeight: 
                                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                             text16.visible = false;
         
@@ -1796,7 +1796,7 @@ var UIScene = new Phaser.Class({
     
                             var text17 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
                                 1024 - 3*95 - 236 + i*93, players[i].unitSkills[2].skillName +
-                                ": " + players[i].unitSkills[2].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                                ": " + players[i].unitSkills[2].description, { color: "#ff2f2f", align: "center", fontWeight: 
                                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                             text17.visible = false;
         
@@ -1825,7 +1825,7 @@ var UIScene = new Phaser.Class({
     
                             var text18 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
                                 1024 - 3*95 - 236 + i*93, players[i].unitSkills[3].skillName +
-                                ": " + players[i].unitSkills[3].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                                ": " + players[i].unitSkills[3].description, { color: "#ff2f2f", align: "center", fontWeight: 
                                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                             text18.visible = false;
         
@@ -1854,7 +1854,7 @@ var UIScene = new Phaser.Class({
     
                             var text19 = this.scene.get("UIScene").add.text(1280 - 392 - j*36 + 30, 
                                 1024 - 3*95 - 236 + i*93, players[i].unitSkills[4].skillName +
-                                ": " + players[i].unitSkills[4].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                                ": " + players[i].unitSkills[4].description, { color: "#ff2f2f", align: "center", fontWeight: 
                                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                             text19.visible = false;
         
@@ -1885,7 +1885,7 @@ var UIScene = new Phaser.Class({
                     "DEF: " + players[3].unitStats.def + "\n" +
                     "RES: " + players[3].unitStats.res + "\n" +
                     "SPD: " + players[3].unitStats.spd + "\n" +
-                    "LUCK: " + players[3].unitStats.luck, { color: "#ff2f2f", align: "center", fontWegight: 
+                    "LUCK: " + players[3].unitStats.luck, { color: "#ff2f2f", align: "center", fontWeight: 
                     'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                 textsprite4.visible = false;
                 player4.setScale(0.8);
@@ -1912,7 +1912,7 @@ var UIScene = new Phaser.Class({
                 //if there is only one enemy
                 var enemy1 = this.add.sprite(58, 1024-3*95-40 + i * 120, enemies[i].unitSprites).setInteractive();
                 hp_enemy1 = new HealthBar(this.scene.get("UIScene"), 158, 1024-3*95-40 + i * 120 - 38, enemies[0].unitStats.hp);
-                var textName = this.add.text(20, 1024-3*95-40 + 36 + i * 120, enemies[i].unitName,{ color: "#FF0000",fontWegight: 
+                var textName = this.add.text(20, 1024-3*95-40 + 36 + i * 120, enemies[i].unitName,{ color: "#FF0000",fontWeight: 
                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                 for (var j = 0; j < enemies[i].unitSkills.length; j++){
                     if (j === 0){
@@ -1927,7 +1927,7 @@ var UIScene = new Phaser.Class({
 
                         var text20 = this.scene.get("UIScene").add.text(180 + j*36, 
                             1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[0].skillName +
-                            ": " + enemies[i].unitSkills[0].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            ": " + enemies[i].unitSkills[0].description, { color: "#ff2f2f", align: "center", fontWeight: 
                             'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                         text20.visible = false;
 
@@ -1958,7 +1958,7 @@ var UIScene = new Phaser.Class({
 
                         var text21 = this.scene.get("UIScene").add.text(180 + j*36, 
                             1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[1].skillName +
-                            ": " + enemies[i].unitSkills[1].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            ": " + enemies[i].unitSkills[1].description, { color: "#ff2f2f", align: "center", fontWeight: 
                             'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                         text21.visible = false;
 
@@ -1989,7 +1989,7 @@ var UIScene = new Phaser.Class({
 
                         var text22 = this.scene.get("UIScene").add.text(180 + j*36, 
                             1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[2].skillName +
-                            ": " + enemies[i].unitSkills[2].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            ": " + enemies[i].unitSkills[2].description, { color: "#ff2f2f", align: "center", fontWeight: 
                             'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                         text22.visible = false;
 
@@ -2019,7 +2019,7 @@ var UIScene = new Phaser.Class({
 
                         var text23 = this.scene.get("UIScene").add.text(180 + j*36, 
                             1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[3].skillName +
-                            ": " + enemies[i].unitSkills[3].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            ": " + enemies[i].unitSkills[3].description, { color: "#ff2f2f", align: "center", fontWeight: 
                             'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                         text23.visible = false;
 
@@ -2049,7 +2049,7 @@ var UIScene = new Phaser.Class({
 
                         var text24 = this.scene.get("UIScene").add.text(180 + j*36, 
                             1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[4].skillName +
-                            ": " + enemies[i].unitSkills[4].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            ": " + enemies[i].unitSkills[4].description, { color: "#ff2f2f", align: "center", fontWeight: 
                             'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                         text24.visible = false;
 
@@ -2088,7 +2088,7 @@ var UIScene = new Phaser.Class({
                 var enemy2 = this.add.sprite(58, 1024-3*95-40 + i * 120, enemies[i].unitSprites).setInteractive();
                 enemy2.setScale(0.8);
                 hp_enemy2 = new HealthBar(this.scene.get("UIScene"), 158, 1024-3*95-40 + i * 120 - 38, enemies[1].unitStats.hp);
-                var textName = this.add.text(20, 1024-3*95-40 + 36 + i * 120, enemies[i].unitName,{ color: "#FF0000",fontWegight: 
+                var textName = this.add.text(20, 1024-3*95-40 + 36 + i * 120, enemies[i].unitName,{ color: "#FF0000",fontWeight: 
                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                 for (var j = 0; j < enemies[i].unitSkills.length; j++){
                     if (j === 0){
@@ -2103,7 +2103,7 @@ var UIScene = new Phaser.Class({
 
                         var text25 = this.scene.get("UIScene").add.text(180 + j*36, 
                             1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[0].skillName +
-                            ": " + enemies[i].unitSkills[0].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            ": " + enemies[i].unitSkills[0].description, { color: "#ff2f2f", align: "center", fontWeight: 
                             'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                         text25.visible = false;
 
@@ -2133,7 +2133,7 @@ var UIScene = new Phaser.Class({
 
                         var text26 = this.scene.get("UIScene").add.text(180 + j*36, 
                             1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[1].skillName +
-                            ": " + enemies[i].unitSkills[1].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            ": " + enemies[i].unitSkills[1].description, { color: "#ff2f2f", align: "center", fontWeight: 
                             'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                         text26.visible = false;
 
@@ -2163,7 +2163,7 @@ var UIScene = new Phaser.Class({
 
                         var text27 = this.scene.get("UIScene").add.text(180 + j*36, 
                             1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[2].skillName +
-                            ": " + enemies[i].unitSkills[2].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            ": " + enemies[i].unitSkills[2].description, { color: "#ff2f2f", align: "center", fontWeight: 
                             'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                         text27.visible = false;
 
@@ -2193,7 +2193,7 @@ var UIScene = new Phaser.Class({
 
                         var text28 = this.scene.get("UIScene").add.text(180 + j*36, 
                             1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[3].skillName +
-                            ": " + enemies[i].unitSkills[3].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            ": " + enemies[i].unitSkills[3].description, { color: "#ff2f2f", align: "center", fontWeight: 
                             'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                         text28.visible = false;
 
@@ -2223,7 +2223,7 @@ var UIScene = new Phaser.Class({
 
                         var text29 = this.scene.get("UIScene").add.text(180 + j*36, 
                             1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[4].skillName +
-                            ": " + enemies[i].unitSkills[4].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            ": " + enemies[i].unitSkills[4].description, { color: "#ff2f2f", align: "center", fontWeight: 
                             'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                         text29.visible = false;
 
@@ -2258,7 +2258,7 @@ var UIScene = new Phaser.Class({
                 var enemy3 = this.add.sprite(58, 1024-3*95-40 + i * 120, enemies[i].unitSprites).setInteractive();
                 enemy3.setScale(0.8);
                 hp_enemy3 = new HealthBar(this.scene.get("UIScene"), 158, 1024-3*95-40 + i * 120 - 38, enemies[2].unitStats.hp);
-                var textName = this.add.text(20, 1024-3*95-40 + 36 + i * 120, enemies[i].unitName,{ color: "#FF0000",fontWegight: 
+                var textName = this.add.text(20, 1024-3*95-40 + 36 + i * 120, enemies[i].unitName,{ color: "#FF0000",fontWeight: 
                 'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                 for (var j = 0; j < enemies[i].unitSkills.length; j++){
                     if (j === 0){
@@ -2273,7 +2273,7 @@ var UIScene = new Phaser.Class({
 
                         var text30 = this.scene.get("UIScene").add.text(180 + j*36, 
                             1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[0].skillName +
-                            ": " + enemies[i].unitSkills[0].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            ": " + enemies[i].unitSkills[0].description, { color: "#ff2f2f", align: "center", fontWeight: 
                             'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                         text30.visible = false;
 
@@ -2303,7 +2303,7 @@ var UIScene = new Phaser.Class({
 
                         var text31 = this.scene.get("UIScene").add.text(180 + j*36, 
                             1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[1].skillName +
-                            ": " + enemies[i].unitSkills[1].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            ": " + enemies[i].unitSkills[1].description, { color: "#ff2f2f", align: "center", fontWeight: 
                             'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                         text31.visible = false;
 
@@ -2333,7 +2333,7 @@ var UIScene = new Phaser.Class({
 
                         var text32 = this.scene.get("UIScene").add.text(180 + j*36, 
                             1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[2].skillName +
-                            ": " + enemies[i].unitSkills[2].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            ": " + enemies[i].unitSkills[2].description, { color: "#ff2f2f", align: "center", fontWeight: 
                             'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                         text32.visible = false;
 
@@ -2363,7 +2363,7 @@ var UIScene = new Phaser.Class({
 
                         var text33 = this.scene.get("UIScene").add.text(180 + j*36, 
                             1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[3].skillName +
-                            ": " + enemies[i].unitSkills[3].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            ": " + enemies[i].unitSkills[3].description, { color: "#ff2f2f", align: "center", fontWeight: 
                             'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                         text33.visible = false;
 
@@ -2393,7 +2393,7 @@ var UIScene = new Phaser.Class({
 
                         var text34 = this.scene.get("UIScene").add.text(180 + j*36, 
                             1024 - 3*95 - 378 + 35 + i*120, enemies[i].unitSkills[4].skillName +
-                            ": " + enemies[i].unitSkills[4].description, { color: "#ff2f2f", align: "center", fontWegight: 
+                            ": " + enemies[i].unitSkills[4].description, { color: "#ff2f2f", align: "center", fontWeight: 
                             'bold',font: '24px Arial', wordWrap: { width: 170, useAdvancedWrap: true }});
                         text34.visible = false;
 
