@@ -4,7 +4,6 @@ var config = {
     width: 1280,
     height: 1024,
     pixelArt: true,
-    zoom: 0.9,
     physics: {
         default: 'arcade',
         arcade: {

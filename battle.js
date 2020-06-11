@@ -985,6 +985,9 @@ var UIScene = new Phaser.Class({
 
         if (method_of_attack === "attack"){
             var damagedelt = player.unitStats.atk - target.unitStats.def;
+            if (target.isGuarding === true){
+                damagedelt = Math.floor(damagedelt/2);
+            }
             this.scene.get("BattleScene").updateMessageBox(player.unitName + " attacks " + target.unitName);
             //now check for skills for damage reduction lmao 
             for (var i = 0; i < target.unitSkills.length; i++){
@@ -998,6 +1001,7 @@ var UIScene = new Phaser.Class({
             if (damagedelt < 0){
                 damagedelt = 0;
             }
+
             //now we search for the target's HP bar 
 
             this.damageText = null;
@@ -1045,9 +1049,10 @@ var UIScene = new Phaser.Class({
             //for heroes taking damage. needs to do for enemies taking damage too boi
             for (var i = 0; i < UIarray.length; i++){
                 if (UIarray[i].name === target.unitName){
+                    target.isGuarding = false;
                     UIarray[i].hp_bar.decrease(damagedelt);
                     if (target.unitStats.hp === 0){
-                        UIarray[i].hp_text.setText("");
+                        UIarray[i].hp_text.setText(target.unitStats.hp.toString() + "/" + target.unitStats.maxHP.toString());
                         for (var i = 0; i < this.battleScene.heroes.length; i++){
                             if(this.battleScene.heroes[i].playerInformation === target){
                                 this.battleScene.heroes[i].living = false;
@@ -1081,8 +1086,11 @@ var UIScene = new Phaser.Class({
 
         }
         if (method_of_attack === "guard"){
+            player.isGuarding = true; //set is guarding to true
             //if the player is guarding
             this.scene.get("BattleScene").updateMessageBox(player.unitName + " gets ready for an incoming attack");
+            timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.battleScene.nextTurn, callbackScope: this.battleScene});
+            this.scene.pause('UIScene');
         }
         if (method_of_attack === "skill"){
             this.scene.get("BattleScene").updateMessageBox(player.unitName + " casts " + skillName + " on " + target.unitName);
@@ -1093,10 +1101,12 @@ var UIScene = new Phaser.Class({
         if (method_of_attack === "skip"){
             this.scene.get("BattleScene").updateMessageBox(player.unitName + " has chosen not to act");
             timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.battleScene.nextTurn, callbackScope: this.battleScene});
+            this.scene.pause('UIScene');
         }
         if (method_of_attack === "escape"){
             this.scene.get("BattleScene").updateMessageBox(player.unitName + "'s group has successfully escaped!");
             timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.battleScene.endBattle, callbackScope: this.battleScene});
+            this.scene.pause('UIScene');
         }
     },
     //deletes the damage text
