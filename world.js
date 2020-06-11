@@ -149,7 +149,7 @@ var WorldScene = new Phaser.Class({
             key: 'defeated',
             frames: this.anims.generateFrameNumbers('Reena', {frames: [32]}),
             frameRate: 1,
-            repeat: -1
+            repeat: 0
         })
 
         //alyene animations
@@ -229,6 +229,35 @@ var WorldScene = new Phaser.Class({
         this.reena.anims.play('up', true);
         players.push(unitReena1);
 
+        unitReenaSkills1 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
+        unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
+        unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
+        unitReenaStats = new unitStats(28, 20, 45, 16, 30, 20, 7); //this is Reena's current stats
+        reenaAnimations = ['left', 'right', 'attack', 'defeated'];
+        //create a new unit information that stores all of Reena's information 
+        unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
+        unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x physical damage to opponent", 10, "physical", "single", "purehalo");
+        unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2];
+
+        //create a new unit information that stores all of Reena's information 
+        unitReena1 = new unitInformation(this.reena, "Reena3", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray); 
+        this.reena.anims.play('up', true);
+        players.push(unitReena1);
+
+        unitReenaSkills1 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
+        unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
+        unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
+        unitReenaStats = new unitStats(28, 20, 45, 16, 30, 20, 7); //this is Reena's current stats
+        reenaAnimations = ['left', 'right', 'attack', 'defeated'];
+        //create a new unit information that stores all of Reena's information 
+        unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
+        unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x physical damage to opponent", 10, "physical", "single", "purehalo");
+        unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2];
+
+        //create a new unit information that stores all of Reena's information 
+        unitReena1 = new unitInformation(this.reena, "Reena4", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray); 
+        this.reena.anims.play('up', true);
+        players.push(unitReena1);
         
 
         //alyene and yune

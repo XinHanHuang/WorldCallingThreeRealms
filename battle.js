@@ -1035,6 +1035,7 @@ var UIScene = new Phaser.Class({
                     hero = this.battleScene.heroes[i];
                     this.battleScene.heroes[i].on("animationcomplete", 
                     ()=>{hero.anims.play(player.unitAnimations[0], true)});
+                    break;
                 }
             }
             //for heroes taking damage
@@ -1046,13 +1047,13 @@ var UIScene = new Phaser.Class({
                         for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
                             if (this.battleScene.enemiesArray[i].playerInformation === target){
                                 this.battleScene.enemiesArray[i].living = false;
-                                this.battleScene.enemiesArray[i].anims.play(target.unitAnimations[3], true);
+                                this.battleScene.enemiesArray[i].anims.play(target.unitAnimations[3], false);
                             }
                         }
                         for (var i = 0; i < this.battleScene.heroes.length; i++){
                             if(this.battleScene.heroes[i].playerInformation === target){
                                 this.battleScene.heroes[i].living = false;
-                                this.battleScene.heroes[i].anims.play(target.unitAnimations[3], true);
+                                this.battleScene.heroes[i].anims.play(target.unitAnimations[3], false);
                             }
                         }
                     }
