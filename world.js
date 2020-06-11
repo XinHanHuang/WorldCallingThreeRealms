@@ -149,7 +149,7 @@ var WorldScene = new Phaser.Class({
             key: 'defeated',
             frames: this.anims.generateFrameNumbers('Reena', {frames: [32]}),
             frameRate: 1,
-            repeat: 0
+            repeat: -1
         })
 
         //alyene animations
@@ -174,6 +174,7 @@ var WorldScene = new Phaser.Class({
             key: 'defeatedalyene',
             frames: this.anims.generateFrameNumbers('Alyene', { frames: [33]}),
             frameRate: 5,
+            repeat: -1
         });
 
         //yune animations
