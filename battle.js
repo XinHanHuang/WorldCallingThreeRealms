@@ -982,10 +982,9 @@ var UIScene = new Phaser.Class({
     //battle is the main function that handles going to the next turn as well as damage updates/scene updates 
     battle: function(player, target, method_of_attack, skillName){
         //simple attack
-        console.log(player);
-        var damagedelt = player.unitStats.atk - target.unitStats.def;
-        console.log(damagedelt);
+
         if (method_of_attack === "attack"){
+            var damagedelt = player.unitStats.atk - target.unitStats.def;
             this.scene.get("BattleScene").updateMessageBox(player.unitName + " attacks " + target.unitName);
             //now check for skills for damage reduction lmao 
             for (var i = 0; i < target.unitSkills.length; i++){
@@ -1092,10 +1091,12 @@ var UIScene = new Phaser.Class({
             this.scene.get("BattleScene").updateMessageBox("There are currently no useable items!");
         }
         if (method_of_attack === "skip"){
-            this.scene.get("BattleScene").updateMessageBox(player.unitName + " has chosen not to act")
+            this.scene.get("BattleScene").updateMessageBox(player.unitName + " has chosen not to act");
+            timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.battleScene.nextTurn, callbackScope: this.battleScene});
         }
         if (method_of_attack === "escape"){
-            this.scene.get("BattleScene").updateMessageBox(player.unitName + "'s group attempts to escape!")
+            this.scene.get("BattleScene").updateMessageBox(player.unitName + "'s group has successfully escaped!");
+            timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.battleScene.endBattle, callbackScope: this.battleScene});
         }
     },
     //deletes the damage text
