@@ -117,7 +117,7 @@ var BattleScene = new Phaser.Class({
             //this.units[this.index].attack(this.heroes[r]);  
             // add timer for the next turn, so will have smooth gameplay
            // this.time.addEvent({ delay: 2000, callback: this.nextTurn, callbackScope: this });
-           this.scene.get('UIScene').battle(this.units[this.index].playerInformation, this.heroes[r].playerInformation, "attack", null);
+           this.scene.get('UIScene').battle(this.units[this.index].playerInformation, this.heroes[r].playerInformation, "attack", null, false);
         }
     },     
     createMessageBox: function(){
@@ -497,7 +497,7 @@ var UIScene = new Phaser.Class({
                             var enemytext1 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                             'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                             enemytext1.on('pointerdown', (pointer)=>{
-                                this.battle(currentPlayer.playerInformation, enemies[0], "attack", null);
+                                this.battle(currentPlayer.playerInformation, enemies[0], "attack", null, true);
                                 for (var i = 0; i < enemyTexts.length; i++){
                                     enemyTexts[i].destroy();
                                 }
@@ -512,7 +512,7 @@ var UIScene = new Phaser.Class({
                             var enemytext2 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                             'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                             enemytext2.on('pointerdown', (pointer)=>{
-                                this.battle(currentPlayer.playerInformation, enemies[1], "attack", null);
+                                this.battle(currentPlayer.playerInformation, enemies[1], "attack", null, true);
                                 for (var i = 0; i < enemyTexts.length; i++){
                                     enemyTexts[i].destroy();
                                 }
@@ -527,7 +527,7 @@ var UIScene = new Phaser.Class({
                             var enemytext3 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                             'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                             enemytext3.on('pointerdown', (pointer)=>{
-                                this.battle(currentPlayer.playerInformation, enemies[2], "attack", null);
+                                this.battle(currentPlayer.playerInformation, enemies[2], "attack", null, true);
                                 for (var i = 0; i < enemyTexts.length; i++){
                                     enemyTexts[i].destroy();
                                 }
@@ -551,7 +551,7 @@ var UIScene = new Phaser.Class({
                 temp.setScale(0.25);
                 temp.on('pointerdown', (pointer) =>{
                     currentPlayer.playerInformation.isGuarding = true;
-                    this.battle(currentPlayer.playerInformation, null, "guard", null);
+                    this.battle(currentPlayer.playerInformation, null, "guard", null, true);
                 })
                 temp.on('pointerout', function(pointer){
                     this.clearTint();
@@ -626,7 +626,7 @@ var UIScene = new Phaser.Class({
                                     var enemytext4 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                                     'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                     enemytext4.on('pointerdown', (pointer)=>{
-                                        this.battle(currentPlayer.playerInformation, enemies[0], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName);
+                                        this.battle(currentPlayer.playerInformation, enemies[0], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName, true);
                                         for (var i = 0; i < enemyTexts.length; i++){
                                             enemyTexts[i].destroy();
                                         }
@@ -641,7 +641,7 @@ var UIScene = new Phaser.Class({
                                     var enemytext5 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                                     'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                     enemytext5.on('pointerdown', (pointer)=>{
-                                        this.battle(currentPlayer.playerInformation, enemies[1], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName);
+                                        this.battle(currentPlayer.playerInformation, enemies[1], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName, true);
                                         for (var i = 0; i < enemyTexts.length; i++){
                                             enemyTexts[i].destroy();
                                         }
@@ -657,7 +657,7 @@ var UIScene = new Phaser.Class({
                                     var enemytext6 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                                     'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                     enemytext6.on('pointerdown', (pointer)=>{
-                                        this.battle(currentPlayer.playerInformation, enemies[2], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName);
+                                        this.battle(currentPlayer.playerInformation, enemies[2], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName, true);
                                         for (var i = 0; i < enemyTexts.length; i++){
                                             enemyTexts[i].destroy();
                                         }
@@ -713,7 +713,7 @@ var UIScene = new Phaser.Class({
                                         var enemytext7 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                         enemytext7.on('pointerdown', (pointer)=>{
-                                            this.battle(currentPlayer.playerInformation, enemies[0], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName);
+                                            this.battle(currentPlayer.playerInformation, enemies[0], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName, true);
                                             for (var i = 0; i < enemyTexts.length; i++){
                                                 enemyTexts[i].destroy();
                                             }
@@ -728,7 +728,7 @@ var UIScene = new Phaser.Class({
                                         var enemytext8 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                         enemytext8.on('pointerdown', (pointer)=>{
-                                            this.battle(currentPlayer.playerInformation, enemies[1], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName);
+                                            this.battle(currentPlayer.playerInformation, enemies[1], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName, true);
                                             for (var i = 0; i < enemyTexts.length; i++){
                                                 enemyTexts[i].destroy();
                                             }
@@ -744,7 +744,7 @@ var UIScene = new Phaser.Class({
                                         var enemytext9 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                         enemytext9.on('pointerdown', (pointer)=>{
-                                            this.battle(currentPlayer.playerInformation, enemies[2], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName);
+                                            this.battle(currentPlayer.playerInformation, enemies[2], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName, true);
                                             for (var i = 0; i < enemyTexts.length; i++){
                                                 enemyTexts[i].destroy();
                                             }
@@ -801,7 +801,7 @@ var UIScene = new Phaser.Class({
                                         var enemytext10 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                         enemytext10.on('pointerdown', (pointer)=>{
-                                            this.battle(currentPlayer.playerInformation, enemies[0], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName);
+                                            this.battle(currentPlayer.playerInformation, enemies[0], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName, true);
                                             for (var i = 0; i < enemyTexts.length; i++){
                                                 enemyTexts[i].destroy();
                                             }
@@ -816,7 +816,7 @@ var UIScene = new Phaser.Class({
                                         var enemytext11 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                         enemytext11.on('pointerdown', (pointer)=>{
-                                            this.battle(currentPlayer.playerInformation, enemies[1], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName);
+                                            this.battle(currentPlayer.playerInformation, enemies[1], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName, true);
                                             for (var i = 0; i < enemyTexts.length; i++){
                                                 enemyTexts[i].destroy();
                                             }
@@ -832,7 +832,7 @@ var UIScene = new Phaser.Class({
                                         var enemytext12 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                         enemytext12.on('pointerdown', (pointer)=>{
-                                            this.battle(currentPlayer.playerInformation, enemies[2], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName);
+                                            this.battle(currentPlayer.playerInformation, enemies[2], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName, true);
                                             for (var i = 0; i < enemyTexts.length; i++){
                                                 enemyTexts[i].destroy();
                                             }
@@ -889,7 +889,7 @@ var UIScene = new Phaser.Class({
                                         var enemytext13 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                         enemytext13.on('pointerdown', (pointer)=>{
-                                            this.battle(currentPlayer.playerInformation, enemies[0], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName);
+                                            this.battle(currentPlayer.playerInformation, enemies[0], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName, true);
                                             for (var i = 0; i < enemyTexts.length; i++){
                                                 enemyTexts[i].destroy();
                                             }
@@ -904,7 +904,7 @@ var UIScene = new Phaser.Class({
                                         var enemytext14 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                         enemytext14.on('pointerdown', (pointer)=>{
-                                            this.battle(currentPlayer.playerInformation, enemies[1], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName);
+                                            this.battle(currentPlayer.playerInformation, enemies[1], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName, true);
                                             for (var i = 0; i < enemyTexts.length; i++){
                                                 enemyTexts[i].destroy();
                                             }
@@ -920,7 +920,7 @@ var UIScene = new Phaser.Class({
                                         var enemytext15 = this.add.text(410, 1024 - 3*95 - 58 + i*80, enemies[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
                                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
                                         enemytext15.on('pointerdown', (pointer)=>{
-                                            this.battle(currentPlayer.playerInformation, enemies[2], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName);
+                                            this.battle(currentPlayer.playerInformation, enemies[2], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName, true);
                                             for (var i = 0; i < enemyTexts.length; i++){
                                                 enemyTexts[i].destroy();
                                             }
@@ -949,7 +949,7 @@ var UIScene = new Phaser.Class({
                 var temp = this.add.sprite(560, 1024 - 3*95 - 58 + i*60, menus[i]).setInteractive();
                 temp.setScale(0.25);
                 temp.on('pointerdown', (pointer)=>{
-                    this.battle(currentPlayer.playerInformation, null, "item", null);
+                    this.battle(currentPlayer.playerInformation, null, "item", null, true);
                 })
                 temp.on('pointerout', function(pointer){
                     this.clearTint();
@@ -960,7 +960,7 @@ var UIScene = new Phaser.Class({
                 var temp = this.add.sprite(560, 1024 - 3*95 - 58 + i*60, menus[i]).setInteractive();
                 temp.setScale(0.25);
                 temp.on('pointerdown', (pointer)=>{
-                    this.battle(currentPlayer.playerInformation, null, "skip", null);
+                    this.battle(currentPlayer.playerInformation, null, "skip", null, true);
                 })
                 temp.on('pointerout', function(pointer){
                     this.clearTint();
@@ -971,7 +971,7 @@ var UIScene = new Phaser.Class({
                 var temp = this.add.sprite(560, 1024 - 3*95 - 58 + i*60, menus[i]).setInteractive();
                 temp.setScale(0.25);
                 temp.on('pointerdown', (pointer)=>{
-                    this.battle(currentPlayer.playerInformation, null, "escape", null);
+                    this.battle(currentPlayer.playerInformation, null, "escape", null, true);
                 })
                 temp.on('pointerout', function(pointer){
                     this.clearTint();
@@ -981,7 +981,9 @@ var UIScene = new Phaser.Class({
         }  
     },
     //battle is the main function that handles going to the next turn as well as damage updates/scene updates 
-    battle: function(player, target, method_of_attack, skillName){
+    //isPlayer is used to identify whether or not the one attacking is the player, which is used to subtract MP for skills
+    //enemy do not have MP, so if isPlayer is false, that part does not have to update 
+    battle: function(player, target, method_of_attack, skillName, isPlayer){
         //simple attack
 
         if (method_of_attack === "attack"){
@@ -1118,6 +1120,7 @@ var UIScene = new Phaser.Class({
         }
         if (method_of_attack === "skill"){
             var damagedelt = player.unitStats.atk - target.unitStats.res; //skill is magical damage, calulcated using res instead of def
+            var mpRequired = 0; //mpRequired variable 
             //there are also no such thing as critical hit in skill
             if (target.isGuarding === true){
                 damagedelt = Math.floor(damagedelt/2); //guarding from magic also halves damage
@@ -1130,33 +1133,17 @@ var UIScene = new Phaser.Class({
             if (skillName === "Fire Magic" || skillName === "Water Magic" || skillName === "Earth Magic" 
              || skillName === "Light Magic" || skillName === "Dark Magic"){
                 damagedelt = damagedelt;
+                mpRequired = 5;
             }
-            if (skillName === "Pure Halo" || "Shining Light"){
+            else if (skillName === "Pure Halo" || skillName ==="Shining Light"){
                 damagedelt = Math.floor(damagedelt * 1.5);
+                mpRequired = 10;
             }
             else{
                 //nothing happens
             }
             //now we search for the target's HP bar 
             this.damageText = null;
-            //damage text indicators
-            for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
-                if (target === this.battleScene.enemiesArray[i].playerInformation){
-                    this.damageText = this.battleScene.add.text(this.battleScene.enemiesArray[i].x - 20,this.battleScene.enemiesArray[i].y - 100, "-" + damagedelt,
-                    { color: "#ff0000", align: "center",fontWeight: 
-                    'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }});}
-                    timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
-
-            }
-            for (var i = 0; i <this.battleScene.heroes.length; i++){
-                if (target === this.battleScene.heroes[i].playerInformation){
-                    if (criticalHit === false){
-                    this.damageText = this.battleScene.add.text(this.battleScene.heroes[i].x - 20, this.battleScene.heroes[i].y - 100, "-" + damagedelt,
-                    { color: "#ff0000", align: "center",fontWeight: 
-                    'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }});}
-                    timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
-                }
-            }
             
             //now we decrease the hp
             target.unitStats.hp = target.unitStats.hp - damagedelt;
@@ -1166,6 +1153,16 @@ var UIScene = new Phaser.Class({
             for (var i = 0; i < this.battleScene.heroes.length; i++){
                 if (player === this.battleScene.heroes[i].playerInformation){
                     this.battleScene.heroes[i].anims.play(player.unitAnimations[2], false);
+                    var temp_mp = player.unitStats.mp - mpRequired;
+                    if (temp_mp < 0){
+                        //if there is not enough mp 
+                        mpRequired = 0;
+                        damagedelt = 0;
+                        this.scene.get("BattleScene").updateMessageBox(player.unitName + " doesn't have enough MP!");
+                    }
+                    else{
+                        player.unitStats.mp = temp_mp;
+                    }
                     var hero = this.battleScene.heroes[i];
                     this.battleScene.heroes[i].on("animationcomplete", 
                     ()=>{hero.anims.play(player.unitAnimations[0], true)});
@@ -1183,6 +1180,12 @@ var UIScene = new Phaser.Class({
             }
             //for heroes taking damage. needs to do for enemies taking damage too boi
             for (var i = 0; i < UIarray.length; i++){
+                if (UIarray[i].name === player.unitName){
+                    //this is for decreasing magic
+                    alert(mpRequired);
+                    UIarray[i].mp_bar.decrease(mpRequired);
+                    UIarray[i].mp_text.setText(player.unitStats.mp.toString() + "/" + player.unitStats.maxMP.toString());
+                }
                 if (UIarray[i].name === target.unitName){
                     UIarray[i].hp_bar.decrease(damagedelt);
                     if (target.unitStats.hp === 0){
@@ -1213,6 +1216,25 @@ var UIScene = new Phaser.Class({
                     }
                 }
             }
+            //damage text indicators
+            for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
+                if (target === this.battleScene.enemiesArray[i].playerInformation){
+                    this.damageText = this.battleScene.add.text(this.battleScene.enemiesArray[i].x - 20,this.battleScene.enemiesArray[i].y - 100, "-" + damagedelt,
+                    { color: "#ff0000", align: "center",fontWeight: 
+                    'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }});}
+                    timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
+
+            }
+            for (var i = 0; i <this.battleScene.heroes.length; i++){
+                if (target === this.battleScene.heroes[i].playerInformation){
+                    if (criticalHit === false){
+                    this.damageText = this.battleScene.add.text(this.battleScene.heroes[i].x - 20, this.battleScene.heroes[i].y - 100, "-" + damagedelt,
+                    { color: "#ff0000", align: "center",fontWeight: 
+                    'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }});}
+                    timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
+                }
+            }
+            
             
             this.scene.get('BattleScene').time.addEvent({ delay: 2000, callback: this.battleScene.nextTurn, callbackScope: this.battleScene});   
             //stopping player from clicking on any buttons during animation
