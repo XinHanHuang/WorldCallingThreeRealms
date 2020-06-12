@@ -1113,13 +1113,111 @@ var UIScene = new Phaser.Class({
             player.isGuarding = true; //set is guarding to true
             //if the player is guarding
             this.scene.get("BattleScene").updateMessageBox(player.unitName + " gets ready for an incoming attack");
-            timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.battleScene.nextTurn, callbackScope: this.battleScene});
+            timedEvent = this.battleScene.time.addEvent({delay: 1500, callback: this.battleScene.nextTurn, callbackScope: this.battleScene});
             this.scene.pause('UIScene');
         }
         if (method_of_attack === "skill"){
-            var damagedelt = player.units.atk - target.unit.res; //skill is magical damage, calulcated using res instead of def
-
+            var damagedelt = player.unitStats.atk - target.unitStats.res; //skill is magical damage, calulcated using res instead of def
+            //there are also no such thing as critical hit in skill
+            if (target.isGuarding === true){
+                damagedelt = Math.floor(damagedelt/2); //guarding from magic also halves damage
+            }
             this.scene.get("BattleScene").updateMessageBox(player.unitName + " casts " + skillName + " on " + target.unitName);
+
+            //now go through the list of all the skills via skill names
+            //there are 3 types. normal magic that deals 1x magic does not get included in this if list, only those that are special do
+            //there are also enemy exclusive skills that do not do anything. 
+            if (skillName === "Fire Magic" || skillName === "Water Magic" || skillName === "Earth Magic" 
+             || skillName === "Light Magic" || skillName === "Dark Magic"){
+                damagedelt = damagedelt;
+            }
+            if (skillName === "Pure Halo" || "Shining Light"){
+                damagedelt = Math.floor(damagedelt * 1.5);
+            }
+            else{
+                //nothing happens
+            }
+            //now we search for the target's HP bar 
+            this.damageText = null;
+            //damage text indicators
+            for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
+                if (target === this.battleScene.enemiesArray[i].playerInformation){
+                    this.damageText = this.battleScene.add.text(this.battleScene.enemiesArray[i].x - 20,this.battleScene.enemiesArray[i].y - 100, "-" + damagedelt,
+                    { color: "#ff0000", align: "center",fontWeight: 
+                    'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }});}
+                    timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
+
+            }
+            for (var i = 0; i <this.battleScene.heroes.length; i++){
+                if (target === this.battleScene.heroes[i].playerInformation){
+                    if (criticalHit === false){
+                    this.damageText = this.battleScene.add.text(this.battleScene.heroes[i].x - 20, this.battleScene.heroes[i].y - 100, "-" + damagedelt,
+                    { color: "#ff0000", align: "center",fontWeight: 
+                    'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }});}
+                    timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
+                }
+            }
+            
+            //now we decrease the hp
+            target.unitStats.hp = target.unitStats.hp - damagedelt;
+            if (target.unitStats.hp < 0){
+                target.unitStats.hp = 0;
+            }
+            for (var i = 0; i < this.battleScene.heroes.length; i++){
+                if (player === this.battleScene.heroes[i].playerInformation){
+                    this.battleScene.heroes[i].anims.play(player.unitAnimations[2], false);
+                    var hero = this.battleScene.heroes[i];
+                    this.battleScene.heroes[i].on("animationcomplete", 
+                    ()=>{hero.anims.play(player.unitAnimations[0], true)});
+                    break;
+                }
+            }
+            for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
+                if (player === this.battleScene.enemiesArray[i].playerInformation){
+                    this.battleScene.enemiesArray[i].anims.play(player.unitAnimations[2], false);
+                    var enem = this.battleScene.enemiesArray[i];
+                    this.battleScene.enemiesArray[i].on("animationcomplete", 
+                    ()=>{enem.anims.play(player.unitAnimations[0], true)});
+                    break;
+                }
+            }
+            //for heroes taking damage. needs to do for enemies taking damage too boi
+            for (var i = 0; i < UIarray.length; i++){
+                if (UIarray[i].name === target.unitName){
+                    UIarray[i].hp_bar.decrease(damagedelt);
+                    if (target.unitStats.hp === 0){
+                        UIarray[i].hp_text.setText(target.unitStats.hp.toString() + "/" + target.unitStats.maxHP.toString());
+                        for (var i = 0; i < this.battleScene.heroes.length; i++){
+                            if(this.battleScene.heroes[i].playerInformation === target){
+                                this.battleScene.heroes[i].living = false;
+                                this.battleScene.heroes[i].anims.play(target.unitAnimations[3], false);
+                            }
+                        }
+                    }
+                    else{
+                        UIarray[i].hp_text.setText(target.unitStats.hp.toString() + "/" + target.unitStats.maxHP.toString());
+                    }
+                }
+            }
+
+            for (var i = 0; i < EnemyUIarray.length; i++){
+                if (EnemyUIarray[i].name === target.unitName){
+                    EnemyUIarray[i].hp_bar.decrease(damagedelt);
+                    if (target.unitStats.hp === 0){
+                        for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
+                            if (this.battleScene.enemiesArray[i].playerInformation === target){
+                                this.battleScene.enemiesArray[i].living = false;
+                                this.battleScene.enemiesArray[i].anims.play(target.unitAnimations[3], false);
+                            }
+                        }
+                    }
+                }
+            }
+            
+            this.scene.get('BattleScene').time.addEvent({ delay: 2000, callback: this.battleScene.nextTurn, callbackScope: this.battleScene});   
+            //stopping player from clicking on any buttons during animation
+            this.scene.pause('UIScene');
+
         }
         if (method_of_attack === "item"){
             this.scene.get("BattleScene").updateMessageBox("There are currently no useable items!");

@@ -229,7 +229,7 @@ var WorldScene = new Phaser.Class({
         reenaAnimations = ['left', 'right', 'attack', 'defeated'];
         //create a new unit information that stores all of Reena's information 
         unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
-        unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x physical damage to opponent", 10, "physical", "single", "purehalo");
+        unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x magical damage to opponent", 10, "magic", "single", "purehalo");
         unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2];
 
         //create a new unit information that stores all of Reena's information 
