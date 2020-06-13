@@ -1511,7 +1511,8 @@ var UIScene = new Phaser.Class({
                 spritegraphics.fillRect(1280 - 300, 1024 - 3*95 - 260 + i*93, 180, 200);
                 spritegraphics.visible = false;
                 var textsprite= this.scene.get("UIScene").add.text(1280 - 265, 
-                    1024 - 3*95 - 260 + i*93, players[0].unitName + "\n" + "\n" +
+                    1024 - 3*95 - 260 + i*93, players[0].unitName + "\n" +
+                    "LV:" + players[0].level + "\n" +
                     "ATK: " + players[0].unitStats.atk + "\n" +
                     "DEF: " + players[0].unitStats.def + "\n" +
                     "RES: " + players[0].unitStats.res + "\n" +
@@ -1713,7 +1714,8 @@ var UIScene = new Phaser.Class({
                 spritegraphics2.fillRect(1280 - 300, 1024 - 3*95 - 260 + i*93, 180, 200);
                 spritegraphics2.visible = false;
                 var textsprite2= this.scene.get("UIScene").add.text(1280 - 265, 
-                    1024 - 3*95 - 260 + i*93, players[1].unitName + "\n" + "\n" +
+                    1024 - 3*95 - 260 + i*93, players[1].unitName + "\n" + 
+                    "LV:" + players[0].level + "\n" +
                     "ATK: " + players[1].unitStats.atk + "\n" +
                     "DEF: " + players[1].unitStats.def + "\n" +
                     "RES: " + players[1].unitStats.res + "\n" +
@@ -1911,7 +1913,8 @@ var UIScene = new Phaser.Class({
                 spritegraphics3.fillRect(1280 - 300, 1024 - 3*95 - 260 + i*93, 180, 200);
                 spritegraphics3.visible = false;
                 var textsprite3= this.scene.get("UIScene").add.text(1280 - 265, 
-                    1024 - 3*95 - 260 + i*93, players[2].unitName + "\n" + "\n" +
+                    1024 - 3*95 - 260 + i*93, players[2].unitName + "\n" + 
+                    "LV:" + players[0].level + "\n" +
                     "ATK: " + players[2].unitStats.atk + "\n" +
                     "DEF: " + players[2].unitStats.def + "\n" +
                     "RES: " + players[2].unitStats.res + "\n" +
@@ -2108,7 +2111,8 @@ var UIScene = new Phaser.Class({
                 spritegraphics4.fillRect(1280 - 300, 1024 - 3*95 - 260 + i*93, 180, 200);
                 spritegraphics4.visible = false;
                 var textsprite4= this.scene.get("UIScene").add.text(1280 - 265, 
-                    1024 - 3*95 - 260 + i*93, players[3].unitName + "\n" + "\n" +
+                    1024 - 3*95 - 260 + i*93, players[3].unitName + "\n" + 
+                    "LV:" + players[0].level + "\n" +
                     "ATK: " + players[3].unitStats.atk + "\n" +
                     "DEF: " + players[3].unitStats.def + "\n" +
                     "RES: " + players[3].unitStats.res + "\n" +
