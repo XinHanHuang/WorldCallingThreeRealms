@@ -38,6 +38,8 @@ var BattleScene = new Phaser.Class({
         // player character - warrior
         this.heroes = [];
         this.enemiesArray = [];
+        this.heroesStatusArray = [];
+        this.enemiesStatusArray = []; //hero and enemy status arrays
         for (var i = 0; i < players.length; i++){
             //for each for loop we are gonna generate new fighting sprites 
             if (i === 0 || i === 1){
@@ -182,14 +184,23 @@ var BattleScene = new Phaser.Class({
         for (var i = 0; i < EnemyUIarray.length; i++){
             EnemyUIarray[i] = null;
         }
+        for (var i = 0; i < this.enemiesStatusArray.length; i++){
+            this.enemiesStatusArray[i].destroy(); 
+        }
+        for (var i = 0; i < this.heroesStatusArray.length; i++){
+            this.heroesStatusArray[i].destroy();
+        }
         this.heroes.length = 0;
         this.enemiesArray.length = 0;
         enemies.length = 0;
         UIarray.length = 0;
         EnemyUIarray.length = 0;
+        this.enemiesStatusArray.length = 0;
+        this.heroesStatusArray.length = 0;
         for (var i = 0; i < players.length; i++){
             players[i].unitStats.hp = players[i].unitStats.maxHP;
             players[i].unitStats.mp = players[i].unitStats.maxMP;
+            players[i].unitStatus = null;
         }
         for(var i = 0; i < this.units.length; i++) {
             // link item
@@ -993,7 +1004,14 @@ var UIScene = new Phaser.Class({
             }
             this.scene.get("BattleScene").updateMessageBox(player.unitName + " attacks " + target.unitName);
             var criticalHit = false;
-            var criticalChance = Math.floor((player.unitStats.spd - target.unitStats.spd) * (player.unitStats.luck/10));
+            var criticalChance = 0;
+            if (player.unitStatus === "paralyzed"){
+                //lowers critical chance when paralyzed
+                criticalChance = Math.floor(((player.unitStats.spd/4) - target.unitStats.spd) * (player.unitStats.luck/10));
+            }
+            else{
+                criticalChance = Math.floor((player.unitStats.spd - target.unitStats.spd) * (player.unitStats.luck/10));
+            }
             var randomNumber = Math.floor(Math.random() * 100) + 1; //1-100random
             if (randomNumber < criticalChance){
                 //if the random number generated is less than the critical chance 
@@ -1014,7 +1032,7 @@ var UIScene = new Phaser.Class({
             }
 
             if (criticalHit === true){
-                damagedelt = damagedelt * 2; //doubles the damage delt
+                damagedelt = Math.floor(damagedelt * 1.5); //1.5 the damage delt
             }
 
             //now we search for the target's HP bar 
@@ -1118,6 +1136,26 @@ var UIScene = new Phaser.Class({
             timedEvent = this.battleScene.time.addEvent({delay: 1500, callback: this.battleScene.nextTurn, callbackScope: this.battleScene});
             this.scene.pause('UIScene');
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         if (method_of_attack === "skill"){
             var damagedelt = player.unitStats.atk - target.unitStats.res; //skill is magical damage, calulcated using res instead of def
             var mpRequired = 0; //mpRequired variable 
@@ -1135,14 +1173,44 @@ var UIScene = new Phaser.Class({
                 damagedelt = damagedelt;
                 mpRequired = 5;
             }
-            else if (skillName === "Pure Halo" || skillName ==="Shining Light"){
+            else if (skillName === "Pure Halo" || skillName === "Shining Light"){
                 damagedelt = Math.floor(damagedelt * 1.5);
                 mpRequired = 10;
+            }
+            else if (skillName === "Chaos" || skillName === "Thunderbrand"){
+                mpRequired = 5; 
+                //also inflicts paralysis. (Status effects generally handled in 'next turn')
+                //if (target.unitName === "Alyene", not paralyzed or something here)
+                target.unitStatus = "paralyzed"; //set paralyzed to unit status
+            }
+            else if (skillName === "Pure Chaos"){
+                mpRequired = 5;
+                for (var i = 0; i < enemies.length; i++){
+                    enemies[i].unitStatus = "paralyzed";
+                }
             }
             else{
                 //nothing happens
             }
             //now we search for the target's HP bar 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             this.damageText = null;
             
             //now we decrease the hp
@@ -1182,7 +1250,6 @@ var UIScene = new Phaser.Class({
             for (var i = 0; i < UIarray.length; i++){
                 if (UIarray[i].name === player.unitName){
                     //this is for decreasing magic
-                    alert(mpRequired);
                     UIarray[i].mp_bar.decrease(mpRequired);
                     UIarray[i].mp_text.setText(player.unitStats.mp.toString() + "/" + player.unitStats.maxMP.toString());
                 }
@@ -1214,6 +1281,11 @@ var UIScene = new Phaser.Class({
                             }
                         }
                     }
+                }
+                if (enemies[i].unitStatus === "paralyzed"){
+                    //update the UI accordingly
+                    var status = this.add.sprite(180, 1024 - 9 - 3*95 + i*120, "paralysis").setInteractive();
+                    this.scene.get('BattleScene').enemiesStatusArray.push(status);
                 }
             }
             //damage text indicators

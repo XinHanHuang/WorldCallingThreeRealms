@@ -46,6 +46,17 @@ var BootScene = new Phaser.Class({
         this.load.image('skill', 'assets/menu/skill.png');
         this.load.image('skip', 'assets/menu/skip.png');
 
+        //load all the status images
+        this.load.image('attackdown', 'assets/status/attackdown.png');
+        this.load.image('attackup', 'assets/status/attackup.png');
+        this.load.image('bindattack', 'assets/statusbindattack.png');
+        this.load.image('critup', 'assets/status/critup.png');
+        this.load.image('defensedown', 'assets/status/defensedown.png');
+        this.load.image('defenseup', 'assets/status/defenseup.png');
+        this.load.image('paralysis', 'assets/status/paralysis.png');
+        this.load.image('poison', 'assets/status/poison.png');
+        this.load.image('skillbind', 'assets/status/skillbind.png');
+
         // player 
         this.load.spritesheet('Reena', 'assets/Character Design/main.png', {frameWidth: 128, frameHeight: 128});
 
@@ -214,8 +225,10 @@ var WorldScene = new Phaser.Class({
         reenaAnimations = ['left', 'right', 'attack', 'defeated'];
         //create a new unit information that stores all of Reena's information 
         unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
-        unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x physical damage to opponent", 10, "physical", "single", "purehalo");
-        unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2];
+        unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x physical damage to opponent", 10, "magic", "single", "purehalo");
+        unitReenaBattleSkills3 = new unitBattleSkills("Chaos", "inflicts paralysis and deals damage", 5, "magic", "single", "chaos");
+        unitReenaBattleSkills4 = new unitBattleSkills("Pure Chaos", "inflicts attack down effect to all opponents", 5, "magic", "single", "purechaos");
+        unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2, unitReenaBattleSkills3, unitReenaBattleSkills4];
 
         //create a new unit information that stores all of Reena's information 
         unitReena = new unitInformation(this.reena, "Reena", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray); 
@@ -230,6 +243,7 @@ var WorldScene = new Phaser.Class({
         //create a new unit information that stores all of Reena's information 
         unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
         unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x magical damage to opponent", 10, "magic", "single", "purehalo");
+        unitReenaBattleSkills3 = new unitBattleSkills("Rally Attack", "raises all ally's defense", 10, "magic", "single", "rallyattack");
         unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2];
 
         //create a new unit information that stores all of Reena's information 
@@ -245,6 +259,7 @@ var WorldScene = new Phaser.Class({
         //create a new unit information that stores all of Reena's information 
         unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
         unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x physical damage to opponent", 10, "physical", "single", "purehalo");
+        unitReenaBattleSkills2 = new unitBattleSkills("Graceful Light", "Recovers HP for allies and nullifies all status effects", 10, "magic", "multiple", "gracefullight");
         unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2];
 
         //create a new unit information that stores all of Reena's information 
@@ -355,7 +370,9 @@ var WorldScene = new Phaser.Class({
             unitAlyeneSkillArray = [unitAlyeneSkills1, unitAlyeneSkills2, unitAlyeneSkills3];
             unitAlyeneStats = new unitStats(30, 30, 30, 15, 30, 30, 30); //this is Alyene's current stats
             alyeneAnimations = ['rightalyene', 'leftalyene','attackalyene','defeatedalyene'];
-            unitAlyeneBattleSkills1 = new unitBattleSkills("Alyene is waiting for you to make a move", "Alyene is waiting for you to make a move", "null", "single");
+            unitAlyeneBattleSkills1 = new unitBattleSkills("Mass Toxic", "inflicts poison and deals damage", 5, "magic", "single", "masstoxic");
+            unitAlyeneBattleSkills2 = new unitBattleSkills("Toxic", "inflicts poison and deals damage", 5, "magic", "single", "toxic");
+            unitAlyeneBattleSkills3 = new unitBattleSkills("Rally Break", "inflicts attack down effect to all opponents", 5, "magic", "multiple", "rallybreak");
             unitAyleneBattleSkllArray = [unitAlyeneBattleSkills1];
 
             unitAlyene = new unitInformation(this.alyene, "Alyene", alyeneAnimations, "alyenesprite", unitAlyeneSkillArray, unitAlyeneStats, null, unitAyleneBattleSkllArray);
