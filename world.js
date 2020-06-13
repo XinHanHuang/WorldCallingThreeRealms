@@ -221,7 +221,7 @@ var WorldScene = new Phaser.Class({
         unitReenaSkills1 = new unitSkills("Rightful God","Negates the damage bonus from enemy critical hits", "rightfulgod");
         unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
         unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
-        unitReenaStats = new unitStats(28, 20, 45, 16, 45, 20, 7); //this is Reena's current stats
+        unitReenaStats = new unitStats(28, 20, 45, 16, 20, 20, 7); //this is Reena's current stats
         reenaAnimations = ['left', 'right', 'attack', 'defeated'];
         //create a new unit information that stores all of Reena's information 
         unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
@@ -238,7 +238,7 @@ var WorldScene = new Phaser.Class({
         unitReenaSkills1 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
         unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
         unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
-        unitReenaStats = new unitStats(28, 20, 45, 16, 30, 20, 7); //this is Reena's current stats
+        unitReenaStats = new unitStats(28, 20, 45, 16, 20, 20, 7); //this is Reena's current stats
         reenaAnimations = ['left', 'right', 'attack', 'defeated'];
         //create a new unit information that stores all of Reena's information 
         unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
@@ -254,7 +254,7 @@ var WorldScene = new Phaser.Class({
         unitReenaSkills1 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
         unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
         unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
-        unitReenaStats = new unitStats(28, 20, 45, 16, 30, 20, 7); //this is Reena's current stats
+        unitReenaStats = new unitStats(28, 20, 45, 16, 20, 20, 7); //this is Reena's current stats
         reenaAnimations = ['left', 'right', 'attack', 'defeated'];
         //create a new unit information that stores all of Reena's information 
         unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
@@ -270,7 +270,7 @@ var WorldScene = new Phaser.Class({
         unitReenaSkills1 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
         unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
         unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
-        unitReenaStats = new unitStats(28, 20, 45, 16, 30, 20, 7); //this is Reena's current stats
+        unitReenaStats = new unitStats(28, 20, 45, 16, 20, 20, 7); //this is Reena's current stats
         reenaAnimations = ['left', 'right', 'attack', 'defeated'];
         //create a new unit information that stores all of Reena's information 
         unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
@@ -384,7 +384,7 @@ var WorldScene = new Phaser.Class({
             unitYuneSkillArray = [unitYuneSkills1, unitYuneSkills2, unitYuneSkills3];
             unitYuneStats = new unitStats(30, 30, 30, 30, 30, 30, 30); //this is Alyene's current stats
             YuneAnimations = ['rightyune', 'leftyune'];
-            unitYuneBattleSkills1 = new unitBattleSkills("Alyene is waiting for you to make a move", "Alyene is waiting for you to make a move", "null", "single");
+            unitYuneBattleSkills1 = new unitBattleSkills("Spirit Break", "inflicts attack down effect", 5, "magic", "single", "spiritbreak");
             unitYuneBattleSkllArray = [unitAlyeneBattleSkills1];
 
             unitYune = new unitInformation(this.yune, "Yune", YuneAnimations, "yunesprite", unitYuneSkillArray, unitYuneStats, null, unitYuneBattleSkllArray, 12);

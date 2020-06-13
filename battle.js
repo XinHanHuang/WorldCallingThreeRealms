@@ -108,18 +108,36 @@ var BattleScene = new Phaser.Class({
 
         } else { // else if its enemy unit, we attack according to enemy's AI, or random AI
             currentEnemy = this.units[this.index];
-            // pick random living hero to be attacked
-            var r;
-            do {
-                r = Math.floor(Math.random() * this.heroes.length);
-            } while(!this.heroes[r].living) 
+            if (currentEnemy.playerInformation.unitName === "Alyene"){
+                //AI for specifc boss here
+                var r;
+                do {
+                    r = Math.floor(Math.random() * this.heroes.length);
+                } while(!this.heroes[r].living) 
+                this.scene.get('UIScene').battle(this.units[this.index].playerInformation, this.heroes[r].playerInformation, "skill", "Mass Toxic", false);
+            }
+            else if (currentEnemy.playerInformation.unitName === "Yune"){
+                var r;
+                do {
+                    r = Math.floor(Math.random() * this.heroes.length);
+                } while(!this.heroes[r].living) 
+                this.scene.get('UIScene').battle(this.units[this.index].playerInformation, this.heroes[r].playerInformation, "skill", "Spirit Break", false);
+            }
+            else{
+                //Random for all other random spawns 
+                // pick random living hero to be attacked
+                var r;
+                do {
+                    r = Math.floor(Math.random() * this.heroes.length);
+                } while(!this.heroes[r].living) 
 
-            //this.updateMessageBox(this.units[this.index].playerInformation.unitName + "'s Turn");
-            // call the enemy's attack function 
-            //this.units[this.index].attack(this.heroes[r]);  
-            // add timer for the next turn, so will have smooth gameplay
-           // this.time.addEvent({ delay: 2000, callback: this.nextTurn, callbackScope: this });
-           this.scene.get('UIScene').battle(this.units[this.index].playerInformation, this.heroes[r].playerInformation, "attack", null, false);
+                //this.updateMessageBox(this.units[this.index].playerInformation.unitName + "'s Turn");
+                // call the enemy's attack function 
+                //this.units[this.index].attack(this.heroes[r]);  
+                // add timer for the next turn, so will have smooth gameplay
+                // this.time.addEvent({ delay: 2000, callback: this.nextTurn, callbackScope: this });
+                this.scene.get('UIScene').battle(this.units[this.index].playerInformation, this.heroes[r].playerInformation, "attack", null, false);
+            }
         }
     },     
     createMessageBox: function(){
@@ -1158,6 +1176,9 @@ var UIScene = new Phaser.Class({
 
         if (method_of_attack === "skill"){
             var damagedelt = player.unitStats.atk - target.unitStats.res; //skill is magical damage, calulcated using res instead of def
+            if (damagedelt < 0){
+                damagedelt = 0;
+            }
             var mpRequired = 0; //mpRequired variable 
             var multiTarget = false; //whether or not its multi target
             //there are also no such thing as critical hit in skill
@@ -1196,17 +1217,62 @@ var UIScene = new Phaser.Class({
                     target.unitStats.hp = 0;
                 }
             }
+
+            else if (skillName === "Spirit Break"){
+                mpRequired = 5;
+                target.unitStatus = "attackdown";
+                target.unitStats.hp = target.unitStats.hp - damagedelt;
+                if (target.unitStats.hp < 0){
+                    target.unitStats.hp = 0;
+                }
+
+            }
             //testing multi target
             else if (skillName === "Pure Chaos"){
+                multiTarget = true; //set to true
                 mpRequired = 5;
-                for (var i = 0; i < enemies.length; i++){
-                    enemies[i].unitStatus = "paralyzed";
-                    enemies[i].unitStats.hp = enemies[i].unitStats.hp - damagedelt;
-                    if (enemies[i].unitStats.hp < 0){
-                        enemies[i].unitStats.hp = 0;
+                if (isPlayer === true){
+                    for (var i = 0; i < enemies.length; i++){
+                        enemies[i].unitStatus = "paralyzed";
+                        enemies[i].unitStats.hp = enemies[i].unitStats.hp - damagedelt;
+                        if (enemies[i].unitStats.hp < 0){
+                            enemies[i].unitStats.hp = 0;
+                        }
                     }
                 }
+                else if (isPlayer === false){
+                    for (var i = 0; i < players.length; i++){
+                        players[i].unitStatus = "paralyzed";
+                        players[i].unitStats.hp = players[i].unitStats.hp - damagedelt;
+                        if (players[i].unitStats.hp < 0){
+                            players[i].unitStats.hp = 0;
+                        }
+                    }
+                }
+            }
+
+            else if (skillName === "Mass Toxic"){
+                mpRequired = 5;
                 multiTarget = true; //set to true
+                if (isPlayer === true){
+                    for (var i = 0; i < enemies.length; i++){
+                        enemies[i].unitStatus = "poisoned";
+                        enemies[i].unitStats.hp = enemies[i].unitStats.hp - damagedelt;
+                        if (enemies[i].unitStats.hp < 0){
+                            enemies[i].unitStats.hp = 0;
+                         }
+                    }
+                }
+
+                else if (isPlayer === false){
+                    for (var i = 0; i < players.length; i++){
+                        players[i].unitStatus = "poisoned";
+                        players[i].unitStats.hp = players[i].unitStats.hp - damagedelt;
+                        if (players[i].unitStats.hp < 0){
+                            players[i].unitStats.hp = 0;
+                        }
+                    }
+                }
             }
             else{
                 //nothing happens
@@ -1271,6 +1337,16 @@ var UIScene = new Phaser.Class({
                         var status = this.add.sprite(180, 1024 - 9 - 3*95 + i*120, "paralysis").setInteractive();
                         this.scene.get('BattleScene').enemiesStatusArray.push(status);
                     }
+                    if (enemies[i].unitStatus === "poisoned"){
+                        //update the UI accordingly
+                        var status = this.add.sprite(180, 1024 - 9 - 3*95 + i*120, "poison").setInteractive();
+                        this.scene.get('BattleScene').enemiesStatusArray.push(status);
+                    }
+                    if (enemies[i].unitStatus === "attackdown"){
+                        //update the UI accordingly
+                        var status = this.add.sprite(180, 1024 - 9 - 3*95 + i*120, "attackdown").setInteractive();
+                        this.scene.get('BattleScene').enemiesStatusArray.push(status);
+                    }
                     if (target.unitStats.hp === 0){
                         for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
                             if (this.battleScene.enemiesArray[i].playerInformation === target){
@@ -1292,7 +1368,15 @@ var UIScene = new Phaser.Class({
                 if (UIarray[i].name === target.unitName){
                     UIarray[i].hp_bar.decrease(damagedelt);
                     if(players[i].unitStatus === "paralyzed"){
-                        var status = this.add.sprite(1024-500, 1024 - 9 - 3*95 + i*90, "paralysis").setInteractive();
+                        var status = this.add.sprite(1280 - 500, 1024 - 22 - 3*95 + i*90, "paralysis").setInteractive();
+                        this.scene.get('BattleScene').heroesStatusArray.push(status);
+                    }
+                    if(players[i].unitStatus === "poisoned"){
+                        var status = this.add.sprite(1280 - 500, 1024 - 22 - 3*95 + i*90, "poison").setInteractive();
+                        this.scene.get('BattleScene').heroesStatusArray.push(status);
+                    }
+                    if(players[i].unitStatus === "attackdown"){
+                        var status = this.add.sprite(1280 - 500, 1024 - 22 - 3*95 + i*90, "attackdown").setInteractive();
                         this.scene.get('BattleScene').heroesStatusArray.push(status);
                     }
                     if (target.unitStats.hp === 0){
@@ -1321,10 +1405,9 @@ var UIScene = new Phaser.Class({
             }
             for (var i = 0; i <this.battleScene.heroes.length; i++){
                 if (target === this.battleScene.heroes[i].playerInformation){
-                    if (criticalHit === false){
                     this.damageText.push(this.battleScene.add.text(this.battleScene.heroes[i].x - 20, this.battleScene.heroes[i].y - 100, "-" + damagedelt,
                     { color: "#ff0000", align: "center",fontWeight: 
-                    'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}));}
+                    'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}));
                     timedEvent2 = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
                 }
             }
@@ -1341,6 +1424,16 @@ var UIScene = new Phaser.Class({
                     if (enemies[i].unitStatus === "paralyzed"){
                         //update the UI accordingly
                         var status = this.add.sprite(180, 1024 - 9 - 3*95 + i*120, "paralysis").setInteractive();
+                        this.scene.get('BattleScene').enemiesStatusArray.push(status);
+                    }
+                    if (enemies[i].unitStatus === "poisoned"){
+                        //update the UI accordingly
+                        var status = this.add.sprite(180, 1024 - 9 - 3*95 + i*120, "poison").setInteractive();
+                        this.scene.get('BattleScene').enemiesStatusArray.push(status);
+                    }
+                    if (enemies[i].unitStatus === "attackdown"){
+                        //update the UI accordingly
+                        var status = this.add.sprite(180, 1024 - 9 - 3*95 + i*120, "attackdown").setInteractive();
                         this.scene.get('BattleScene').enemiesStatusArray.push(status);
                     }
                     if (UIarray[i].name === player.unitName){
@@ -1361,20 +1454,32 @@ var UIScene = new Phaser.Class({
 
             else if (multiTarget === true && isPlayer === false){
                 for (var i = 0; i < UIarray.length; i++){
+                    console.log(damagedelt);
                     UIarray[i].hp_bar.decrease(damagedelt);
                     if (players[i].unitStats.hp === 0){
-                        this.battleScene.heroesArray[i].living = false;
-                        this.battleScene.heroesArray[i].anims.play(players[i].unitAnimations[3], false);
+                        this.battleScene.heroes[i].living = false;
+                        this.battleScene.heroes[i].anims.play(players[i].unitAnimations[3], false);
                     }
                     
                     if (players[i].unitStatus === "paralyzed"){
                         //update the UI accordingly
-                        var status = this.add.sprite(1024-500, 1024 - 9 - 3*95 + i*90, "paralysis").setInteractive();
+                        var status = this.add.sprite(1280 - 500, 1024 - 22 - 3*95 + i*90, "paralysis").setInteractive();
                         this.scene.get('BattleScene').heroesStatusArray.push(status);
                     }
+                    if (players[i].unitStatus === "poisoned"){
+                        //update the UI accordingly
+                        var status = this.add.sprite(1280 - 500, 1024 - 22 - 3*95 + i*90, "poison").setInteractive();
+                        this.scene.get('BattleScene').heroesStatusArray.push(status);
+                    }
+                    if (players[i].unitStatus === "attackdown"){
+                        //update the UI accordingly
+                        var status = this.add.sprite(1280 - 500, 1024 - 22 - 3*95 + i*90, "attackdown").setInteractive();
+                        this.scene.get('BattleScene').heroesStatusArray.push(status);
+                    }
+                    UIarray[i].hp_text.setText(players[i].unitStats.hp.toString() + "/" + players[i].unitStats.maxHP.toString());
                 }
-                for (var i = 0; i < this.battleScene.heroesArray.length; i++){
-                        this.damageText.push(this.battleScene.add.text(this.battleScene.heroesArray[i].x - 20,this.battleScene.heroesArray[i].y - 100, "-" + damagedelt,
+                for (var i = 0; i < this.battleScene.heroes.length; i++){
+                        this.damageText.push(this.battleScene.add.text(this.battleScene.heroes[i].x - 20,this.battleScene.heroes[i].y - 100, "-" + damagedelt,
                         { color: "#ff0000", align: "center",fontWeight: 
                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}));
                         timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
