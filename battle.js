@@ -1291,6 +1291,10 @@ var UIScene = new Phaser.Class({
                 }
                 if (UIarray[i].name === target.unitName){
                     UIarray[i].hp_bar.decrease(damagedelt);
+                    if(players[i].unitStatus === "paralyzed"){
+                        var status = this.add.sprite(1024-500, 1024 - 9 - 3*95 + i*90, "paralysis").setInteractive();
+                        this.scene.get('BattleScene').heroesStatusArray.push(status);
+                    }
                     if (target.unitStats.hp === 0){
                         UIarray[i].hp_text.setText(target.unitStats.hp.toString() + "/" + target.unitStats.maxHP.toString());
                         for (var i = 0; i < this.battleScene.heroes.length; i++){
@@ -1366,7 +1370,7 @@ var UIScene = new Phaser.Class({
                     if (players[i].unitStatus === "paralyzed"){
                         //update the UI accordingly
                         var status = this.add.sprite(1024-500, 1024 - 9 - 3*95 + i*90, "paralysis").setInteractive();
-                        this.scene.get('BattleScene').enemiesStatusArray.push(status);
+                        this.scene.get('BattleScene').heroesStatusArray.push(status);
                     }
                 }
                 for (var i = 0; i < this.battleScene.heroesArray.length; i++){
