@@ -1036,18 +1036,18 @@ var UIScene = new Phaser.Class({
             }
 
             //now we search for the target's HP bar 
-            this.damageText = null;
+            this.damageText = [];
             //damage text indicators
             for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
                 if (target === this.battleScene.enemiesArray[i].playerInformation){
                     if (criticalHit === false){
-                    this.damageText = this.battleScene.add.text(this.battleScene.enemiesArray[i].x - 20,this.battleScene.enemiesArray[i].y - 100, "-" + damagedelt,
+                    this.damageText.push(this.battleScene.add.text(this.battleScene.enemiesArray[i].x - 20,this.battleScene.enemiesArray[i].y - 100, "-" + damagedelt,
                     { color: "#ff0000", align: "center",fontWeight: 
-                    'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }});}
+                    'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}));}
                     else if (criticalHit === true){
-                    this.damageText = this.battleScene.add.text(this.battleScene.enemiesArray[i].x - 120,this.battleScene.enemiesArray[i].y - 100, "CRITICAL HIT -" + damagedelt,
+                    this.damageText.push(this.battleScene.add.text(this.battleScene.enemiesArray[i].x - 120,this.battleScene.enemiesArray[i].y - 100, "CRITICAL HIT -" + damagedelt,
                     { color: "#ff0000", align: "center",fontWeight: 
-                    'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }});   
+                    'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}));   
                     }
                     timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
                 }
@@ -1056,14 +1056,14 @@ var UIScene = new Phaser.Class({
             for (var i = 0; i <this.battleScene.heroes.length; i++){
                 if (target === this.battleScene.heroes[i].playerInformation){
                     if (criticalHit === false){
-                    this.damageText = this.battleScene.add.text(this.battleScene.heroes[i].x - 20, this.battleScene.heroes[i].y - 100, "-" + damagedelt,
+                    this.damageText.push(this.battleScene.add.text(this.battleScene.heroes[i].x - 20, this.battleScene.heroes[i].y - 100, "-" + damagedelt,
                     { color: "#ff0000", align: "center",fontWeight: 
-                    'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }});
+                    'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}));
                     }
                     else if (criticalHit === true){
-                        this.damageText = this.battleScene.add.text(this.battleScene.heroes[i].x - 120, this.battleScene.heroes[i].y - 100, "CRITICAL HIT -" + damagedelt,
+                        this.damageText.push(this.battleScene.add.text(this.battleScene.heroes[i].x - 120, this.battleScene.heroes[i].y - 100, "CRITICAL HIT -" + damagedelt,
                         { color: "#ff0000", align: "center",fontWeight: 
-                        'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}); 
+                        'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }})); 
                     }
                     timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
                 }
@@ -1159,6 +1159,7 @@ var UIScene = new Phaser.Class({
         if (method_of_attack === "skill"){
             var damagedelt = player.unitStats.atk - target.unitStats.res; //skill is magical damage, calulcated using res instead of def
             var mpRequired = 0; //mpRequired variable 
+            var multiTarget = false; //whether or not its multi target
             //there are also no such thing as critical hit in skill
             if (target.isGuarding === true){
                 damagedelt = Math.floor(damagedelt/2); //guarding from magic also halves damage
@@ -1172,22 +1173,40 @@ var UIScene = new Phaser.Class({
              || skillName === "Light Magic" || skillName === "Dark Magic"){
                 damagedelt = damagedelt;
                 mpRequired = 5;
+                target.unitStats.hp = target.unitStats.hp - damagedelt;
+                if (target.unitStats.hp < 0){
+                    target.unitStats.hp = 0;
+                }
             }
             else if (skillName === "Pure Halo" || skillName === "Shining Light"){
                 damagedelt = Math.floor(damagedelt * 1.5);
                 mpRequired = 10;
+                target.unitStats.hp = target.unitStats.hp - damagedelt;
+                if (target.unitStats.hp < 0){
+                    target.unitStats.hp = 0;
+                }
             }
             else if (skillName === "Chaos" || skillName === "Thunderbrand"){
                 mpRequired = 5; 
                 //also inflicts paralysis. (Status effects generally handled in 'next turn')
                 //if (target.unitName === "Alyene", not paralyzed or something here)
                 target.unitStatus = "paralyzed"; //set paralyzed to unit status
+                target.unitStats.hp = target.unitStats.hp - damagedelt;
+                if (target.unitStats.hp < 0){
+                    target.unitStats.hp = 0;
+                }
             }
+            //testing multi target
             else if (skillName === "Pure Chaos"){
                 mpRequired = 5;
                 for (var i = 0; i < enemies.length; i++){
                     enemies[i].unitStatus = "paralyzed";
+                    enemies[i].unitStats.hp = enemies[i].unitStats.hp - damagedelt;
+                    if (enemies[i].unitStats.hp < 0){
+                        enemies[i].unitStats.hp = 0;
+                    }
                 }
+                multiTarget = true; //set to true
             }
             else{
                 //nothing happens
@@ -1211,13 +1230,8 @@ var UIScene = new Phaser.Class({
 
 
 
-            this.damageText = null;
-            
-            //now we decrease the hp
-            target.unitStats.hp = target.unitStats.hp - damagedelt;
-            if (target.unitStats.hp < 0){
-                target.unitStats.hp = 0;
-            }
+            this.damageText = [];
+
             for (var i = 0; i < this.battleScene.heroes.length; i++){
                 if (player === this.battleScene.heroes[i].playerInformation){
                     this.battleScene.heroes[i].anims.play(player.unitAnimations[2], false);
@@ -1246,7 +1260,29 @@ var UIScene = new Phaser.Class({
                     break;
                 }
             }
-            //for heroes taking damage. needs to do for enemies taking damage too boi
+
+            if (multiTarget === false){
+
+            for (var i = 0; i < EnemyUIarray.length; i++){
+                if (EnemyUIarray[i].name === target.unitName){
+                    EnemyUIarray[i].hp_bar.decrease(damagedelt);
+                    if (enemies[i].unitStatus === "paralyzed"){
+                        //update the UI accordingly
+                        var status = this.add.sprite(180, 1024 - 9 - 3*95 + i*120, "paralysis").setInteractive();
+                        this.scene.get('BattleScene').enemiesStatusArray.push(status);
+                    }
+                    if (target.unitStats.hp === 0){
+                        for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
+                            if (this.battleScene.enemiesArray[i].playerInformation === target){
+                                this.battleScene.enemiesArray[i].living = false;
+                                this.battleScene.enemiesArray[i].anims.play(target.unitAnimations[3], false);
+                            }
+                        }
+                    }
+                }
+
+            }
+            //for heroes taking damage. 
             for (var i = 0; i < UIarray.length; i++){
                 if (UIarray[i].name === player.unitName){
                     //this is for decreasing magic
@@ -1270,42 +1306,79 @@ var UIScene = new Phaser.Class({
                 }
             }
 
-            for (var i = 0; i < EnemyUIarray.length; i++){
-                if (EnemyUIarray[i].name === target.unitName){
-                    EnemyUIarray[i].hp_bar.decrease(damagedelt);
-                    if (target.unitStats.hp === 0){
-                        for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
-                            if (this.battleScene.enemiesArray[i].playerInformation === target){
-                                this.battleScene.enemiesArray[i].living = false;
-                                this.battleScene.enemiesArray[i].anims.play(target.unitAnimations[3], false);
-                            }
-                        }
-                    }
-                }
-                if (enemies[i].unitStatus === "paralyzed"){
-                    //update the UI accordingly
-                    var status = this.add.sprite(180, 1024 - 9 - 3*95 + i*120, "paralysis").setInteractive();
-                    this.scene.get('BattleScene').enemiesStatusArray.push(status);
-                }
-            }
             //damage text indicators
             for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
                 if (target === this.battleScene.enemiesArray[i].playerInformation){
-                    this.damageText = this.battleScene.add.text(this.battleScene.enemiesArray[i].x - 20,this.battleScene.enemiesArray[i].y - 100, "-" + damagedelt,
+                    this.damageText.push(this.battleScene.add.text(this.battleScene.enemiesArray[i].x - 20,this.battleScene.enemiesArray[i].y - 100, "-" + damagedelt,
                     { color: "#ff0000", align: "center",fontWeight: 
-                    'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }});}
+                    'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}));}
                     timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
 
             }
             for (var i = 0; i <this.battleScene.heroes.length; i++){
                 if (target === this.battleScene.heroes[i].playerInformation){
                     if (criticalHit === false){
-                    this.damageText = this.battleScene.add.text(this.battleScene.heroes[i].x - 20, this.battleScene.heroes[i].y - 100, "-" + damagedelt,
+                    this.damageText.push(this.battleScene.add.text(this.battleScene.heroes[i].x - 20, this.battleScene.heroes[i].y - 100, "-" + damagedelt,
                     { color: "#ff0000", align: "center",fontWeight: 
-                    'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }});}
-                    timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
+                    'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}));}
+                    timedEvent2 = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
                 }
             }
+            }
+
+
+            else if (multiTarget === true && isPlayer === true){
+                for (var i = 0; i < EnemyUIarray.length; i++){
+                    EnemyUIarray[i].hp_bar.decrease(damagedelt);
+                    if (enemies[i].unitStats.hp === 0){
+                        this.battleScene.enemiesArray[i].living = false;
+                        this.battleScene.enemiesArray[i].anims.play(enemies[i].unitAnimations[3], false);
+                    }
+                    if (enemies[i].unitStatus === "paralyzed"){
+                        //update the UI accordingly
+                        var status = this.add.sprite(180, 1024 - 9 - 3*95 + i*120, "paralysis").setInteractive();
+                        this.scene.get('BattleScene').enemiesStatusArray.push(status);
+                    }
+                    if (UIarray[i].name === player.unitName){
+                        //this is for decreasing magic
+                        UIarray[i].mp_bar.decrease(mpRequired);
+                        UIarray[i].mp_text.setText(player.unitStats.mp.toString() + "/" + player.unitStats.maxMP.toString());
+                    }
+                }
+                for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
+
+                        this.damageText.push(this.battleScene.add.text(this.battleScene.enemiesArray[i].x - 20,this.battleScene.enemiesArray[i].y - 100, "-" + damagedelt,
+                        { color: "#ff0000", align: "center",fontWeight: 
+                        'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}));
+                        timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
+            
+                }
+            }
+
+            else if (multiTarget === true && isPlayer === false){
+                for (var i = 0; i < UIarray.length; i++){
+                    UIarray[i].hp_bar.decrease(damagedelt);
+                    if (players[i].unitStats.hp === 0){
+                        this.battleScene.heroesArray[i].living = false;
+                        this.battleScene.heroesArray[i].anims.play(players[i].unitAnimations[3], false);
+                    }
+                    
+                    if (players[i].unitStatus === "paralyzed"){
+                        //update the UI accordingly
+                        var status = this.add.sprite(1024-500, 1024 - 9 - 3*95 + i*90, "paralysis").setInteractive();
+                        this.scene.get('BattleScene').enemiesStatusArray.push(status);
+                    }
+                }
+                for (var i = 0; i < this.battleScene.heroesArray.length; i++){
+                        this.damageText.push(this.battleScene.add.text(this.battleScene.heroesArray[i].x - 20,this.battleScene.heroesArray[i].y - 100, "-" + damagedelt,
+                        { color: "#ff0000", align: "center",fontWeight: 
+                        'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}));
+                        timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
+                }
+            }
+
+
+
             
             
             this.scene.get('BattleScene').time.addEvent({ delay: 2000, callback: this.battleScene.nextTurn, callbackScope: this.battleScene});   
@@ -1329,7 +1402,10 @@ var UIScene = new Phaser.Class({
     },
     //deletes the damage text
     deleteDamageIndicator: function(){
-        this.damageText.destroy();
+        for (var i = 0; i< this.damageText.length; i++){
+            this.damageText[i].destroy();
+        }
+        this.damageText.length = 0;
     },
 
     createBattleSprites: function(){
