@@ -498,6 +498,7 @@ var UIScene = new Phaser.Class({
         var graphicsArray = [];
         var textsArray = [];
         this.damageDeltArray = []; //array of damage delt for different calculations for each (multi attack only)
+        this.damageHealedArray = [];
         for (var i = 0; i < 6; i++){
             if (menus[i] === "attack"){
                 var temp = this.add.sprite(560, 1024 - 3*95 - 58 + i*60, menus[i]).setInteractive();
@@ -1599,24 +1600,34 @@ var UIScene = new Phaser.Class({
                 //also inflicts paralysis. (Status effects generally handled in 'next turn')
                 //if (target.unitName === "Alyene", not paralyzed or something here)
                 target.unitStatus = "paralyzed"; //set paralyzed to unit status
+                
                 for (var i = 0; i < players.length; i++){
                     if (players[i].unitName === target.unitName){
                         //if the unit's name matches the i
                         target.unitStats.hp = target.unitStats.hp - this.damageDeltArray[i];
+                        if(this.scene.get('BattleScene').heroesStatusArray[i]){
+                            this.scene.get('BattleScene').heroesStatusArray[i].destroy();
+                        }
                     }
                     if (target.unitStats.hp < 0){
                         target.unitStats.hp = 0;
                     }
+
+
                 }
                 for (var i = 0; i < enemies.length; i++){
                     if (enemies[i].unitName === target.unitName){
                         //if the unit's name matches the i
                         target.unitStats.hp = target.unitStats.hp - this.damageDeltArray[i];
+                        if(this.scene.get('BattleScene').enemiesStatusArray[i]){
+                            this.scene.get('BattleScene').enemiesStatusArray[i].destroy();               
+                            }
                     }
                     if (target.unitStats.hp < 0){
                         target.unitStats.hp = 0;
                     }
-                }
+
+                 }
             }
 
             else if (skillName === "Spirit Break"){
@@ -1626,19 +1637,27 @@ var UIScene = new Phaser.Class({
                     if (players[i].unitName === target.unitName){
                         //if the unit's name matches the i
                         target.unitStats.hp = target.unitStats.hp - this.damageDeltArray[i];
+                        if(this.scene.get('BattleScene').heroesStatusArray[i]){
+                            this.scene.get('BattleScene').heroesStatusArray[i].destroy();
+                        }
                     }
                     if (target.unitStats.hp < 0){
                         target.unitStats.hp = 0;
                     }
+
                 }
                 for (var i = 0; i < enemies.length; i++){
                     if (enemies[i].unitName === target.unitName){
                         //if the unit's name matches the i
                         target.unitStats.hp = target.unitStats.hp - this.damageDeltArray[i];
+                        if(this.scene.get('BattleScene').enemiesStatusArray[i]){
+                            this.scene.get('BattleScene').enemiesStatusArray[i].destroy();
+                        }
                     }
                     if (target.unitStats.hp < 0){
                         target.unitStats.hp = 0;
                     }
+
                 }
 
             }
@@ -1653,6 +1672,9 @@ var UIScene = new Phaser.Class({
                         if (enemies[i].unitStats.hp < 0){
                             enemies[i].unitStats.hp = 0;
                         }
+                        if(this.scene.get('BattleScene').enemiesStatusArray[i]){
+                            this.scene.get('BattleScene').enemiesStatusArray[i].destroy();
+                        }
                     }
                 }
                 else if (isPlayer === false){
@@ -1661,6 +1683,9 @@ var UIScene = new Phaser.Class({
                         players[i].unitStats.hp = players[i].unitStats.hp - this.damageDeltArray[i];
                         if (players[i].unitStats.hp < 0){
                             players[i].unitStats.hp = 0;
+                        }
+                        if(this.scene.get('BattleScene').heroesStatusArray[i]){
+                            this.scene.get('BattleScene').heroesStatusArray[i].destroy();
                         }
                     }
                 }
@@ -1676,6 +1701,9 @@ var UIScene = new Phaser.Class({
                         if (enemies[i].unitStats.hp < 0){
                             enemies[i].unitStats.hp = 0;
                          }
+                         if(this.scene.get('BattleScene').enemiesStatusArray[i]){
+                            this.scene.get('BattleScene').enemiesStatusArray[i].destroy();
+                         }
                     }
                 }
 
@@ -1686,6 +1714,9 @@ var UIScene = new Phaser.Class({
                         if (players[i].unitStats.hp < 0){
                             players[i].unitStats.hp = 0;
                         }
+                        if(this.scene.get('BattleScene').heroesStatusArray[i]){
+                            this.scene.get('BattleScene').heroesStatusArray[i].destroy();
+                        }
                     }
                 }
             }
@@ -1695,10 +1726,10 @@ var UIScene = new Phaser.Class({
             //now we search for the target's HP bar 
 
             if (multiTarget === false){
-                this.scene.get("BattleScene").updateMessageBox(player.unitName + " casts " + skillName + " on " + target.unitName);
+                this.scene.get("BattleScene").updateMessageBox(skillName);
             }
             else if (multiTarget === true){
-                this.scene.get("BattleScene").updateMessageBox(player.unitName + " casts " + skillName + " on all opposing units");
+                this.scene.get("BattleScene").updateMessageBox(skillName);
             }
 
 
@@ -1792,15 +1823,15 @@ var UIScene = new Phaser.Class({
                     UIarray[i].hp_bar.decrease(this.damageDeltArray[i]);
                     if(players[i].unitStatus === "paralyzed"){
                         var status = this.add.sprite(1280 - 500, 1024 - 22 - 3*95 + i*90, "paralysis").setInteractive();
-                        this.scene.get('BattleScene').heroesStatusArray.push(status);
+                        this.scene.get('BattleScene').heroesStatusArray[i] = status;
                     }
                     if(players[i].unitStatus === "poisoned"){
                         var status = this.add.sprite(1280 - 500, 1024 - 22 - 3*95 + i*90, "poison").setInteractive();
-                        this.scene.get('BattleScene').heroesStatusArray.push(status);
+                        this.scene.get('BattleScene').heroesStatusArray[i] = status;
                     }
                     if(players[i].unitStatus === "attackdown"){
                         var status = this.add.sprite(1280 - 500, 1024 - 22 - 3*95 + i*90, "attackdown").setInteractive();
-                        this.scene.get('BattleScene').heroesStatusArray.push(status);
+                        this.scene.get('BattleScene').heroesStatusArray[i] = status;
                     }
                     if (target.unitStats.hp === 0){
                         UIarray[i].hp_text.setText(target.unitStats.hp.toString() + "/" + target.unitStats.maxHP.toString());
@@ -1887,17 +1918,17 @@ var UIScene = new Phaser.Class({
                     if (players[i].unitStatus === "paralyzed"){
                         //update the UI accordingly
                         var status = this.add.sprite(1280 - 500, 1024 - 22 - 3*95 + i*90, "paralysis").setInteractive();
-                        this.scene.get('BattleScene').heroesStatusArray.push(status);
+                        this.scene.get('BattleScene').heroesStatusArray[i] = status;
                     }
                     if (players[i].unitStatus === "poisoned"){
                         //update the UI accordingly
                         var status = this.add.sprite(1280 - 500, 1024 - 22 - 3*95 + i*90, "poison").setInteractive();
-                        this.scene.get('BattleScene').heroesStatusArray.push(status);
+                        this.scene.get('BattleScene').heroesStatusArray[i] = status;
                     }
                     if (players[i].unitStatus === "attackdown"){
                         //update the UI accordingly
                         var status = this.add.sprite(1280 - 500, 1024 - 22 - 3*95 + i*90, "attackdown").setInteractive();
-                        this.scene.get('BattleScene').heroesStatusArray.push(status);
+                        this.scene.get('BattleScene').heroesStatusArray[i] = status;
                     }
                     UIarray[i].hp_text.setText(players[i].unitStats.hp.toString() + "/" + players[i].unitStats.maxHP.toString());
                 }
@@ -1932,8 +1963,267 @@ var UIScene = new Phaser.Class({
             this.scene.pause('UIScene');
         }
     },
-    heal: function(){
-        alert();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    heal: function(player, target, method_of_attack, skillName, isPlayer){
+
+            var damagehealed = Math.floor((player.unitStats.atk)/2); //array of damages 
+
+            if (damagehealed < 0){
+                damagehealed = 0;
+            }
+
+            if(isPlayer === true){
+                for (var i = 0; i < players.length; i++){
+                    this.damageHealedArray[i] = damagehealed;
+                }
+            }
+            else if (isPlayer === false){
+                //if it is enemy
+                for (var i = 0; i < enemies.length; i++){
+                    this.damageHealedArray[i] = damagehealed;
+                }
+            }
+
+            var mpRequired = 0; //mpRequired variable 
+            var multiTarget = false; //whether or not its multi target
+            //there are also no such thing as critical hit in skill
+            //if (target.isGuarding === true){
+                //damagedelt = Math.floor(damagedelt/2); //guarding from magic also halves damage
+            //}
+            
+
+            //now go through the list of all the skills via skill names
+            //there are 3 types. normal magic that deals 1x magic does not get included in this if list, only those that are special do
+            //there are also enemy exclusive skills that do not do anything. 
+            if (skillName === "Light" || skillName === "Prayer" || skillName === "God's Voice" 
+             || skillName === "Encore" || skillName === "God's Benevolence"){
+                mpRequired = 2;
+                var currentHP = target.unitStats.hp; //get the current HP 
+                target.unitStats.hp = target.unitStats.hp + damagehealed;
+                if (target.unitStats.hp > target.unitStats.maxHP){
+                    target.unitStats.hp = target.unitStats.maxHP;
+                    damagehealed = target.unitStats.maxHP - currentHP;
+                }
+                for(var i = 0; i < players.length; i++){
+                    if (target.unitName === players.unitName){
+                        this.damageHealedArray[i] = damagehealed;
+                    }
+                }
+                target.unitStatus = null; //heals any status effects and clears them
+            }
+            else if (skillName === "Rally Attack" || skillName === "Graceful Light"){
+                var damagehealed2 = Math.floor(damagehealed * 1.5);
+                //damagedelt = Math.floor(damagedelt * 1.5);
+                mpRequired = 2;
+                multiTarget = true; //set to true
+                if (isPlayer === false){
+                    for (var i = 0; i < enemies.length; i++){
+                        var currentHP = enemies[i].unitStats.hp; //get the current HP 
+                        enemies[i].unitStatus = null;
+                        enemies[i].unitStats.hp = enemies[i].unitStats.hp + damagehealed;
+                        if (enemies[i].unitStats.hp > enemies[i].unitStats.maxHP){
+                            enemies[i].unitStats.hp = enemies[i].unitStats.maxHP;
+                            damagehealed2 = enemies[i].unitStats.maxHP - currentHP;
+                            this.damageHealedArray[i] = damagehealed2;
+                        }
+                    }
+                }
+                else if (isPlayer === true){
+                    for (var i = 0; i < players.length; i++){
+                        var currentHP = players[i].unitStats.hp
+                        players[i].unitStatus = null;
+                        players[i].unitStats.hp = players[i].unitStats.hp + damagehealed;
+                        if (players[i].unitStats.hp > players[i].unitStats.maxHP){
+                            players[i].unitStats.hp = players[i].unitStats.maxHP;
+                            damagehealed2 = players[i].unitStats.maxHP - currentHP;
+                            this.damageHealedArray[i] = damagehealed2;
+                        }
+                    }
+                }
+
+            }
+
+
+            else{
+                //nothing happens
+            }
+            //now we search for the target's HP bar 
+
+            if (multiTarget === false){
+                this.scene.get("BattleScene").updateMessageBox(skillName);
+            }
+            else if (multiTarget === true){
+                this.scene.get("BattleScene").updateMessageBox(skillName);
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            this.damageText = [];
+
+            for (var i = 0; i < this.battleScene.heroes.length; i++){
+                if (player === this.battleScene.heroes[i].playerInformation){
+                    this.battleScene.heroes[i].anims.play(player.unitAnimations[2], false);
+                    var hero = this.battleScene.heroes[i];
+                    this.battleScene.heroes[i].on("animationcomplete", 
+                    ()=>{hero.anims.play(player.unitAnimations[0], true)});
+                    var temp_mp = player.unitStats.mp - mpRequired;
+                    if (temp_mp < 0){
+                        //if there is not enough mp 
+                        mpRequired = 0;
+                        this.scene.get("BattleScene").updateMessageBox(player.unitName + " doesn't have enough MP!");
+                    }
+                    else{
+                        player.unitStats.mp = temp_mp;
+                    }
+
+                    break;
+                }
+            }
+            for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
+                if (player === this.battleScene.enemiesArray[i].playerInformation){
+                    this.battleScene.enemiesArray[i].anims.play(player.unitAnimations[2], false);
+                    var enem = this.battleScene.enemiesArray[i];
+                    this.battleScene.enemiesArray[i].on("animationcomplete", 
+                    ()=>{enem.anims.play(player.unitAnimations[0], true)});
+                    break;
+                }
+            }
+
+            if (multiTarget === false){
+
+            for (var i = 0; i < EnemyUIarray.length; i++){
+                if (EnemyUIarray[i].name === target.unitName){
+                    EnemyUIarray[i].hp_bar.increase(this.damageHealedArray[i]);
+                    if (enemies[i].unitStatus === null &&  this.scene.get('BattleScene').enemiesStatusArray[i]){
+                        //update the UI accordingly
+                        this.scene.get('BattleScene').enemiesStatusArray[i].destroy();
+                        this.scene.get('BattleScene').enemiesStatusArray[i] = null;
+                    }
+
+                }
+            }
+            //for heroes taking damage. 
+            for (var i = 0; i < UIarray.length; i++){
+                if (UIarray[i].name === player.unitName){
+                    //this is for decreasing magic
+                    UIarray[i].mp_bar.decrease(mpRequired);
+                    UIarray[i].mp_text.setText(player.unitStats.mp.toString() + "/" + player.unitStats.maxMP.toString());
+                }
+                if (UIarray[i].name === target.unitName){
+                    UIarray[i].hp_bar.increase(this.damageHealedArray[i]);
+                    if(players[i].unitStatus === null && this.scene.get('BattleScene').heroesStatusArray[i]){
+                        this.scene.get('BattleScene').heroesStatusArray[i].destroy();
+                        this.scene.get('BattleScene').heroesStatusArray[i] = null;
+                        console.log("found");
+                    }
+                     UIarray[i].hp_text.setText(target.unitStats.hp.toString() + "/" + target.unitStats.maxHP.toString());
+                }
+            }
+
+            //damage text indicators
+            for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
+                if (target === this.battleScene.enemiesArray[i].playerInformation){
+                    this.damageText.push(this.battleScene.add.text(this.battleScene.enemiesArray[i].x - 20,this.battleScene.enemiesArray[i].y - 100, "+" + this.damageHealedArray[i],
+                    { color: "#228B22", align: "center",fontWeight: 
+                    'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}));}
+                    timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
+
+            }
+            for (var i = 0; i <this.battleScene.heroes.length; i++){
+                if (target === this.battleScene.heroes[i].playerInformation){
+                    this.damageText.push(this.battleScene.add.text(this.battleScene.heroes[i].x - 20, this.battleScene.heroes[i].y - 100, "+" + this.damageHealedArray[i],
+                    { color: "#228B22", align: "center",fontWeight: 
+                    'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}));
+                    timedEvent2 = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
+                }
+            }
+            }
+
+
+            else if (multiTarget === true && isPlayer === false){
+                for (var i = 0; i < EnemyUIarray.length; i++){
+                    EnemyUIarray[i].hp_bar.increase(this.damageHealedArray[i]);
+                    if (enemies[i].unitStatus === null && this.scene.get('BattleScene').enemiesStatusArray[i]){
+                        //update the UI accordingly
+                        this.scene.get('BattleScene').enemiesStatusArray[i].destroy();
+                        this.scene.get('BattleScene').enemiesStatusArray[i] = null;
+                    }
+
+                }
+                for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
+
+                        this.damageText.push(this.battleScene.add.text(this.battleScene.enemiesArray[i].x - 20,this.battleScene.enemiesArray[i].y - 100, "+" + damagehealed,
+                        { color: "#228B22", align: "center",fontWeight: 
+                        'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}));
+                        timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
+            
+                }
+            }
+
+            else if (multiTarget === true && isPlayer === true){
+                for (var i = 0; i < UIarray.length; i++){
+                    UIarray[i].hp_bar.increase(this.damageHealedArray[i]);
+                    
+                    if (players[i].unitStatus === null && this.scene.get('BattleScene').heroesStatusArray[i]){
+                        this.scene.get('BattleScene').heroesStatusArray[i].destroy();
+                        this.scene.get('BattleScene').heroesStatusArray[i] = null;
+                        console.log(i);
+                    }
+                    if (UIarray[i].name === player.unitName){
+                        //this is for decreasing magic
+                        UIarray[i].mp_bar.decrease(mpRequired);
+                        UIarray[i].mp_text.setText(player.unitStats.mp.toString() + "/" + player.unitStats.maxMP.toString());
+                    }
+                    UIarray[i].hp_text.setText(players[i].unitStats.hp.toString() + "/" + players[i].unitStats.maxHP.toString());
+                }
+                for (var i = 0; i < this.battleScene.heroes.length; i++){
+                        this.damageText.push(this.battleScene.add.text(this.battleScene.heroes[i].x - 20,this.battleScene.heroes[i].y - 100, "+" + this.damageHealedArray[i],
+                        { color: "#228B22", align: "center",fontWeight: 
+                        'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}));
+                        timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
+                }
+            }
+
+
+
+            
+            
+            this.scene.get('BattleScene').time.addEvent({ delay: 2000, callback: this.battleScene.nextTurn, callbackScope: this.battleScene});   
+            //stopping player from clicking on any buttons during animation
+            this.scene.pause('UIScene');
     },
     //deletes the damage text
     deleteDamageIndicator: function(){
@@ -3359,6 +3649,12 @@ class HealthBar {
         return (this.value === 0);
     }
 
+    increase (amount)
+    {
+        this.value += amount;
+        this.draw();
+    }
+
     draw ()
     {
         this.bar.clear();
@@ -3387,6 +3683,10 @@ class HealthBar {
         }
         if (d%2>0){
             d = d + 1;
+        }
+
+        if (d>200){
+            d = 200;
         }
 
         this.bar.fillRect(this.x + 2, this.y + 2, d, 12);
