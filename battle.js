@@ -2031,7 +2031,7 @@ var UIScene = new Phaser.Class({
                 }
                 target.unitStatus = null; //heals any status effects and clears them
             }
-            else if (skillName === "Rally Attack" || skillName === "Graceful Light"){
+            else if (skillName === "Graceful Light"){
                 var damagehealed2 = Math.floor(damagehealed * 1.5);
                 //damagedelt = Math.floor(damagedelt * 1.5);
                 mpRequired = 2;
@@ -2061,6 +2061,45 @@ var UIScene = new Phaser.Class({
                     }
                 }
 
+            }
+
+            else if (skillName === "Rally Attack"){
+                var damagehealed2 = Math.floor(damagehealed * 1.5);
+                //damagedelt = Math.floor(damagedelt * 1.5);
+                mpRequired = 2;
+                multiTarget = true; //set to true
+                if (isPlayer === false){
+                    for (var i = 0; i < enemies.length; i++){
+                        if (this.scene.get('BattleScene').enemiesStatusArray[i]){
+                            this.scene.get('BattleScene').enemiesStatusArray[i].destroy();
+                            this.scene.get('BattleScene').enemiesStatusArray[i] = null;
+                        }
+                        var currentHP = enemies[i].unitStats.hp; //get the current HP 
+                        enemies[i].unitStatus = "attackup";
+                        enemies[i].unitStats.hp = enemies[i].unitStats.hp + damagehealed;
+                        if (enemies[i].unitStats.hp > enemies[i].unitStats.maxHP){
+                            enemies[i].unitStats.hp = enemies[i].unitStats.maxHP;
+                            damagehealed2 = enemies[i].unitStats.maxHP - currentHP;
+                            this.damageHealedArray[i] = damagehealed2;
+                        }
+                    }
+                }
+                else if (isPlayer === true){
+                    for (var i = 0; i < players.length; i++){
+                        if(this.scene.get('BattleScene').heroesStatusArray[i]){
+                            this.scene.get('BattleScene').heroesStatusArray[i].destroy();
+                            this.scene.get('BattleScene').heroesStatusArray[i] = null;
+                        }
+                        var currentHP = players[i].unitStats.hp
+                        players[i].unitStatus = "attackup";
+                        players[i].unitStats.hp = players[i].unitStats.hp + damagehealed;
+                        if (players[i].unitStats.hp > players[i].unitStats.maxHP){
+                            players[i].unitStats.hp = players[i].unitStats.maxHP;
+                            damagehealed2 = players[i].unitStats.maxHP - currentHP;
+                            this.damageHealedArray[i] = damagehealed2;
+                        }
+                    }
+                }
             }
 
 
@@ -2132,6 +2171,11 @@ var UIScene = new Phaser.Class({
                         this.scene.get('BattleScene').enemiesStatusArray[i].destroy();
                         this.scene.get('BattleScene').enemiesStatusArray[i] = null;
                     }
+                    if (enemies[i].unitStatus === "attackup"){
+                        //update the UI accordingly
+                        var status = this.add.sprite(180, 1024 - 9 - 3*95 + i*120, "attackup").setInteractive();
+                        this.scene.get('BattleScene').enemiesStatusArray.push(status);
+                    }
 
                 }
             }
@@ -2148,6 +2192,10 @@ var UIScene = new Phaser.Class({
                         this.scene.get('BattleScene').heroesStatusArray[i].destroy();
                         this.scene.get('BattleScene').heroesStatusArray[i] = null;
                         console.log("found");
+                    }
+                    if(players[i].unitStatus === "attackup"){
+                        var status = this.add.sprite(1280 - 500, 1024 - 22 - 3*95 + i*90, "attackup").setInteractive();
+                        this.scene.get('BattleScene').heroesStatusArray[i] = status;
                     }
                      UIarray[i].hp_text.setText(target.unitStats.hp.toString() + "/" + target.unitStats.maxHP.toString());
                 }
@@ -2181,6 +2229,11 @@ var UIScene = new Phaser.Class({
                         this.scene.get('BattleScene').enemiesStatusArray[i].destroy();
                         this.scene.get('BattleScene').enemiesStatusArray[i] = null;
                     }
+                    if (enemies[i].unitStatus === "attackup"){
+                        //update the UI accordingly
+                        var status = this.add.sprite(180, 1024 - 9 - 3*95 + i*120, "attackup").setInteractive();
+                        this.scene.get('BattleScene').enemiesStatusArray.push(status);
+                    }
 
                 }
                 for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
@@ -2201,6 +2254,10 @@ var UIScene = new Phaser.Class({
                         this.scene.get('BattleScene').heroesStatusArray[i].destroy();
                         this.scene.get('BattleScene').heroesStatusArray[i] = null;
                         console.log(i);
+                    }
+                    if(players[i].unitStatus === "attackup"){
+                        var status = this.add.sprite(1280 - 500, 1024 - 22 - 3*95 + i*90, "attackup").setInteractive();
+                        this.scene.get('BattleScene').heroesStatusArray[i] = status;
                     }
                     if (UIarray[i].name === player.unitName){
                         //this is for decreasing magic
