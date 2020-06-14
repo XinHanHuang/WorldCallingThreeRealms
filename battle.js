@@ -215,6 +215,7 @@ var BattleScene = new Phaser.Class({
         EnemyUIarray.length = 0;
         this.enemiesStatusArray.length = 0;
         this.heroesStatusArray.length = 0;
+        //this.damageDeltArray.length = 0;
         for (var i = 0; i < players.length; i++){
             players[i].unitStats.hp = players[i].unitStats.maxHP;
             players[i].unitStats.mp = players[i].unitStats.maxMP;
@@ -496,6 +497,7 @@ var UIScene = new Phaser.Class({
         var skillsArray = []; //text that stores all the skills in an array
         var graphicsArray = [];
         var textsArray = [];
+        this.damageDeltArray = []; //array of damage delt for different calculations for each (multi attack only)
         for (var i = 0; i < 6; i++){
             if (menus[i] === "attack"){
                 var temp = this.add.sprite(560, 1024 - 3*95 - 58 + i*60, menus[i]).setInteractive();
@@ -1175,36 +1177,93 @@ var UIScene = new Phaser.Class({
 
 
         if (method_of_attack === "skill"){
-            var damagedelt = player.unitStats.atk - target.unitStats.res; //skill is magical damage, calulcated using res instead of def
-            if (damagedelt < 0){
-                damagedelt = 0;
+            if (isPlayer === true){
+            for (var i = 0; i < enemies.length; i++){
+                var damagedelt = player.unitStats.atk - enemies[i].unitStats.res; //array of damages 
+                if (damagedelt < 0){
+                    damagedelt = 0;
+                }
+                this.damageDeltArray[i] = damagedelt;
             }
+            }
+            else if (isPlayer === false){
+                for (var i = 0; i < players.length; i++){
+                    var damagedelt = player.unitStats.atk - players[i].unitStats.res;
+                    if (damagedelt < 0){
+                        damagedelt = 0;
+                    }
+                    if (players[i].isGuarding === true){
+                        damagedelt = Math.floor(damagedelt/2);
+                    }
+                    this.damageDeltArray[i] = damagedelt;
+                }
+                
+
+            }
+            //var damagedelt = player.unitStats.atk - target.unitStats.res; //skill is magical damage, calulcated using res instead of def
+            //if (damagedelt < 0){
+                //damagedelt = 0;
+            //}
             var mpRequired = 0; //mpRequired variable 
             var multiTarget = false; //whether or not its multi target
             //there are also no such thing as critical hit in skill
-            if (target.isGuarding === true){
-                damagedelt = Math.floor(damagedelt/2); //guarding from magic also halves damage
-            }
-            this.scene.get("BattleScene").updateMessageBox(player.unitName + " casts " + skillName + " on " + target.unitName);
+            //if (target.isGuarding === true){
+                //damagedelt = Math.floor(damagedelt/2); //guarding from magic also halves damage
+            //}
+            
 
             //now go through the list of all the skills via skill names
             //there are 3 types. normal magic that deals 1x magic does not get included in this if list, only those that are special do
             //there are also enemy exclusive skills that do not do anything. 
             if (skillName === "Fire Magic" || skillName === "Water Magic" || skillName === "Earth Magic" 
              || skillName === "Light Magic" || skillName === "Dark Magic"){
-                damagedelt = damagedelt;
                 mpRequired = 5;
-                target.unitStats.hp = target.unitStats.hp - damagedelt;
+                for (var i = 0; i < players.length; i++){
+                    if (players[i].unitName === target.unitName){
+                        //if the unit's name matches the i
+                        target.unitStats.hp = target.unitStats.hp - this.damageDeltArray[i];
+                    }
+                    if (target.unitStats.hp < 0){
+                        target.unitStats.hp = 0;
+                    }
+                }
+                for (var i = 0; i < enemies.length; i++){
+                    if (enemies[i].unitName === target.unitName){
+                        //if the unit's name matches the i
+                        target.unitStats.hp = target.unitStats.hp - this.damageDeltArray[i];
+                    }
+                    if (target.unitStats.hp < 0){
+                        target.unitStats.hp = 0;
+                    }
+                }
+                //target.unitStats.hp = target.unitStats.hp - this.damageDeltArray[0];
                 if (target.unitStats.hp < 0){
                     target.unitStats.hp = 0;
                 }
             }
             else if (skillName === "Pure Halo" || skillName === "Shining Light"){
-                damagedelt = Math.floor(damagedelt * 1.5);
-                mpRequired = 10;
-                target.unitStats.hp = target.unitStats.hp - damagedelt;
-                if (target.unitStats.hp < 0){
-                    target.unitStats.hp = 0;
+                for (var i = 0; i < this.damageDeltArray.length; i++){
+                    this.damageDeltArray[i] = Math.floor(this.damageDeltArray[i] * 1.5);
+                }
+                //damagedelt = Math.floor(damagedelt * 1.5);
+                mpRequired = 20;
+                for (var i = 0; i < players.length; i++){
+                    if (players[i].unitName === target.unitName){
+                        //if the unit's name matches the i
+                        target.unitStats.hp = target.unitStats.hp - this.damageDeltArray[i];
+                    }
+                    if (target.unitStats.hp < 0){
+                        target.unitStats.hp = 0;
+                    }
+                }
+                for (var i = 0; i < enemies.length; i++){
+                    if (enemies[i].unitName === target.unitName){
+                        //if the unit's name matches the i
+                        target.unitStats.hp = target.unitStats.hp - this.damageDeltArray[i];
+                    }
+                    if (target.unitStats.hp < 0){
+                        target.unitStats.hp = 0;
+                    }
                 }
             }
             else if (skillName === "Chaos" || skillName === "Thunderbrand"){
@@ -1212,18 +1271,46 @@ var UIScene = new Phaser.Class({
                 //also inflicts paralysis. (Status effects generally handled in 'next turn')
                 //if (target.unitName === "Alyene", not paralyzed or something here)
                 target.unitStatus = "paralyzed"; //set paralyzed to unit status
-                target.unitStats.hp = target.unitStats.hp - damagedelt;
-                if (target.unitStats.hp < 0){
-                    target.unitStats.hp = 0;
+                for (var i = 0; i < players.length; i++){
+                    if (players[i].unitName === target.unitName){
+                        //if the unit's name matches the i
+                        target.unitStats.hp = target.unitStats.hp - this.damageDeltArray[i];
+                    }
+                    if (target.unitStats.hp < 0){
+                        target.unitStats.hp = 0;
+                    }
+                }
+                for (var i = 0; i < enemies.length; i++){
+                    if (enemies[i].unitName === target.unitName){
+                        //if the unit's name matches the i
+                        target.unitStats.hp = target.unitStats.hp - this.damageDeltArray[i];
+                    }
+                    if (target.unitStats.hp < 0){
+                        target.unitStats.hp = 0;
+                    }
                 }
             }
 
             else if (skillName === "Spirit Break"){
                 mpRequired = 5;
                 target.unitStatus = "attackdown";
-                target.unitStats.hp = target.unitStats.hp - damagedelt;
-                if (target.unitStats.hp < 0){
-                    target.unitStats.hp = 0;
+                for (var i = 0; i < players.length; i++){
+                    if (players[i].unitName === target.unitName){
+                        //if the unit's name matches the i
+                        target.unitStats.hp = target.unitStats.hp - this.damageDeltArray[i];
+                    }
+                    if (target.unitStats.hp < 0){
+                        target.unitStats.hp = 0;
+                    }
+                }
+                for (var i = 0; i < enemies.length; i++){
+                    if (enemies[i].unitName === target.unitName){
+                        //if the unit's name matches the i
+                        target.unitStats.hp = target.unitStats.hp - this.damageDeltArray[i];
+                    }
+                    if (target.unitStats.hp < 0){
+                        target.unitStats.hp = 0;
+                    }
                 }
 
             }
@@ -1234,7 +1321,7 @@ var UIScene = new Phaser.Class({
                 if (isPlayer === true){
                     for (var i = 0; i < enemies.length; i++){
                         enemies[i].unitStatus = "paralyzed";
-                        enemies[i].unitStats.hp = enemies[i].unitStats.hp - damagedelt;
+                        enemies[i].unitStats.hp = enemies[i].unitStats.hp - this.damageDeltArray[i];
                         if (enemies[i].unitStats.hp < 0){
                             enemies[i].unitStats.hp = 0;
                         }
@@ -1243,7 +1330,7 @@ var UIScene = new Phaser.Class({
                 else if (isPlayer === false){
                     for (var i = 0; i < players.length; i++){
                         players[i].unitStatus = "paralyzed";
-                        players[i].unitStats.hp = players[i].unitStats.hp - damagedelt;
+                        players[i].unitStats.hp = players[i].unitStats.hp - this.damageDeltArray[i];
                         if (players[i].unitStats.hp < 0){
                             players[i].unitStats.hp = 0;
                         }
@@ -1257,7 +1344,7 @@ var UIScene = new Phaser.Class({
                 if (isPlayer === true){
                     for (var i = 0; i < enemies.length; i++){
                         enemies[i].unitStatus = "poisoned";
-                        enemies[i].unitStats.hp = enemies[i].unitStats.hp - damagedelt;
+                        enemies[i].unitStats.hp = enemies[i].unitStats.hp - this.damageDeltArray[i];
                         if (enemies[i].unitStats.hp < 0){
                             enemies[i].unitStats.hp = 0;
                          }
@@ -1267,7 +1354,7 @@ var UIScene = new Phaser.Class({
                 else if (isPlayer === false){
                     for (var i = 0; i < players.length; i++){
                         players[i].unitStatus = "poisoned";
-                        players[i].unitStats.hp = players[i].unitStats.hp - damagedelt;
+                        players[i].unitStats.hp = players[i].unitStats.hp - this.damageDeltArray[i];
                         if (players[i].unitStats.hp < 0){
                             players[i].unitStats.hp = 0;
                         }
@@ -1279,7 +1366,12 @@ var UIScene = new Phaser.Class({
             }
             //now we search for the target's HP bar 
 
-
+            if (multiTarget === false){
+                this.scene.get("BattleScene").updateMessageBox(player.unitName + " casts " + skillName + " on " + target.unitName);
+            }
+            else if (multiTarget === true){
+                this.scene.get("BattleScene").updateMessageBox(player.unitName + " casts " + skillName + " on all opposing units");
+            }
 
 
 
@@ -1301,19 +1393,22 @@ var UIScene = new Phaser.Class({
             for (var i = 0; i < this.battleScene.heroes.length; i++){
                 if (player === this.battleScene.heroes[i].playerInformation){
                     this.battleScene.heroes[i].anims.play(player.unitAnimations[2], false);
+                    var hero = this.battleScene.heroes[i];
+                    this.battleScene.heroes[i].on("animationcomplete", 
+                    ()=>{hero.anims.play(player.unitAnimations[0], true)});
                     var temp_mp = player.unitStats.mp - mpRequired;
                     if (temp_mp < 0){
                         //if there is not enough mp 
                         mpRequired = 0;
-                        damagedelt = 0;
+                        for (var i = 0; i < this.damageDeltArray.length; i++){
+                            this.damageDeltArray[i] = 0;
+                        }
                         this.scene.get("BattleScene").updateMessageBox(player.unitName + " doesn't have enough MP!");
                     }
                     else{
                         player.unitStats.mp = temp_mp;
                     }
-                    var hero = this.battleScene.heroes[i];
-                    this.battleScene.heroes[i].on("animationcomplete", 
-                    ()=>{hero.anims.play(player.unitAnimations[0], true)});
+
                     break;
                 }
             }
@@ -1331,7 +1426,7 @@ var UIScene = new Phaser.Class({
 
             for (var i = 0; i < EnemyUIarray.length; i++){
                 if (EnemyUIarray[i].name === target.unitName){
-                    EnemyUIarray[i].hp_bar.decrease(damagedelt);
+                    EnemyUIarray[i].hp_bar.decrease(this.damageDeltArray[i]);
                     if (enemies[i].unitStatus === "paralyzed"){
                         //update the UI accordingly
                         var status = this.add.sprite(180, 1024 - 9 - 3*95 + i*120, "paralysis").setInteractive();
@@ -1366,7 +1461,7 @@ var UIScene = new Phaser.Class({
                     UIarray[i].mp_text.setText(player.unitStats.mp.toString() + "/" + player.unitStats.maxMP.toString());
                 }
                 if (UIarray[i].name === target.unitName){
-                    UIarray[i].hp_bar.decrease(damagedelt);
+                    UIarray[i].hp_bar.decrease(this.damageDeltArray[i]);
                     if(players[i].unitStatus === "paralyzed"){
                         var status = this.add.sprite(1280 - 500, 1024 - 22 - 3*95 + i*90, "paralysis").setInteractive();
                         this.scene.get('BattleScene').heroesStatusArray.push(status);
@@ -1397,7 +1492,7 @@ var UIScene = new Phaser.Class({
             //damage text indicators
             for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
                 if (target === this.battleScene.enemiesArray[i].playerInformation){
-                    this.damageText.push(this.battleScene.add.text(this.battleScene.enemiesArray[i].x - 20,this.battleScene.enemiesArray[i].y - 100, "-" + damagedelt,
+                    this.damageText.push(this.battleScene.add.text(this.battleScene.enemiesArray[i].x - 20,this.battleScene.enemiesArray[i].y - 100, "-" + this.damageDeltArray[i],
                     { color: "#ff0000", align: "center",fontWeight: 
                     'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}));}
                     timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
@@ -1405,7 +1500,7 @@ var UIScene = new Phaser.Class({
             }
             for (var i = 0; i <this.battleScene.heroes.length; i++){
                 if (target === this.battleScene.heroes[i].playerInformation){
-                    this.damageText.push(this.battleScene.add.text(this.battleScene.heroes[i].x - 20, this.battleScene.heroes[i].y - 100, "-" + damagedelt,
+                    this.damageText.push(this.battleScene.add.text(this.battleScene.heroes[i].x - 20, this.battleScene.heroes[i].y - 100, "-" + this.damageDeltArray[i],
                     { color: "#ff0000", align: "center",fontWeight: 
                     'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}));
                     timedEvent2 = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
@@ -1416,7 +1511,7 @@ var UIScene = new Phaser.Class({
 
             else if (multiTarget === true && isPlayer === true){
                 for (var i = 0; i < EnemyUIarray.length; i++){
-                    EnemyUIarray[i].hp_bar.decrease(damagedelt);
+                    EnemyUIarray[i].hp_bar.decrease(this.damageDeltArray[i]);
                     if (enemies[i].unitStats.hp === 0){
                         this.battleScene.enemiesArray[i].living = false;
                         this.battleScene.enemiesArray[i].anims.play(enemies[i].unitAnimations[3], false);
@@ -1444,7 +1539,7 @@ var UIScene = new Phaser.Class({
                 }
                 for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
 
-                        this.damageText.push(this.battleScene.add.text(this.battleScene.enemiesArray[i].x - 20,this.battleScene.enemiesArray[i].y - 100, "-" + damagedelt,
+                        this.damageText.push(this.battleScene.add.text(this.battleScene.enemiesArray[i].x - 20,this.battleScene.enemiesArray[i].y - 100, "-" + this.damageDeltArray[i],
                         { color: "#ff0000", align: "center",fontWeight: 
                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}));
                         timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
@@ -1454,8 +1549,8 @@ var UIScene = new Phaser.Class({
 
             else if (multiTarget === true && isPlayer === false){
                 for (var i = 0; i < UIarray.length; i++){
-                    console.log(damagedelt);
-                    UIarray[i].hp_bar.decrease(damagedelt);
+                    console.log(this.damageDeltArray[i]);
+                    UIarray[i].hp_bar.decrease(this.damageDeltArray[i]);
                     if (players[i].unitStats.hp === 0){
                         this.battleScene.heroes[i].living = false;
                         this.battleScene.heroes[i].anims.play(players[i].unitAnimations[3], false);
@@ -1479,7 +1574,7 @@ var UIScene = new Phaser.Class({
                     UIarray[i].hp_text.setText(players[i].unitStats.hp.toString() + "/" + players[i].unitStats.maxHP.toString());
                 }
                 for (var i = 0; i < this.battleScene.heroes.length; i++){
-                        this.damageText.push(this.battleScene.add.text(this.battleScene.heroes[i].x - 20,this.battleScene.heroes[i].y - 100, "-" + damagedelt,
+                        this.damageText.push(this.battleScene.add.text(this.battleScene.heroes[i].x - 20,this.battleScene.heroes[i].y - 100, "-" + this.damageDeltArray[i],
                         { color: "#ff0000", align: "center",fontWeight: 
                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}));
                         timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});

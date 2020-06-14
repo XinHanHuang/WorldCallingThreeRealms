@@ -221,11 +221,11 @@ var WorldScene = new Phaser.Class({
         unitReenaSkills1 = new unitSkills("Rightful God","Negates the damage bonus from enemy critical hits", "rightfulgod");
         unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
         unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
-        unitReenaStats = new unitStats(28, 20, 45, 16, 20, 20, 7); //this is Reena's current stats
+        unitReenaStats = new unitStats(28, 20, 45, 16, 21, 20, 7); //this is Reena's current stats
         reenaAnimations = ['left', 'right', 'attack', 'defeated'];
         //create a new unit information that stores all of Reena's information 
         unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
-        unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x physical damage to opponent", 10, "magic", "single", "purehalo");
+        unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x physical damage to opponent", 20, "magic", "single", "purehalo");
         unitReenaBattleSkills3 = new unitBattleSkills("Chaos", "inflicts paralysis and deals damage", 5, "magic", "single", "chaos");
         unitReenaBattleSkills4 = new unitBattleSkills("Pure Chaos", "inflicts attack down effect to all opponents", 5, "magic", "single", "purechaos");
         unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2, unitReenaBattleSkills3, unitReenaBattleSkills4];
@@ -238,7 +238,7 @@ var WorldScene = new Phaser.Class({
         unitReenaSkills1 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
         unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
         unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
-        unitReenaStats = new unitStats(28, 20, 45, 16, 20, 20, 7); //this is Reena's current stats
+        unitReenaStats = new unitStats(28, 20, 45, 16, 22, 20, 7); //this is Reena's current stats
         reenaAnimations = ['left', 'right', 'attack', 'defeated'];
         //create a new unit information that stores all of Reena's information 
         unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
@@ -254,7 +254,7 @@ var WorldScene = new Phaser.Class({
         unitReenaSkills1 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
         unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
         unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
-        unitReenaStats = new unitStats(28, 20, 45, 16, 20, 20, 7); //this is Reena's current stats
+        unitReenaStats = new unitStats(28, 20, 45, 16, 23, 20, 7); //this is Reena's current stats
         reenaAnimations = ['left', 'right', 'attack', 'defeated'];
         //create a new unit information that stores all of Reena's information 
         unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
@@ -270,7 +270,7 @@ var WorldScene = new Phaser.Class({
         unitReenaSkills1 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
         unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
         unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
-        unitReenaStats = new unitStats(28, 20, 45, 16, 20, 20, 7); //this is Reena's current stats
+        unitReenaStats = new unitStats(28, 20, 45, 16, 25, 20, 7); //this is Reena's current stats
         reenaAnimations = ['left', 'right', 'attack', 'defeated'];
         //create a new unit information that stores all of Reena's information 
         unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
