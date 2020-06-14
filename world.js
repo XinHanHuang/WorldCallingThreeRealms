@@ -225,7 +225,7 @@ var WorldScene = new Phaser.Class({
         reenaAnimations = ['left', 'right', 'attack', 'defeated'];
         //create a new unit information that stores all of Reena's information 
         unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
-        unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x physical damage to opponent", 20, "magic", "single", "purehalo");
+        unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x physical damage to opponent", 20, "heal", "single", "purehalo");
         unitReenaBattleSkills3 = new unitBattleSkills("Chaos", "inflicts paralysis and deals damage", 5, "magic", "single", "chaos");
         unitReenaBattleSkills4 = new unitBattleSkills("Pure Chaos", "inflicts attack down effect to all opponents", 5, "magic", "single", "purechaos");
         unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2, unitReenaBattleSkills3, unitReenaBattleSkills4];
@@ -243,8 +243,8 @@ var WorldScene = new Phaser.Class({
         //create a new unit information that stores all of Reena's information 
         unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
         unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x magical damage to opponent", 10, "magic", "single", "purehalo");
-        unitReenaBattleSkills3 = new unitBattleSkills("Rally Attack", "raises all ally's defense", 10, "magic", "single", "rallyattack");
-        unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2];
+        unitReenaBattleSkills3 = new unitBattleSkills("Rally Attack", "raises all ally's defense", 10, "heal", "single", "rallyattack");
+        unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2, unitReenaBattleSkills3];
 
         //create a new unit information that stores all of Reena's information 
         unitReena1 = new unitInformation(this.reena, "Reena2", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
@@ -259,8 +259,8 @@ var WorldScene = new Phaser.Class({
         //create a new unit information that stores all of Reena's information 
         unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
         unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x physical damage to opponent", 10, "physical", "single", "purehalo");
-        unitReenaBattleSkills2 = new unitBattleSkills("Graceful Light", "Recovers HP for allies and nullifies all status effects", 10, "magic", "multiple", "gracefullight");
-        unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2];
+        unitReenaBattleSkills3 = new unitBattleSkills("Graceful Light", "Recovers HP for allies and nullifies all status effects", 10, "heal", "multiple", "gracefullight");
+        unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2, unitReenaBattleSkills3];
 
         //create a new unit information that stores all of Reena's information 
         unitReena1 = new unitInformation(this.reena, "Reena3", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
@@ -275,7 +275,8 @@ var WorldScene = new Phaser.Class({
         //create a new unit information that stores all of Reena's information 
         unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
         unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x physical damage to opponent", 10, "physical", "single", "purehalo");
-        unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2];
+        unitReenaBattleSkills3 = new unitBattleSkills("Light", "recovers HP for one ally and nullify status effects", 10, "heal", "single", "light");
+        unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2, unitReenaBattleSkills3];
 
         //create a new unit information that stores all of Reena's information 
         unitReena1 = new unitInformation(this.reena, "Reena4", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 

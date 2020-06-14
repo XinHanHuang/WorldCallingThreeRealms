@@ -637,6 +637,87 @@ var UIScene = new Phaser.Class({
                                 textsArray.length = 0;
                                 graphicsArray.length = 0;
                                 skillsArray.length = 0;
+                            if(currentPlayer.playerInformation.unitBattleSkills[0].type === "heal"){
+                                for (var i = 0; i < players.length + 1; i++){
+                                    if(i === players.length){
+                                        //if this is the last index, create an escape button
+                                        var escapetext2 = this.add.text(410, 1024 - 3*95 - 58 + i*60, "BACK",{ color: "#ffa500", align: "center",fontWeight: 
+                                        'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
+                                        escapetext2.on('pointerdown', (pointer)=>{
+                                            for (var i = 0; i < enemyTexts.length; i++){
+                                                enemyTexts[i].destroy();
+                                            }
+                                            enemyTexts.length = 0;
+                                            for (var i = 0; i < menuBackup.length; i++){
+                                                menuBackup[i].setActive(true).setVisible(true);
+                                            }
+                                        });
+                                        enemyTexts.push(escapetext2);
+                                 }
+                                    else if (i === 0){
+                                        var enemytext4 = this.add.text(410, 1024 - 3*95 - 58 + i*60, players[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
+                                        'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
+                                        enemytext4.on('pointerdown', (pointer)=>{
+                                            this.heal(currentPlayer.playerInformation, players[0], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName, true);
+                                            for (var i = 0; i < enemyTexts.length; i++){
+                                                enemyTexts[i].destroy();
+                                            }
+                                            enemyTexts.length = 0;
+                                            for (var i = 0; i < menuBackup.length; i++){
+                                                menuBackup[i].setActive(true).setVisible(true);
+                                            }
+                                        });
+                                        enemyTexts.push(enemytext4);
+                                    }
+                                    else if (i === 1){
+                                        var enemytext5 = this.add.text(410, 1024 - 3*95 - 58 + i*60, players[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
+                                        'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
+                                        enemytext5.on('pointerdown', (pointer)=>{
+                                            this.heal(currentPlayer.playerInformation, players[1], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName, true);
+                                            for (var i = 0; i < enemyTexts.length; i++){
+                                                enemyTexts[i].destroy();
+                                            }
+                                            enemyTexts.length = 0;
+                                            for (var i = 0; i < menuBackup.length; i++){
+                                                menuBackup[i].setActive(true).setVisible(true);
+                                            }
+                                        });
+                                        enemyTexts.push(enemytext5);
+                                    }
+                                
+                                    else if (i === 2){
+                                        var enemytext6 = this.add.text(410, 1024 - 3*95 - 58 + i*60, players[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
+                                        'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
+                                        enemytext6.on('pointerdown', (pointer)=>{
+                                            this.heal(currentPlayer.playerInformation, players[2], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName, true);
+                                            for (var i = 0; i < enemyTexts.length; i++){
+                                                enemyTexts[i].destroy();
+                                            }
+                                            enemyTexts.length = 0;
+                                            for (var i = 0; i < menuBackup.length; i++){
+                                                menuBackup[i].setActive(true).setVisible(true);
+                                            }
+                                        });
+                                        enemyTexts.push(enemytext6);
+                                    }
+                                    else if (i === 3){
+                                        var enemytext61 = this.add.text(410, 1024 - 3*95 - 58 + i*60, players[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
+                                        'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
+                                        enemytext61.on('pointerdown', (pointer)=>{
+                                            this.heal(currentPlayer.playerInformation, players[3], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName, true);
+                                            for (var i = 0; i < enemyTexts.length; i++){
+                                                enemyTexts[i].destroy();
+                                            }
+                                            enemyTexts.length = 0;
+                                            for (var i = 0; i < menuBackup.length; i++){
+                                                menuBackup[i].setActive(true).setVisible(true);
+                                            }
+                                        });
+                                        enemyTexts.push(enemytext61);
+                                    }
+                                }
+                            }
+                            else{
                             for (var i = 0; i < enemies.length + 1; i++){
                                 if(i === enemies.length){
                                     //if this is the last index, create an escape button
@@ -700,6 +781,7 @@ var UIScene = new Phaser.Class({
                                     enemyTexts.push(enemytext6);
                                 }
                             }
+                            }
                             });
                             skillsArray.push(skilltext1);
                         }
@@ -724,6 +806,87 @@ var UIScene = new Phaser.Class({
                                 textsArray.length = 0;
                                 graphicsArray.length = 0;
                                 skillsArray.length = 0;
+                                if(currentPlayer.playerInformation.unitBattleSkills[1].type === "heal"){
+                                    for (var i = 0; i < players.length + 1; i++){
+                                        if(i === players.length){
+                                            //if this is the last index, create an escape button
+                                            var escapetext2 = this.add.text(410, 1024 - 3*95 - 58 + i*60, "BACK",{ color: "#ffa500", align: "center",fontWeight: 
+                                            'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
+                                            escapetext2.on('pointerdown', (pointer)=>{
+                                                for (var i = 0; i < enemyTexts.length; i++){
+                                                    enemyTexts[i].destroy();
+                                                }
+                                                enemyTexts.length = 0;
+                                                for (var i = 0; i < menuBackup.length; i++){
+                                                    menuBackup[i].setActive(true).setVisible(true);
+                                                }
+                                            });
+                                            enemyTexts.push(escapetext2);
+                                     }
+                                        else if (i === 0){
+                                            var enemytext7 = this.add.text(410, 1024 - 3*95 - 58 + i*60, players[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
+                                            'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
+                                            enemytext7.on('pointerdown', (pointer)=>{
+                                                this.heal(currentPlayer.playerInformation, players[0], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName, true);
+                                                for (var i = 0; i < enemyTexts.length; i++){
+                                                    enemyTexts[i].destroy();
+                                                }
+                                                enemyTexts.length = 0;
+                                                for (var i = 0; i < menuBackup.length; i++){
+                                                    menuBackup[i].setActive(true).setVisible(true);
+                                                }
+                                            });
+                                            enemyTexts.push(enemytext7);
+                                        }
+                                        else if (i === 1){
+                                            var enemytext8 = this.add.text(410, 1024 - 3*95 - 58 + i*60, players[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
+                                            'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
+                                            enemytext8.on('pointerdown', (pointer)=>{
+                                                this.heal(currentPlayer.playerInformation, players[1], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName, true);
+                                                for (var i = 0; i < enemyTexts.length; i++){
+                                                    enemyTexts[i].destroy();
+                                                }
+                                                enemyTexts.length = 0;
+                                                for (var i = 0; i < menuBackup.length; i++){
+                                                    menuBackup[i].setActive(true).setVisible(true);
+                                                }
+                                            });
+                                            enemyTexts.push(enemytext8);
+                                        }
+                                    
+                                        else if (i === 2){
+                                            var enemytext9 = this.add.text(410, 1024 - 3*95 - 58 + i*60, players[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
+                                            'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
+                                            enemytext9.on('pointerdown', (pointer)=>{
+                                                this.heal(currentPlayer.playerInformation, players[2], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName, true);
+                                                for (var i = 0; i < enemyTexts.length; i++){
+                                                    enemyTexts[i].destroy();
+                                                }
+                                                enemyTexts.length = 0;
+                                                for (var i = 0; i < menuBackup.length; i++){
+                                                    menuBackup[i].setActive(true).setVisible(true);
+                                                }
+                                            });
+                                            enemyTexts.push(enemytext9);
+                                        }
+                                        else if (i === 3){
+                                            var enemytext91 = this.add.text(410, 1024 - 3*95 - 58 + i*60, players[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
+                                            'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
+                                            enemytext91.on('pointerdown', (pointer)=>{
+                                                this.heal(currentPlayer.playerInformation, players[3], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName, true);
+                                                for (var i = 0; i < enemyTexts.length; i++){
+                                                    enemyTexts[i].destroy();
+                                                }
+                                                enemyTexts.length = 0;
+                                                for (var i = 0; i < menuBackup.length; i++){
+                                                    menuBackup[i].setActive(true).setVisible(true);
+                                                }
+                                            });
+                                            enemyTexts.push(enemytext91);
+                                        }
+                                    }
+                                }
+                                else{
                                 for (var i = 0; i < enemies.length + 1; i++){
                                     if(i === enemies.length){
                                         //if this is the last index, create an escape button
@@ -787,6 +950,7 @@ var UIScene = new Phaser.Class({
                                         enemyTexts.push(enemytext9);
                                     }
                                 }
+                            }
 
                             });
                             skillsArray.push(skilltext2);
@@ -812,6 +976,87 @@ var UIScene = new Phaser.Class({
                                 textsArray.length = 0;
                                 graphicsArray.length = 0;
                                 skillsArray.length = 0;
+                                if(currentPlayer.playerInformation.unitBattleSkills[2].type === "heal"){
+                                    for (var i = 0; i < players.length + 1; i++){
+                                        if(i === players.length){
+                                            //if this is the last index, create an escape button
+                                            var escapetext3 = this.add.text(410, 1024 - 3*95 - 58 + i*60, "BACK",{ color: "#ffa500", align: "center",fontWeight: 
+                                            'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
+                                            escapetext3.on('pointerdown', (pointer)=>{
+                                                for (var i = 0; i < enemyTexts.length; i++){
+                                                    enemyTexts[i].destroy();
+                                                }
+                                                enemyTexts.length = 0;
+                                                for (var i = 0; i < menuBackup.length; i++){
+                                                    menuBackup[i].setActive(true).setVisible(true);
+                                                }
+                                            });
+                                            enemyTexts.push(escapetext3);
+                                     }
+                                        else if (i === 0){
+                                            var enemytext10 = this.add.text(410, 1024 - 3*95 - 58 + i*60, players[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
+                                            'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
+                                            enemytext10.on('pointerdown', (pointer)=>{
+                                                this.heal(currentPlayer.playerInformation, players[0], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName, true);
+                                                for (var i = 0; i < enemyTexts.length; i++){
+                                                    enemyTexts[i].destroy();
+                                                }
+                                                enemyTexts.length = 0;
+                                                for (var i = 0; i < menuBackup.length; i++){
+                                                    menuBackup[i].setActive(true).setVisible(true);
+                                                }
+                                            });
+                                            enemyTexts.push(enemytext10);
+                                        }
+                                        else if (i === 1){
+                                            var enemytext11 = this.add.text(410, 1024 - 3*95 - 58 + i*60, players[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
+                                            'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
+                                            enemytext11.on('pointerdown', (pointer)=>{
+                                                this.heal(currentPlayer.playerInformation, players[1], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName, true);
+                                                for (var i = 0; i < enemyTexts.length; i++){
+                                                    enemyTexts[i].destroy();
+                                                }
+                                                enemyTexts.length = 0;
+                                                for (var i = 0; i < menuBackup.length; i++){
+                                                    menuBackup[i].setActive(true).setVisible(true);
+                                                }
+                                            });
+                                            enemyTexts.push(enemytext11);
+                                        }
+                                    
+                                        else if (i === 2){
+                                            var enemytext12 = this.add.text(410, 1024 - 3*95 - 58 + i*60, players[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
+                                            'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
+                                            enemytext12.on('pointerdown', (pointer)=>{
+                                                this.heal(currentPlayer.playerInformation, players[2], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName, true);
+                                                for (var i = 0; i < enemyTexts.length; i++){
+                                                    enemyTexts[i].destroy();
+                                                }
+                                                enemyTexts.length = 0;
+                                                for (var i = 0; i < menuBackup.length; i++){
+                                                    menuBackup[i].setActive(true).setVisible(true);
+                                                }
+                                            });
+                                            enemyTexts.push(enemytext12);
+                                        }
+                                        else if (i === 3){
+                                            var enemytext121 = this.add.text(410, 1024 - 3*95 - 58 + i*60, players[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
+                                            'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
+                                            enemytext121.on('pointerdown', (pointer)=>{
+                                                this.heal(currentPlayer.playerInformation, players[3], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName, true);
+                                                for (var i = 0; i < enemyTexts.length; i++){
+                                                    enemyTexts[i].destroy();
+                                                }
+                                                enemyTexts.length = 0;
+                                                for (var i = 0; i < menuBackup.length; i++){
+                                                    menuBackup[i].setActive(true).setVisible(true);
+                                                }
+                                            });
+                                            enemyTexts.push(enemytext121);
+                                        }
+                                    }
+                                }
+                                else{
                                 for (var i = 0; i < enemies.length + 1; i++){
                                     if(i === enemies.length){
                                         //if this is the last index, create an escape button
@@ -875,6 +1120,7 @@ var UIScene = new Phaser.Class({
                                         enemyTexts.push(enemytext12);
                                     }
                                 }
+                            }
 
                             });
                             skillsArray.push(skilltext3);
@@ -900,6 +1146,87 @@ var UIScene = new Phaser.Class({
                                 textsArray.length = 0;
                                 graphicsArray.length = 0;
                                 skillsArray.length = 0;
+                                if(currentPlayer.playerInformation.unitBattleSkills[3].type === "heal"){
+                                    for (var i = 0; i < players.length + 1; i++){
+                                        if(i === players.length){
+                                            //if this is the last index, create an escape button
+                                            var escapetext4 = this.add.text(410, 1024 - 3*95 - 58 + i*60, "BACK",{ color: "#ffa500", align: "center",fontWeight: 
+                                            'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
+                                            escapetext4.on('pointerdown', (pointer)=>{
+                                                for (var i = 0; i < enemyTexts.length; i++){
+                                                    enemyTexts[i].destroy();
+                                                }
+                                                enemyTexts.length = 0;
+                                                for (var i = 0; i < menuBackup.length; i++){
+                                                    menuBackup[i].setActive(true).setVisible(true);
+                                                }
+                                            });
+                                            enemyTexts.push(escapetext4);
+                                     }
+                                        else if (i === 0){
+                                            var enemytext13 = this.add.text(410, 1024 - 3*95 - 58 + i*60, players[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
+                                            'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
+                                            enemytext13.on('pointerdown', (pointer)=>{
+                                                this.heal(currentPlayer.playerInformation, players[0], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName, true);
+                                                for (var i = 0; i < enemyTexts.length; i++){
+                                                    enemyTexts[i].destroy();
+                                                }
+                                                enemyTexts.length = 0;
+                                                for (var i = 0; i < menuBackup.length; i++){
+                                                    menuBackup[i].setActive(true).setVisible(true);
+                                                }
+                                            });
+                                            enemyTexts.push(enemytext13);
+                                        }
+                                        else if (i === 1){
+                                            var enemytext14 = this.add.text(410, 1024 - 3*95 - 58 + i*60, players[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
+                                            'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
+                                            enemytext14.on('pointerdown', (pointer)=>{
+                                                this.heal(currentPlayer.playerInformation, players[1], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName, true);
+                                                for (var i = 0; i < enemyTexts.length; i++){
+                                                    enemyTexts[i].destroy();
+                                                }
+                                                enemyTexts.length = 0;
+                                                for (var i = 0; i < menuBackup.length; i++){
+                                                    menuBackup[i].setActive(true).setVisible(true);
+                                                }
+                                            });
+                                            enemyTexts.push(enemytext14);
+                                        }
+                                    
+                                        else if (i === 2){
+                                            var enemytext15 = this.add.text(410, 1024 - 3*95 - 58 + i*60, players[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
+                                            'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
+                                            enemytext15.on('pointerdown', (pointer)=>{
+                                                this.heal(currentPlayer.playerInformation, players[2], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName, true);
+                                                for (var i = 0; i < enemyTexts.length; i++){
+                                                    enemyTexts[i].destroy();
+                                                }
+                                                enemyTexts.length = 0;
+                                                for (var i = 0; i < menuBackup.length; i++){
+                                                    menuBackup[i].setActive(true).setVisible(true);
+                                                }
+                                            });
+                                            enemyTexts.push(enemytext15);
+                                        }
+                                        else if (i === 3){
+                                            var enemytext151 = this.add.text(410, 1024 - 3*95 - 58 + i*60, players[i].unitName,{ color: "#ffa500", align: "center",fontWeight: 
+                                            'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}).setInteractive();
+                                            enemytext151.on('pointerdown', (pointer)=>{
+                                                this.heal(currentPlayer.playerInformation, players[3], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName, true);
+                                                for (var i = 0; i < enemyTexts.length; i++){
+                                                    enemyTexts[i].destroy();
+                                                }
+                                                enemyTexts.length = 0;
+                                                for (var i = 0; i < menuBackup.length; i++){
+                                                    menuBackup[i].setActive(true).setVisible(true);
+                                                }
+                                            });
+                                            enemyTexts.push(enemytext151);
+                                        }
+                                    }
+                                }
+                                else{
                                 for (var i = 0; i < enemies.length + 1; i++){
                                     if(i === enemies.length){
                                         //if this is the last index, create an escape button
@@ -963,6 +1290,7 @@ var UIScene = new Phaser.Class({
                                         enemyTexts.push(enemytext15);
                                     }
                                 }
+                            }
 
                             });
                             skillsArray.push(skilltext4);
@@ -1603,6 +1931,9 @@ var UIScene = new Phaser.Class({
             timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.battleScene.endBattle, callbackScope: this.battleScene});
             this.scene.pause('UIScene');
         }
+    },
+    heal: function(){
+        alert();
     },
     //deletes the damage text
     deleteDamageIndicator: function(){
