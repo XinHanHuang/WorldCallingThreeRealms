@@ -2205,7 +2205,7 @@ var UIScene = new Phaser.Class({
             for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
                 if (target === this.battleScene.enemiesArray[i].playerInformation){
                     this.damageText.push(this.battleScene.add.text(this.battleScene.enemiesArray[i].x - 20,this.battleScene.enemiesArray[i].y - 100, "+" + this.damageHealedArray[i],
-                    { color: "#228B22", align: "center",fontWeight: 
+                    { color: "#006400", align: "center",fontWeight: 
                     'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}));}
                     timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
 
@@ -2213,7 +2213,7 @@ var UIScene = new Phaser.Class({
             for (var i = 0; i <this.battleScene.heroes.length; i++){
                 if (target === this.battleScene.heroes[i].playerInformation){
                     this.damageText.push(this.battleScene.add.text(this.battleScene.heroes[i].x - 20, this.battleScene.heroes[i].y - 100, "+" + this.damageHealedArray[i],
-                    { color: "#228B22", align: "center",fontWeight: 
+                    { color: "#006400", align: "center",fontWeight: 
                     'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}));
                     timedEvent2 = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
                 }
@@ -2239,7 +2239,7 @@ var UIScene = new Phaser.Class({
                 for (var i = 0; i < this.battleScene.enemiesArray.length; i++){
 
                         this.damageText.push(this.battleScene.add.text(this.battleScene.enemiesArray[i].x - 20,this.battleScene.enemiesArray[i].y - 100, "+" + damagehealed,
-                        { color: "#228B22", align: "center",fontWeight: 
+                        { color: "#006400", align: "center",fontWeight: 
                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}));
                         timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
             
@@ -2268,7 +2268,7 @@ var UIScene = new Phaser.Class({
                 }
                 for (var i = 0; i < this.battleScene.heroes.length; i++){
                         this.damageText.push(this.battleScene.add.text(this.battleScene.heroes[i].x - 20,this.battleScene.heroes[i].y - 100, "+" + this.damageHealedArray[i],
-                        { color: "#228B22", align: "center",fontWeight: 
+                        { color: "#006400", align: "center",fontWeight: 
                         'bold',font: '36px Arial', wordWrap: { width: 320, useAdvancedWrap: true }}));
                         timedEvent = this.battleScene.time.addEvent({ delay: 1500, callback: this.deleteDamageIndicator, callbackScope: this});
                 }
