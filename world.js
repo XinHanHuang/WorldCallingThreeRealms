@@ -303,6 +303,11 @@ var WorldScene = new Phaser.Class({
             left: 'A',
             right: 'D'
         });  // keys.up, keys.down, keys.left, keys.right
+
+
+        this.input.keyboard.on('keydown_F', ()=>{
+            this.scene.switch("PartyMembersScene");
+        });
         
         // where the enemies will be
         this.spawns = this.physics.add.group({ classType: Phaser.GameObjects.Zone });
@@ -533,8 +538,23 @@ var PartyMembersScene = new Phaser.Class({
         },
     
     create: function(){
+        this.cameras.main.setBackgroundColor('rgba(250, 218, 94, 1)');
+        this.graphics = this.add.graphics();
+        this.graphics.lineStyle(1, 0xffffff);
+        this.graphics.fillStyle(0x031f4c, 1);        
+        this.graphics.strokeRect(280, 30, 720, 150);
+        this.graphics.fillRect(280, 30, 720, 150);
+        this.graphics.strokeRect(280, 200, 720, 800);
+        this.graphics.fillRect(280, 200, 720, 800);
+        this.input.keyboard.on('keydown_F', ()=>{
+            this.scene.switch("WorldScene");
+        });
+    },
 
-    }
+    
+
+
+
     
 })
 
