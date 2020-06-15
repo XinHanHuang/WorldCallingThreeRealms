@@ -521,6 +521,25 @@ class unitInformation {
 
 }
 
+var PartyMembersScene = new Phaser.Class({
+
+    Extends: Phaser.Scene,
+
+    initialize:
+        function PartyMembersScene(){
+            Phaser.Scene.call(this, {
+                key: "PartyMembersScene"
+            });
+        },
+    
+    create: function(){
+
+    }
+    
+})
+
+
+
 
 
 

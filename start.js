@@ -15,7 +15,8 @@ var config = {
         BootScene,
         WorldScene,
         BattleScene,
-        UIScene
+        UIScene,
+        PartyMembersScene
     ]
 };
 var game = new Phaser.Game(config);
