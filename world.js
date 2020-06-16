@@ -282,6 +282,24 @@ var WorldScene = new Phaser.Class({
         unitReena1 = new unitInformation(this.reena, "Reena4", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
         this.reena.anims.play('up', true);
         players.push(unitReena1);
+
+
+
+
+        unitReenaSkills1 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
+        unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
+        unitReenaStats = new unitStats(28, 20, 45, 16, 25, 20, 7); //this is Reena's current stats
+        reenaAnimations = ['left', 'right', 'attack', 'defeated'];
+        //create a new unit information that stores all of Reena's information 
+        unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
+        unitReenaBattleSkillArray = [unitReenaBattleSkills1];
+
+        //create a new unit information that stores all of Reena's information 
+        unitReena1 = new unitInformation(this.reena, "Reena5", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
+        this.reena.anims.play('up', true);
+        players.push(unitReena1);
+
+        
         
 
         //alyene and yune
@@ -546,9 +564,37 @@ var PartyMembersScene = new Phaser.Class({
         this.graphics.fillRect(280, 30, 720, 150);
         this.graphics.strokeRect(280, 200, 720, 800);
         this.graphics.fillRect(280, 200, 720, 800);
+
+        var text = this.add.text(1280 / 2 - 100,
+			40, "CURRENT PARTY", {
+				color: "#FF0000",
+				align: "center",
+				fontWeight: 'bold',
+				font: '24px Arial',
+				wordWrap: {
+					width: 300,
+					useAdvancedWrap: true
+				}
+			});
+
         this.input.keyboard.on('keydown_F', ()=>{
             this.scene.switch("WorldScene");
         });
+
+        this.currentUnitIndex = 0; //start and 0, and when it reaches 3, go back to 0 as a circular array
+        this.currentPartySprites = []; //an array that holds sprite information regarding the current party
+        this.currentPlayers = []; //an array that holds all the playable characters 
+
+        this.sys.events.on('wake', this.createMenu, this);
+        this.createMenu();
+    },
+
+    createMenu: function(){
+        //an array of only 4 for the party members
+        for (var i = 0; i < 4; i++){
+            var player = this.add.sprite(340 + i*200, 120, players[i].unitSprites).setInteractive()
+            this.currentPartySprites.push(player);
+        }
     },
 
     
