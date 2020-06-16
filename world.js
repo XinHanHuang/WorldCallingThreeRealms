@@ -1,4 +1,5 @@
 players = [];
+playersCopy = []; //this is a copy of player array that never changes
 enemies = []; //rule is that special enemies will always appear in the first 0, 1, and 3rd index of the array 
 playerInventory = []; //inventory to hold items, additional classes will be implemented for skill scrolls
 battlescenemap = 'heaven'; //default is heaven, this global variable determines the battle scene map to load
@@ -6,6 +7,7 @@ enemy_hp_bars = [];
 UIarray = []; //this array keeps track of all the UIs for every character on the map. Needs to be cleared
 EnemyUIarray = []; //this array keeps track of all the UIs for every enemy on the map
 menus = []; //keeps track of menus
+num_of_players = 4; //global variable to keep track of the number of players, will be set to 2 in actual game
 
 
 
@@ -234,6 +236,7 @@ var WorldScene = new Phaser.Class({
         unitReena = new unitInformation(this.reena, "Reena", reenaAnimations, "yunesprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
         this.reena.anims.play('up', true);
         players.push(unitReena);
+        playersCopy.push(unitReena);
 
         unitReenaSkills1 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
         unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
@@ -250,6 +253,7 @@ var WorldScene = new Phaser.Class({
         unitReena1 = new unitInformation(this.reena, "Reena2", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
         this.reena.anims.play('up', true);
         players.push(unitReena1);
+        playersCopy.push(unitReena1);
 
         unitReenaSkills1 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
         unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
@@ -266,6 +270,7 @@ var WorldScene = new Phaser.Class({
         unitReena1 = new unitInformation(this.reena, "Reena3", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
         this.reena.anims.play('up', true);
         players.push(unitReena1);
+        playersCopy.push(unitReena1);
 
         unitReenaSkills1 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
         unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
@@ -282,6 +287,7 @@ var WorldScene = new Phaser.Class({
         unitReena1 = new unitInformation(this.reena, "Reena4", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
         this.reena.anims.play('up', true);
         players.push(unitReena1);
+        playersCopy.push(unitReena1);
 
 
 
@@ -298,6 +304,7 @@ var WorldScene = new Phaser.Class({
         unitReena1 = new unitInformation(this.reena, "Reena5", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
         this.reena.anims.play('up', true);
         players.push(unitReena1);
+        playersCopy.push(unitReena1);
 
         
         unitReenaSkills1 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
@@ -309,9 +316,10 @@ var WorldScene = new Phaser.Class({
         unitReenaBattleSkillArray = [unitReenaBattleSkills1];
 
         //create a new unit information that stores all of Reena's information 
-        unitReena1 = new unitInformation(this.reena, "Reena5", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
+        unitReena1 = new unitInformation(this.reena, "Reena6", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
         this.reena.anims.play('up', true);
         players.push(unitReena1);
+        playersCopy.push(unitReena1);
 
         
         unitReenaSkills1 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
@@ -323,9 +331,10 @@ var WorldScene = new Phaser.Class({
         unitReenaBattleSkillArray = [unitReenaBattleSkills1];
 
         //create a new unit information that stores all of Reena's information 
-        unitReena1 = new unitInformation(this.reena, "Reena5", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
+        unitReena1 = new unitInformation(this.reena, "Reena7", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
         this.reena.anims.play('up', true);
         players.push(unitReena1);
+        playersCopy.push(unitReena1);
 
         
         unitReenaSkills1 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
@@ -337,9 +346,10 @@ var WorldScene = new Phaser.Class({
         unitReenaBattleSkillArray = [unitReenaBattleSkills1];
 
         //create a new unit information that stores all of Reena's information 
-        unitReena1 = new unitInformation(this.reena, "Reena5", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
+        unitReena1 = new unitInformation(this.reena, "Reena8", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
         this.reena.anims.play('up', true);
         players.push(unitReena1);
+        playersCopy.push(unitReena1);
 
         
         
@@ -619,7 +629,7 @@ var PartyMembersScene = new Phaser.Class({
 				}
 			});
 
-        this.input.keyboard.on('keydown_F', ()=>{
+        /*this.input.keyboard.on('keydown_F', ()=>{
             this.currentUnitIndex = 0;
             for (var i = 0; i < this.currentPartySprites.length; i++){
                 this.currentPartySprites[i].destroy();
@@ -630,11 +640,14 @@ var PartyMembersScene = new Phaser.Class({
             this.currentPartySprites.length = 0;
             this.currentPlayersSprites.length = 0;
             this.scene.switch("WorldScene");
-        });
+        });*/
 
         this.currentUnitIndex = 0; //start and 0, and when it reaches 3, go back to 0 as a circular array
         this.currentPartySprites = []; //an array that holds sprite information regarding the current party
         this.currentPlayersSprites = []; //an array that holds all the playable characters 
+        this.num_characters_changed = 0; //keeps track of the number of characters currently changed 
+        this.textsArray = [];
+        this.tempPlayersArray = []; //stores temporary players arrays
 
         this.sys.events.on('wake', this.createMenu, this);
         this.createMenu();
@@ -650,11 +663,11 @@ var PartyMembersScene = new Phaser.Class({
         for (var i = 0; i < players.length; i++){
             if (i === 0){
                 //an array of all the current avaliable players
-                var player1 = this.add.sprite(340, 260 + i*100, players[i].unitSprites).setInteractive()
-                var text1 = this.add.text(400, 220 + i*100, players[i].unitName + "\n" + " LEVEL:" + players[i].level + " EXP:" +
-                players[i].exp + " HP:" + players[i].unitStats.hp + " MP:" + players[i].unitStats.mp + " ATK:" +
-                players[i].unitStats.atk + " DEF:" + players[i].unitStats.def + " RES:" + players[i].unitStats.res + " SPD:" +
-                players[i].unitStats.spd + " LUCK:" + players[i].unitStats.luck , {
+                var player1 = this.add.sprite(340, 260 + i*100, playersCopy[i].unitSprites).setInteractive()
+                var text1 = this.add.text(400, 220 + i*100, playersCopy[i].unitName + "\n" + " LEVEL:" + playersCopy[i].level + " EXP:" +
+                playersCopy[i].exp + " HP:" + playersCopy[i].unitStats.hp + " MP:" + playersCopy[i].unitStats.mp + " ATK:" +
+                playersCopy[i].unitStats.atk + " DEF:" + playersCopy[i].unitStats.def + " RES:" + playersCopy[i].unitStats.res + " SPD:" +
+                playersCopy[i].unitStats.spd + " LUCK:" + playersCopy[i].unitStats.luck , {
                 color: "#FF0000",
                 align: "center",
                 fontWeight: 'bold',
@@ -674,30 +687,55 @@ var PartyMembersScene = new Phaser.Class({
                     //first check if unit is in the top 4 player base
                     
                     this.currentPartySprites[this.currentUnitIndex].destroy();
-                    var playerSprite = this.add.sprite(340 + this.currentUnitIndex*200, 120, players[0].unitSprites).setInteractive();
-                    this.currentPartySprites[this.currentUnitIndex] = playerSprite;
+                    var playerSprite1 = this.add.sprite(340 + this.currentUnitIndex*200, 120, playersCopy[0].unitSprites).setInteractive();
+                    this.currentPartySprites[this.currentUnitIndex] = playerSprite1;
 
-
-                    var tempPlayer = players[0];
-                    players[this.currentUnitIndex] = players[0];
-                    players[0] = tempPlayer;
+                    var playerObject1 = {index:0, playerInformation: playersCopy[0]};
+                    this.tempPlayersArray[this.currentUnitIndex] = playerObject1;
+                    //var tempPlayer1 = players[this.currentUnitIndex];
+                    //players[this.currentUnitIndex] = players[0];
+                    //players[0] = tempPlayer1;
 
                     this.currentUnitIndex++;
                     if (this.currentUnitIndex === 4){
                         this.currentUnitIndex = 0;
                     }
                     player1.disableInteractive();
+                    this.num_characters_changed++;
+                    if (this.num_characters_changed === num_of_players){
+                        //changed player number of times
+                        this.num_characters_changed = 0;
+                        this.currentUnitIndex = 0;
+                        for (var i = 0; i < this.currentPartySprites.length; i++){
+                            this.currentPartySprites[i].destroy();
+                        }
+                        for (var i = 0; i < this.currentPlayersSprites.length; i++){
+                            this.currentPlayersSprites[i].destroy();
+                        }
+                        for (var i = 0; i < this.textsArray.length; i++){
+                            this.textsArray[i].destroy();
+                        }
+                        for (var i = 0; i < this.tempPlayersArray.length; i++){
+                            //players[this.tempPlayersArray[i].index] = players[i];
+                            players[i] = this.tempPlayersArray[i].playerInformation;
+                        }
+                        this.tempPlayersArray.length = 0;
+                        this.textsArray.length = 0;
+                        this.currentPartySprites.length = 0;
+                        this.currentPlayersSprites.length = 0;
+                        this.scene.switch("WorldScene");
+                    }
                 });
-
+                this.textsArray.push(text1);
                 this.currentPlayersSprites.push(player1);  
             }
             if (i === 1){
                 //an array of all the current avaliable players
-                var player2 = this.add.sprite(340, 260 + i*100, players[i].unitSprites).setInteractive()
-                var text2 = this.add.text(400, 220 + i*100, players[i].unitName + "\n" + " LEVEL:" + players[i].level + " EXP:" +
-                players[i].exp + " HP:" + players[i].unitStats.hp + " MP:" + players[i].unitStats.mp + " ATK:" +
-                players[i].unitStats.atk + " DEF:" + players[i].unitStats.def + " RES:" + players[i].unitStats.res + " SPD:" +
-                players[i].unitStats.spd + " LUCK:" + players[i].unitStats.luck , {
+                var player2 = this.add.sprite(340, 260 + i*100, playersCopy[i].unitSprites).setInteractive()
+                var text2 = this.add.text(400, 220 + i*100, playersCopy[i].unitName + "\n" + " LEVEL:" + playersCopy[i].level + " EXP:" +
+                playersCopy[i].exp + " HP:" + playersCopy[i].unitStats.hp + " MP:" + playersCopy[i].unitStats.mp + " ATK:" +
+                playersCopy[i].unitStats.atk + " DEF:" + playersCopy[i].unitStats.def + " RES:" + playersCopy[i].unitStats.res + " SPD:" +
+                playersCopy[i].unitStats.spd + " LUCK:" + playersCopy[i].unitStats.luck , {
                 color: "#FF0000",
                 align: "center",
                 fontWeight: 'bold',
@@ -713,16 +751,57 @@ var PartyMembersScene = new Phaser.Class({
                 player2.on('pointerout', ()=> {
                     player2.clearTint();
                 });
+                player2.on('pointerdown', ()=> {
+                    //first check if unit is in the top 4 player base
+                    
+                    this.currentPartySprites[this.currentUnitIndex].destroy();
+                    var playerSprite2 = this.add.sprite(340 + this.currentUnitIndex*200, 120, playersCopy[1].unitSprites).setInteractive();
+                    this.currentPartySprites[this.currentUnitIndex] = playerSprite2;
 
+
+                    var playerObject2 = {index:1, playerInformation: playersCopy[1]};
+                    this.tempPlayersArray[this.currentUnitIndex] = playerObject2;
+
+                    this.currentUnitIndex++;
+                    if (this.currentUnitIndex === 4){
+                        this.currentUnitIndex = 0;
+                    }
+                    player2.disableInteractive();
+                    this.num_characters_changed++;
+                    if (this.num_characters_changed === num_of_players){
+                        //changed player number of times
+                        this.num_characters_changed = 0;
+                        this.currentUnitIndex = 0;
+                        for (var i = 0; i < this.currentPartySprites.length; i++){
+                            this.currentPartySprites[i].destroy();
+                        }
+                        for (var i = 0; i < this.currentPlayersSprites.length; i++){
+                            this.currentPlayersSprites[i].destroy();
+                        }
+                        for (var i = 0; i < this.textsArray.length; i++){
+                            this.textsArray[i].destroy();
+                        }
+                        for (var i = 0; i < this.tempPlayersArray.length; i++){
+                            //players[this.tempPlayersArray[i].index] = players[i];
+                            players[i] = this.tempPlayersArray[i].playerInformation;
+                        }
+                        this.tempPlayersArray.length = 0;
+                        this.textsArray.length = 0;
+                        this.currentPartySprites.length = 0;
+                        this.currentPlayersSprites.length = 0;
+                        this.scene.switch("WorldScene");
+                    }
+                });
+                this.textsArray.push(text2);
                 this.currentPlayersSprites.push(player2);  
             }
             if (i === 2){
                 //an array of all the current avaliable players
-                var player3 = this.add.sprite(340, 260 + i*100, players[i].unitSprites).setInteractive()
-                var text3 = this.add.text(400, 220 + i*100, players[i].unitName + "\n" + " LEVEL:" + players[i].level + " EXP:" +
-                players[i].exp + " HP:" + players[i].unitStats.hp + " MP:" + players[i].unitStats.mp + " ATK:" +
-                players[i].unitStats.atk + " DEF:" + players[i].unitStats.def + " RES:" + players[i].unitStats.res + " SPD:" +
-                players[i].unitStats.spd + " LUCK:" + players[i].unitStats.luck , {
+                var player3 = this.add.sprite(340, 260 + i*100, playersCopy[i].unitSprites).setInteractive()
+                var text3 = this.add.text(400, 220 + i*100, playersCopy[i].unitName + "\n" + " LEVEL:" + playersCopy[i].level + " EXP:" +
+                playersCopy[i].exp + " HP:" + playersCopy[i].unitStats.hp + " MP:" + playersCopy[i].unitStats.mp + " ATK:" +
+                playersCopy[i].unitStats.atk + " DEF:" + playersCopy[i].unitStats.def + " RES:" + playersCopy[i].unitStats.res + " SPD:" +
+                playersCopy[i].unitStats.spd + " LUCK:" + playersCopy[i].unitStats.luck , {
                 color: "#FF0000",
                 align: "center",
                 fontWeight: 'bold',
@@ -738,16 +817,57 @@ var PartyMembersScene = new Phaser.Class({
                 player3.on('pointerout', ()=> {
                     player3.clearTint();
                 });
+                player3.on('pointerdown', ()=> {
+                    //first check if unit is in the top 4 player base
+                    
+                    this.currentPartySprites[this.currentUnitIndex].destroy();
+                    var playerSprite3 = this.add.sprite(340 + this.currentUnitIndex*200, 120, playersCopy[2].unitSprites).setInteractive();
+                    this.currentPartySprites[this.currentUnitIndex] = playerSprite3;
 
+
+                    var playerObject3 = {index:2, playerInformation: playersCopy[2]};
+                    this.tempPlayersArray[this.currentUnitIndex] = playerObject3;
+
+                    this.currentUnitIndex++;
+                    if (this.currentUnitIndex === 4){
+                        this.currentUnitIndex = 0;
+                    }
+                    player3.disableInteractive();
+                    this.num_characters_changed++;
+                    if (this.num_characters_changed === num_of_players){
+                        //changed player number of times
+                        this.num_characters_changed = 0;
+                        this.currentUnitIndex = 0;
+                        for (var i = 0; i < this.currentPartySprites.length; i++){
+                            this.currentPartySprites[i].destroy();
+                        }
+                        for (var i = 0; i < this.currentPlayersSprites.length; i++){
+                            this.currentPlayersSprites[i].destroy();
+                        }
+                        for (var i = 0; i < this.textsArray.length; i++){
+                            this.textsArray[i].destroy();
+                        }
+                        for (var i = 0; i < this.tempPlayersArray.length; i++){
+                            //players[this.tempPlayersArray[i].index] = players[i];
+                            players[i] = this.tempPlayersArray[i].playerInformation;
+                        }
+                        this.tempPlayersArray.length = 0;
+                        this.textsArray.length = 0;
+                        this.currentPartySprites.length = 0;
+                        this.currentPlayersSprites.length = 0;
+                        this.scene.switch("WorldScene");
+                    }
+                });
+                this.textsArray.push(text3);
                 this.currentPlayersSprites.push(player3);  
             }
             if (i === 3){
                 //an array of all the current avaliable players
-                var player4 = this.add.sprite(340, 260 + i*100, players[i].unitSprites).setInteractive()
-                var text4 = this.add.text(400, 220 + i*100, players[i].unitName + "\n" + " LEVEL:" + players[i].level + " EXP:" +
-                players[i].exp + " HP:" + players[i].unitStats.hp + " MP:" + players[i].unitStats.mp + " ATK:" +
-                players[i].unitStats.atk + " DEF:" + players[i].unitStats.def + " RES:" + players[i].unitStats.res + " SPD:" +
-                players[i].unitStats.spd + " LUCK:" + players[i].unitStats.luck , {
+                var player4 = this.add.sprite(340, 260 + i*100, playersCopy[i].unitSprites).setInteractive()
+                var text4 = this.add.text(400, 220 + i*100, playersCopy[i].unitName + "\n" + " LEVEL:" + playersCopy[i].level + " EXP:" +
+                playersCopy[i].exp + " HP:" + playersCopy[i].unitStats.hp + " MP:" + playersCopy[i].unitStats.mp + " ATK:" +
+                playersCopy[i].unitStats.atk + " DEF:" + playersCopy[i].unitStats.def + " RES:" + playersCopy[i].unitStats.res + " SPD:" +
+                playersCopy[i].unitStats.spd + " LUCK:" + playersCopy[i].unitStats.luck , {
                 color: "#FF0000",
                 align: "center",
                 fontWeight: 'bold',
@@ -763,16 +883,56 @@ var PartyMembersScene = new Phaser.Class({
                 player4.on('pointerout', ()=> {
                     player4.clearTint();
                 });
+                player4.on('pointerdown', ()=> {
+                    //first check if unit is in the top 4 player base
+                    
+                    this.currentPartySprites[this.currentUnitIndex].destroy();
+                    var playerSprite4 = this.add.sprite(340 + this.currentUnitIndex*200, 120, playersCopy[3].unitSprites).setInteractive();
+                    this.currentPartySprites[this.currentUnitIndex] = playerSprite4;
 
+                    var playerObject4 = {index:3, playerInformation: playersCopy[3]};
+                    this.tempPlayersArray[this.currentUnitIndex] = playerObject4;
+
+                    this.currentUnitIndex++;
+                    if (this.currentUnitIndex === 4){
+                        this.currentUnitIndex = 0;
+                    }
+                    player4.disableInteractive();
+                    this.num_characters_changed++;
+                    if (this.num_characters_changed === num_of_players){
+                        //changed player number of times
+                        this.num_characters_changed = 0;
+                        this.currentUnitIndex = 0;
+                        for (var i = 0; i < this.currentPartySprites.length; i++){
+                            this.currentPartySprites[i].destroy();
+                        }
+                        for (var i = 0; i < this.currentPlayersSprites.length; i++){
+                            this.currentPlayersSprites[i].destroy();
+                        }
+                        for (var i = 0; i < this.textsArray.length; i++){
+                            this.textsArray[i].destroy();
+                        }
+                        for (var i = 0; i < this.tempPlayersArray.length; i++){
+                            //players[this.tempPlayersArray[i].index] = players[i];
+                            players[i] = this.tempPlayersArray[i].playerInformation;
+                        }
+                        this.tempPlayersArray.length = 0;
+                        this.textsArray.length = 0;
+                        this.currentPartySprites.length = 0;
+                        this.currentPlayersSprites.length = 0;
+                        this.scene.switch("WorldScene");
+                    }
+                });
+                this.textsArray.push(text4);
                 this.currentPlayersSprites.push(player4);  
             }
             if (i === 4){
                 //an array of all the current avaliable players
-                var player5 = this.add.sprite(340, 260 + i*100, players[i].unitSprites).setInteractive()
-                var text5 = this.add.text(400, 220 + i*100, players[i].unitName + "\n" + " LEVEL:" + players[i].level + " EXP:" +
-                players[i].exp + " HP:" + players[i].unitStats.hp + " MP:" + players[i].unitStats.mp + " ATK:" +
-                players[i].unitStats.atk + " DEF:" + players[i].unitStats.def + " RES:" + players[i].unitStats.res + " SPD:" +
-                players[i].unitStats.spd + " LUCK:" + players[i].unitStats.luck , {
+                var player5 = this.add.sprite(340, 260 + i*100, playersCopy[i].unitSprites).setInteractive()
+                var text5 = this.add.text(400, 220 + i*100,playersCopy[i].unitName + "\n" + " LEVEL:" +playersCopy[i].level + " EXP:" +
+                playersCopy[i].exp + " HP:" + playersCopy[i].unitStats.hp + " MP:" + playersCopy[i].unitStats.mp + " ATK:" +
+                playersCopy[i].unitStats.atk + " DEF:" + playersCopy[i].unitStats.def + " RES:" + playersCopy[i].unitStats.res + " SPD:" +
+                playersCopy[i].unitStats.spd + " LUCK:" + playersCopy[i].unitStats.luck , {
                 color: "#FF0000",
                 align: "center",
                 fontWeight: 'bold',
@@ -788,16 +948,57 @@ var PartyMembersScene = new Phaser.Class({
                 player5.on('pointerout', ()=> {
                     player5.clearTint();
                 });
+                player5.on('pointerdown', ()=> {
+                    //first check if unit is in the top 4 player base
+                    
+                    this.currentPartySprites[this.currentUnitIndex].destroy();
+                    var playerSprite5 = this.add.sprite(340 + this.currentUnitIndex*200, 120, playersCopy[4].unitSprites).setInteractive();
+                    this.currentPartySprites[this.currentUnitIndex] = playerSprite5;
 
+
+                    var playerObject5 = {index:4, playerInformation: playersCopy[4]};
+                    this.tempPlayersArray[this.currentUnitIndex] = playerObject5;
+
+                    this.currentUnitIndex++;
+                    if (this.currentUnitIndex === 4){
+                        this.currentUnitIndex = 0;
+                    }
+                    player5.disableInteractive();
+                    this.num_characters_changed++;
+                    if (this.num_characters_changed === num_of_players){
+                        //changed player number of times
+                        this.num_characters_changed = 0;
+                        this.currentUnitIndex = 0;
+                        for (var i = 0; i < this.currentPartySprites.length; i++){
+                            this.currentPartySprites[i].destroy();
+                        }
+                        for (var i = 0; i < this.currentPlayersSprites.length; i++){
+                            this.currentPlayersSprites[i].destroy();
+                        }
+                        for (var i = 0; i < this.textsArray.length; i++){
+                            this.textsArray[i].destroy();
+                        }
+                        for (var i = 0; i < this.tempPlayersArray.length; i++){
+                            //players[this.tempPlayersArray[i].index] = players[i];
+                            players[i] = this.tempPlayersArray[i].playerInformation;
+                        }
+                        this.tempPlayersArray.length = 0;
+                        this.textsArray.length = 0;
+                        this.currentPartySprites.length = 0;
+                        this.currentPlayersSprites.length = 0;
+                        this.scene.switch("WorldScene");
+                    }
+                });
+                this.textsArray.push(text5);
                 this.currentPlayersSprites.push(player5);  
             }
             if (i === 5){
                 //an array of all the current avaliable players
-                var player6 = this.add.sprite(340, 260 + i*100, players[i].unitSprites).setInteractive()
-                var text6 = this.add.text(400, 220 + i*100, players[i].unitName + "\n" + " LEVEL:" + players[i].level + " EXP:" +
-                players[i].exp + " HP:" + players[i].unitStats.hp + " MP:" + players[i].unitStats.mp + " ATK:" +
-                players[i].unitStats.atk + " DEF:" + players[i].unitStats.def + " RES:" + players[i].unitStats.res + " SPD:" +
-                players[i].unitStats.spd + " LUCK:" + players[i].unitStats.luck , {
+                var player6 = this.add.sprite(340, 260 + i*100, playersCopy[i].unitSprites).setInteractive()
+                var text6 = this.add.text(400, 220 + i*100, playersCopy[i].unitName + "\n" + " LEVEL:" + playersCopy[i].level + " EXP:" +
+                playersCopy[i].exp + " HP:" + playersCopy[i].unitStats.hp + " MP:" + playersCopy[i].unitStats.mp + " ATK:" +
+                playersCopy[i].unitStats.atk + " DEF:" + playersCopy[i].unitStats.def + " RES:" + playersCopy[i].unitStats.res + " SPD:" +
+                playersCopy[i].unitStats.spd + " LUCK:" + playersCopy[i].unitStats.luck , {
                 color: "#FF0000",
                 align: "center",
                 fontWeight: 'bold',
@@ -813,16 +1014,57 @@ var PartyMembersScene = new Phaser.Class({
                 player6.on('pointerout', ()=> {
                     player6.clearTint();
                 });
+                player6.on('pointerdown', ()=> {
+                    //first check if unit is in the top 4 player base
+                    
+                    this.currentPartySprites[this.currentUnitIndex].destroy();
+                    var playerSprite6 = this.add.sprite(340 + this.currentUnitIndex*200, 120, playersCopy[5].unitSprites).setInteractive();
+                    this.currentPartySprites[this.currentUnitIndex] = playerSprite6;
 
+
+                    var playerObject6 = {index:5, playerInformation: playersCopy[5]};
+                    this.tempPlayersArray[this.currentUnitIndex] = playerObject6;
+
+                    this.currentUnitIndex++;
+                    if (this.currentUnitIndex === 4){
+                        this.currentUnitIndex = 0;
+                    }
+                    player6.disableInteractive();
+                    this.num_characters_changed++;
+                    if (this.num_characters_changed === num_of_players){
+                        //changed player number of times
+                        this.num_characters_changed = 0;
+                        this.currentUnitIndex = 0;
+                        for (var i = 0; i < this.currentPartySprites.length; i++){
+                            this.currentPartySprites[i].destroy();
+                        }
+                        for (var i = 0; i < this.currentPlayersSprites.length; i++){
+                            this.currentPlayersSprites[i].destroy();
+                        }
+                        for (var i = 0; i < this.textsArray.length; i++){
+                            this.textsArray[i].destroy();
+                        }
+                        for (var i = 0; i < this.tempPlayersArray.length; i++){
+                            //players[this.tempPlayersArray[i].index] = players[i];
+                            players[i] = this.tempPlayersArray[i].playerInformation;
+                        }
+                        this.tempPlayersArray.length = 0;
+                        this.textsArray.length = 0;
+                        this.currentPartySprites.length = 0;
+                        this.currentPlayersSprites.length = 0;
+                        this.scene.switch("WorldScene");
+                    }
+                });
+                this.textsArray.push(text6);
                 this.currentPlayersSprites.push(player6);  
             }
             if (i === 6){
                 //an array of all the current avaliable players
-                var player7 = this.add.sprite(340, 260 + i*100, players[i].unitSprites).setInteractive()
-                var text7 = this.add.text(400, 220 + i*100, players[i].unitName + "\n" + " LEVEL:" + players[i].level + " EXP:" +
-                players[i].exp + " HP:" + players[i].unitStats.hp + " MP:" + players[i].unitStats.mp + " ATK:" +
-                players[i].unitStats.atk + " DEF:" + players[i].unitStats.def + " RES:" + players[i].unitStats.res + " SPD:" +
-                players[i].unitStats.spd + " LUCK:" + players[i].unitStats.luck , {
+                var player7 = this.add.sprite(340, 260 + i*100, playersCopy[i].unitSprites).setInteractive()
+                var text7 = this.add.text(400, 220 + i*100, playersCopy[i].unitName + "\n" + " LEVEL:" + playersCopy[i].level + " EXP:" +
+                playersCopy[i].exp + " HP:" +playersCopy[i].unitStats.hp + " MP:" +playersCopy[i].unitStats.mp + " ATK:" +
+                playersCopy[i].unitStats.atk + " DEF:" + playersCopy[i].unitStats.def + " RES:" + playersCopy[i].unitStats.res + " SPD:" +
+                playersCopy[i].unitStats.spd + " LUCK:" + playersCopy[i].unitStats.luck , {
                 color: "#FF0000",
                 align: "center",
                 fontWeight: 'bold',
@@ -838,16 +1080,57 @@ var PartyMembersScene = new Phaser.Class({
                 player7.on('pointerout', ()=> {
                     player7.clearTint();
                 });
+                player7.on('pointerdown', ()=> {
+                    //first check if unit is in the top 4 player base
+                    
+                    this.currentPartySprites[this.currentUnitIndex].destroy();
+                    var playerSprite7 = this.add.sprite(340 + this.currentUnitIndex*200, 120, playersCopy[6].unitSprites).setInteractive();
+                    this.currentPartySprites[this.currentUnitIndex] = playerSprite7;
 
+
+                    var playerObject7 = {index:6, playerInformation: playersCopy[6]};
+                    this.tempPlayersArray[this.currentUnitIndex] = playerObject7;
+
+                    this.currentUnitIndex++;
+                    if (this.currentUnitIndex === 4){
+                        this.currentUnitIndex = 0;
+                    }
+                    player7.disableInteractive();
+                    this.num_characters_changed++;
+                    if (this.num_characters_changed === num_of_players){
+                        //changed player number of times
+                        this.num_characters_changed = 0;
+                        this.currentUnitIndex = 0;
+                        for (var i = 0; i < this.currentPartySprites.length; i++){
+                            this.currentPartySprites[i].destroy();
+                        }
+                        for (var i = 0; i < this.currentPlayersSprites.length; i++){
+                            this.currentPlayersSprites[i].destroy();
+                        }
+                        for (var i = 0; i < this.textsArray.length; i++){
+                            this.textsArray[i].destroy();
+                        }
+                        for (var i = 0; i < this.tempPlayersArray.length; i++){
+                            //players[this.tempPlayersArray[i].index] = players[i];
+                            players[i] = this.tempPlayersArray[i].playerInformation;
+                        }
+                        this.tempPlayersArray.length = 0;
+                        this.textsArray.length = 0;
+                        this.currentPartySprites.length = 0;
+                        this.currentPlayersSprites.length = 0;
+                        this.scene.switch("WorldScene");
+                    }
+                });
+                this.textsArray.push(text7);
                 this.currentPlayersSprites.push(player7);  
             }
             if (i === 7){
                 //an array of all the current avaliable players
-                var player8 = this.add.sprite(340, 260 + i*100, players[i].unitSprites).setInteractive()
-                var text8 = this.add.text(400, 220 + i*100, players[i].unitName + "\n" + " LEVEL:" + players[i].level + " EXP:" +
-                players[i].exp + " HP:" + players[i].unitStats.hp + " MP:" + players[i].unitStats.mp + " ATK:" +
-                players[i].unitStats.atk + " DEF:" + players[i].unitStats.def + " RES:" + players[i].unitStats.res + " SPD:" +
-                players[i].unitStats.spd + " LUCK:" + players[i].unitStats.luck , {
+                var player8 = this.add.sprite(340, 260 + i*100, playersCopy[i].unitSprites).setInteractive()
+                var text8 = this.add.text(400, 220 + i*100, playersCopy[i].unitName + "\n" + " LEVEL:" + playersCopy[i].level + " EXP:" +
+                playersCopy[i].exp + " HP:" + playersCopy[i].unitStats.hp + " MP:" + playersCopy[i].unitStats.mp + " ATK:" +
+                playersCopy[i].unitStats.atk + " DEF:" + playersCopy[i].unitStats.def + " RES:" + playersCopy[i].unitStats.res + " SPD:" +
+                playersCopy[i].unitStats.spd + " LUCK:" + playersCopy[i].unitStats.luck , {
                 color: "#FF0000",
                 align: "center",
                 fontWeight: 'bold',
@@ -863,7 +1146,49 @@ var PartyMembersScene = new Phaser.Class({
                 player8.on('pointerout', ()=> {
                     player8.clearTint();
                 });
+                player8.on('pointerdown', ()=> {
+                    //first check if unit is in the top 4 player base
+                    
+                    this.currentPartySprites[this.currentUnitIndex].destroy();
+                    var playerSprite8 = this.add.sprite(340 + this.currentUnitIndex*200, 120, playersCopy[7].unitSprites).setInteractive();
+                    this.currentPartySprites[this.currentUnitIndex] = playerSprite8;
 
+
+                    var playerObject8 = {index:7, playerInformation: playersCopy[7]};
+                    this.tempPlayersArray[this.currentUnitIndex] = playerObject8;
+
+                    this.currentUnitIndex++;
+                    if (this.currentUnitIndex === 4){
+                        this.currentUnitIndex = 0;
+                    }
+                    player8.disableInteractive();
+                    this.num_characters_changed++;
+                    if (this.num_characters_changed === num_of_players){
+                        //changed player number of times
+                        this.num_characters_changed = 0;
+                        this.currentUnitIndex = 0;
+                        for (var i = 0; i < this.currentPartySprites.length; i++){
+                            this.currentPartySprites[i].destroy();
+                        }
+                        for (var i = 0; i < this.currentPlayersSprites.length; i++){
+                            this.currentPlayersSprites[i].destroy();
+                        }
+                        for (var i = 0; i < this.textsArray.length; i++){
+                            this.textsArray[i].destroy();
+                        }
+                        for (var i = 0; i < this.tempPlayersArray.length; i++){
+                            //players[this.tempPlayersArray[i].index] = players[i];
+                            players[i] = this.tempPlayersArray[i].playerInformation;
+
+                        }
+                        this.tempPlayersArray.length = 0;
+                        this.textsArray.length = 0;
+                        this.currentPartySprites.length = 0;
+                        this.currentPlayersSprites.length = 0;
+                        this.scene.switch("WorldScene");
+                    }
+                });
+                this.textsArray.push(text8);
                 this.currentPlayersSprites.push(player8);  
             }
         }
