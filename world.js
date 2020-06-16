@@ -231,7 +231,7 @@ var WorldScene = new Phaser.Class({
         unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2, unitReenaBattleSkills3, unitReenaBattleSkills4];
 
         //create a new unit information that stores all of Reena's information 
-        unitReena = new unitInformation(this.reena, "Reena", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
+        unitReena = new unitInformation(this.reena, "Reena", reenaAnimations, "yunesprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
         this.reena.anims.play('up', true);
         players.push(unitReena);
 
@@ -620,6 +620,15 @@ var PartyMembersScene = new Phaser.Class({
 			});
 
         this.input.keyboard.on('keydown_F', ()=>{
+            this.currentUnitIndex = 0;
+            for (var i = 0; i < this.currentPartySprites.length; i++){
+                this.currentPartySprites[i].destroy();
+            }
+            for (var i = 0; i < this.currentPlayersSprites.length; i++){
+                this.currentPlayersSprites[i].destroy();
+            }
+            this.currentPartySprites.length = 0;
+            this.currentPlayersSprites.length = 0;
             this.scene.switch("WorldScene");
         });
 
@@ -634,7 +643,7 @@ var PartyMembersScene = new Phaser.Class({
     createMenu: function(){
         //an array of only 4 for the party members
         for (var i = 0; i < 4; i++){
-            var player = this.add.sprite(340 + i*200, 120, players[i].unitSprites).setInteractive()
+            var player = this.add.sprite(340 + i*200, 120, players[i].unitSprites).setInteractive();
             this.currentPartySprites.push(player);
         }
 
@@ -660,6 +669,24 @@ var PartyMembersScene = new Phaser.Class({
                 })
                 player1.on('pointerout', ()=> {
                     player1.clearTint();
+                });
+                player1.on('pointerdown', ()=> {
+                    //first check if unit is in the top 4 player base
+                    
+                    this.currentPartySprites[this.currentUnitIndex].destroy();
+                    var playerSprite = this.add.sprite(340 + this.currentUnitIndex*200, 120, players[0].unitSprites).setInteractive();
+                    this.currentPartySprites[this.currentUnitIndex] = playerSprite;
+
+
+                    var tempPlayer = players[0];
+                    players[this.currentUnitIndex] = players[0];
+                    players[0] = tempPlayer;
+
+                    this.currentUnitIndex++;
+                    if (this.currentUnitIndex === 4){
+                        this.currentUnitIndex = 0;
+                    }
+                    player1.disableInteractive();
                 });
 
                 this.currentPlayersSprites.push(player1);  
