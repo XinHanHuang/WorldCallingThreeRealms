@@ -639,12 +639,13 @@ var PartyMembersScene = new Phaser.Class({
         }
 
         for (var i = 0; i < players.length; i++){
-            //an array of all the current avaliable players
-            var player = this.add.sprite(340, 260 + i*100, players[i].unitSprites).setInteractive()
-            var text = this.add.text(400, 220 + i*100, players[i].unitName + "\n" + " LEVEL:" + players[i].level + " EXP:" +
-            players[i].exp + " HP:" + players[i].unitStats.hp + " MP:" + players[i].unitStats.mp + " ATK:" +
-            players[i].unitStats.atk + " DEF:" + players[i].unitStats.def + " RES:" + players[i].unitStats.res + " SPD:" +
-            players[i].unitStats.spd + " LUCK:" + players[i].unitStats.luck , {
+            if (i === 0){
+                //an array of all the current avaliable players
+                var player1 = this.add.sprite(340, 260 + i*100, players[i].unitSprites).setInteractive()
+                var text1 = this.add.text(400, 220 + i*100, players[i].unitName + "\n" + " LEVEL:" + players[i].level + " EXP:" +
+                players[i].exp + " HP:" + players[i].unitStats.hp + " MP:" + players[i].unitStats.mp + " ATK:" +
+                players[i].unitStats.atk + " DEF:" + players[i].unitStats.def + " RES:" + players[i].unitStats.res + " SPD:" +
+                players[i].unitStats.spd + " LUCK:" + players[i].unitStats.luck , {
                 color: "#FF0000",
                 align: "center",
                 fontWeight: 'bold',
@@ -653,8 +654,191 @@ var PartyMembersScene = new Phaser.Class({
                     width: 600,
                     useAdvancedWrap: true
                 }
-            });
-            this.currentPlayersSprites.push(player);  
+                });
+                player1.on('pointerover', ()=> {
+                    player1.setTint(0x87ceeb);
+                })
+                player1.on('pointerout', ()=> {
+                    player1.clearTint();
+                });
+
+                this.currentPlayersSprites.push(player1);  
+            }
+            if (i === 1){
+                //an array of all the current avaliable players
+                var player2 = this.add.sprite(340, 260 + i*100, players[i].unitSprites).setInteractive()
+                var text2 = this.add.text(400, 220 + i*100, players[i].unitName + "\n" + " LEVEL:" + players[i].level + " EXP:" +
+                players[i].exp + " HP:" + players[i].unitStats.hp + " MP:" + players[i].unitStats.mp + " ATK:" +
+                players[i].unitStats.atk + " DEF:" + players[i].unitStats.def + " RES:" + players[i].unitStats.res + " SPD:" +
+                players[i].unitStats.spd + " LUCK:" + players[i].unitStats.luck , {
+                color: "#FF0000",
+                align: "center",
+                fontWeight: 'bold',
+                font: '28px Arial',
+                wordWrap: {
+                    width: 600,
+                    useAdvancedWrap: true
+                }
+                });
+                player2.on('pointerover', ()=> {
+                    player2.setTint(0x87ceeb);
+                })
+                player2.on('pointerout', ()=> {
+                    player2.clearTint();
+                });
+
+                this.currentPlayersSprites.push(player2);  
+            }
+            if (i === 2){
+                //an array of all the current avaliable players
+                var player3 = this.add.sprite(340, 260 + i*100, players[i].unitSprites).setInteractive()
+                var text3 = this.add.text(400, 220 + i*100, players[i].unitName + "\n" + " LEVEL:" + players[i].level + " EXP:" +
+                players[i].exp + " HP:" + players[i].unitStats.hp + " MP:" + players[i].unitStats.mp + " ATK:" +
+                players[i].unitStats.atk + " DEF:" + players[i].unitStats.def + " RES:" + players[i].unitStats.res + " SPD:" +
+                players[i].unitStats.spd + " LUCK:" + players[i].unitStats.luck , {
+                color: "#FF0000",
+                align: "center",
+                fontWeight: 'bold',
+                font: '28px Arial',
+                wordWrap: {
+                    width: 600,
+                    useAdvancedWrap: true
+                }
+                });
+                player3.on('pointerover', ()=> {
+                    player3.setTint(0x87ceeb);
+                })
+                player3.on('pointerout', ()=> {
+                    player3.clearTint();
+                });
+
+                this.currentPlayersSprites.push(player3);  
+            }
+            if (i === 3){
+                //an array of all the current avaliable players
+                var player4 = this.add.sprite(340, 260 + i*100, players[i].unitSprites).setInteractive()
+                var text4 = this.add.text(400, 220 + i*100, players[i].unitName + "\n" + " LEVEL:" + players[i].level + " EXP:" +
+                players[i].exp + " HP:" + players[i].unitStats.hp + " MP:" + players[i].unitStats.mp + " ATK:" +
+                players[i].unitStats.atk + " DEF:" + players[i].unitStats.def + " RES:" + players[i].unitStats.res + " SPD:" +
+                players[i].unitStats.spd + " LUCK:" + players[i].unitStats.luck , {
+                color: "#FF0000",
+                align: "center",
+                fontWeight: 'bold',
+                font: '28px Arial',
+                wordWrap: {
+                    width: 600,
+                    useAdvancedWrap: true
+                }
+                });
+                player4.on('pointerover', ()=> {
+                    player4.setTint(0x87ceeb);
+                })
+                player4.on('pointerout', ()=> {
+                    player4.clearTint();
+                });
+
+                this.currentPlayersSprites.push(player4);  
+            }
+            if (i === 4){
+                //an array of all the current avaliable players
+                var player5 = this.add.sprite(340, 260 + i*100, players[i].unitSprites).setInteractive()
+                var text5 = this.add.text(400, 220 + i*100, players[i].unitName + "\n" + " LEVEL:" + players[i].level + " EXP:" +
+                players[i].exp + " HP:" + players[i].unitStats.hp + " MP:" + players[i].unitStats.mp + " ATK:" +
+                players[i].unitStats.atk + " DEF:" + players[i].unitStats.def + " RES:" + players[i].unitStats.res + " SPD:" +
+                players[i].unitStats.spd + " LUCK:" + players[i].unitStats.luck , {
+                color: "#FF0000",
+                align: "center",
+                fontWeight: 'bold',
+                font: '28px Arial',
+                wordWrap: {
+                    width: 600,
+                    useAdvancedWrap: true
+                }
+                });
+                player5.on('pointerover', ()=> {
+                    player5.setTint(0x87ceeb);
+                })
+                player5.on('pointerout', ()=> {
+                    player5.clearTint();
+                });
+
+                this.currentPlayersSprites.push(player5);  
+            }
+            if (i === 5){
+                //an array of all the current avaliable players
+                var player6 = this.add.sprite(340, 260 + i*100, players[i].unitSprites).setInteractive()
+                var text6 = this.add.text(400, 220 + i*100, players[i].unitName + "\n" + " LEVEL:" + players[i].level + " EXP:" +
+                players[i].exp + " HP:" + players[i].unitStats.hp + " MP:" + players[i].unitStats.mp + " ATK:" +
+                players[i].unitStats.atk + " DEF:" + players[i].unitStats.def + " RES:" + players[i].unitStats.res + " SPD:" +
+                players[i].unitStats.spd + " LUCK:" + players[i].unitStats.luck , {
+                color: "#FF0000",
+                align: "center",
+                fontWeight: 'bold',
+                font: '28px Arial',
+                wordWrap: {
+                    width: 600,
+                    useAdvancedWrap: true
+                }
+                });
+                player6.on('pointerover', ()=> {
+                    player6.setTint(0x87ceeb);
+                })
+                player6.on('pointerout', ()=> {
+                    player6.clearTint();
+                });
+
+                this.currentPlayersSprites.push(player6);  
+            }
+            if (i === 6){
+                //an array of all the current avaliable players
+                var player7 = this.add.sprite(340, 260 + i*100, players[i].unitSprites).setInteractive()
+                var text7 = this.add.text(400, 220 + i*100, players[i].unitName + "\n" + " LEVEL:" + players[i].level + " EXP:" +
+                players[i].exp + " HP:" + players[i].unitStats.hp + " MP:" + players[i].unitStats.mp + " ATK:" +
+                players[i].unitStats.atk + " DEF:" + players[i].unitStats.def + " RES:" + players[i].unitStats.res + " SPD:" +
+                players[i].unitStats.spd + " LUCK:" + players[i].unitStats.luck , {
+                color: "#FF0000",
+                align: "center",
+                fontWeight: 'bold',
+                font: '28px Arial',
+                wordWrap: {
+                    width: 600,
+                    useAdvancedWrap: true
+                }
+                });
+                player7.on('pointerover', ()=> {
+                    player7.setTint(0x87ceeb);
+                })
+                player7.on('pointerout', ()=> {
+                    player7.clearTint();
+                });
+
+                this.currentPlayersSprites.push(player7);  
+            }
+            if (i === 7){
+                //an array of all the current avaliable players
+                var player8 = this.add.sprite(340, 260 + i*100, players[i].unitSprites).setInteractive()
+                var text8 = this.add.text(400, 220 + i*100, players[i].unitName + "\n" + " LEVEL:" + players[i].level + " EXP:" +
+                players[i].exp + " HP:" + players[i].unitStats.hp + " MP:" + players[i].unitStats.mp + " ATK:" +
+                players[i].unitStats.atk + " DEF:" + players[i].unitStats.def + " RES:" + players[i].unitStats.res + " SPD:" +
+                players[i].unitStats.spd + " LUCK:" + players[i].unitStats.luck , {
+                color: "#FF0000",
+                align: "center",
+                fontWeight: 'bold',
+                font: '28px Arial',
+                wordWrap: {
+                    width: 600,
+                    useAdvancedWrap: true
+                }
+                });
+                player8.on('pointerover', ()=> {
+                    player8.setTint(0x87ceeb);
+                })
+                player8.on('pointerout', ()=> {
+                    player8.clearTint();
+                });
+
+                this.currentPlayersSprites.push(player8);  
+            }
         }
     },
 
