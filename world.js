@@ -616,18 +616,53 @@ var PartyMembersScene = new Phaser.Class({
         this.graphics.fillRect(280, 30, 720, 150);
         this.graphics.strokeRect(280, 200, 720, 815);
         this.graphics.fillRect(280, 200, 720, 815);
+        this.graphics.strokeRect(90, 900, 150, 50);
+        this.graphics.fillRect(90, 900, 150, 50);
 
-        var text = this.add.text(1280 / 2 - 100,
-			40, "CURRENT PARTY", {
+
+        var text = this.add.text(350,
+			40, "CURRENT PARTY (SELECT 4 NEW PARTY MEMBERS)", {
 				color: "#FF0000",
 				align: "center",
 				fontWeight: 'bold',
 				font: '24px Arial',
 				wordWrap: {
-					width: 300,
+					width: 800,
 					useAdvancedWrap: true
 				}
-			});
+        });
+        
+        var exitText = this.add.text(115,
+			910, "CANCEL", {
+				color: "#FF0000",
+				align: "center",
+				fontWeight: 'bold',
+				font: '24px Arial',
+				wordWrap: {
+					width: 800,
+					useAdvancedWrap: true
+				}
+        }).setInteractive();
+
+        exitText.on('pointerdown', ()=>{
+            this.num_characters_changed = 0;
+            this.currentUnitIndex = 0;
+            for (var i = 0; i < this.currentPartySprites.length; i++){
+                this.currentPartySprites[i].destroy();
+            }
+            for (var i = 0; i < this.currentPlayersSprites.length; i++){
+                this.currentPlayersSprites[i].destroy();
+            }
+            for (var i = 0; i < this.textsArray.length; i++){
+                this.textsArray[i].destroy();
+            }
+            this.tempPlayersArray.length = 0;
+            this.textsArray.length = 0;
+            this.currentPartySprites.length = 0;
+            this.currentPlayersSprites.length = 0;
+            this.scene.switch("WorldScene");
+        });
+
 
         /*this.input.keyboard.on('keydown_F', ()=>{
             this.currentUnitIndex = 0;
@@ -655,6 +690,7 @@ var PartyMembersScene = new Phaser.Class({
 
     createMenu: function(){
         //an array of only 4 for the party members
+
         for (var i = 0; i < 4; i++){
             var player = this.add.sprite(340 + i*200, 120, players[i].unitSprites).setInteractive();
             this.currentPartySprites.push(player);
