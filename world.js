@@ -1256,8 +1256,8 @@ var SkillScene = new Phaser.Class({
         this.graphics = this.add.graphics();
         this.graphics.lineStyle(1, 0xffffff);
         this.graphics.fillStyle(0x031f4c, 1);        
-        this.graphics.strokeRect(280, 10, 720, 1005);
-        this.graphics.fillRect(280, 10, 720, 1005);
+        this.graphics.strokeRect(280, 10, 950, 1005);
+        this.graphics.fillRect(280, 10, 950, 1005);
         this.graphics.strokeRect(90, 955, 150, 50);
         this.graphics.fillRect(90, 955, 150, 50);
 
@@ -1277,14 +1277,26 @@ var SkillScene = new Phaser.Class({
             for (var i = 0; i < this.spritesArray.length; i++){
                 this.spritesArray[i].destroy();
             }
-            this.spritesArray.length = 0; //clear out array
+            for (var i = 0; i < this.skillDescriptionTextArray.length; i++){
+                this.skillDescriptionTextArray[i].destroy();
+            }
+            for (var i = 0; i < this.battleSkillDescriptionTextArray.length; i++){
+                this.battleSkillDescriptionTextArray[i].destroy();
+            }
+            for (var i = 0; i < this.nameTextArray.length; i++){
+                this.nameTextArray[i].destroy();
+            }
+            this.spritesArray.length = 0
+            this.nameTextArray.length = 0;
+            this.skillDescriptionTextArray.length = 0;
+            this.battleSkillDescriptionTextArray.length = 0;
             this.scene.switch("WorldScene");
         });
 
         this.spritesArray = []; //array of party sprites
         this.nameTextArray = []; //array of names
         this.skillDescriptionTextArray = []; //array of skills and skill description texts
-
+        this.battleSkillDescriptionTextArray = [];
 
 
         this.sys.events.on('wake', this.createMenu, this);
@@ -1310,6 +1322,31 @@ var SkillScene = new Phaser.Class({
 				}
             }).setInteractive();
             this.nameTextArray.push(nameText);
+
+            for (var j = 0; j < players[i].unitSkills.length; j++){
+                var skillText = this.add.text(430, 15 + i*280 + j*15, players[i].unitSkills[j].skillName + " :" +
+                 players[i].unitSkills[j].description + "\n", {
+                    fontWeight: 'bold',
+                    wordWrap: {
+                        width: 900,
+                        useAdvancedWrap: true
+                    }
+                });
+                this.skillDescriptionTextArray.push(skillText);
+            }
+
+            for (var k = 0; k < players[k].unitBattleSkills.length; k++){
+                var battleSkillText = this.add.text(430, 105 + i*280 + k*15, players[i].unitBattleSkills[k].battleSkillName + " :" + 
+                players[i].unitBattleSkills[k].battleSkillDescription + "\n", {
+                    fontWeight: 'bold',
+                    wordWrap: {
+                        width: 900,
+                        useAdvancedWrap: true
+                    }
+                });
+                this.battleSkillDescriptionTextArray.push(battleSkillText);
+            }
+            
         }
 
         
