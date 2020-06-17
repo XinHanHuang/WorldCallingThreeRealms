@@ -378,6 +378,10 @@ var WorldScene = new Phaser.Class({
         this.input.keyboard.on('keydown_F', ()=>{
             this.scene.switch("PartyMembersScene");
         });
+
+        this.input.keyboard.on('keydown_G', ()=>{
+            this.scene.switch("SkillScene");
+        });
         
         // where the enemies will be
         this.spawns = this.physics.add.group({ classType: Phaser.GameObjects.Zone });
@@ -1123,7 +1127,6 @@ var PartyMembersScene = new Phaser.Class({
                     var playerSprite7 = this.add.sprite(340 + this.currentUnitIndex*200, 120, playersCopy[6].unitSprites).setInteractive();
                     this.currentPartySprites[this.currentUnitIndex] = playerSprite7;
 
-
                     var playerObject7 = {index:6, playerInformation: playersCopy[6]};
                     this.tempPlayersArray[this.currentUnitIndex] = playerObject7;
 
@@ -1236,6 +1239,84 @@ var PartyMembersScene = new Phaser.Class({
 
     
 })
+
+var SkillScene = new Phaser.Class({
+
+    Extends: Phaser.Scene,
+
+    initialize:
+        function PartyMembersScene(){
+            Phaser.Scene.call(this, {
+                key: "SkillScene"
+            });
+        },
+    
+    create: function(){
+        this.cameras.main.setBackgroundColor('rgba(250, 218, 94, 1)');
+        this.graphics = this.add.graphics();
+        this.graphics.lineStyle(1, 0xffffff);
+        this.graphics.fillStyle(0x031f4c, 1);        
+        this.graphics.strokeRect(280, 10, 720, 1005);
+        this.graphics.fillRect(280, 10, 720, 1005);
+        this.graphics.strokeRect(90, 955, 150, 50);
+        this.graphics.fillRect(90, 955, 150, 50);
+
+        var exitText = this.add.text(128,
+			965, "BACK", {
+				color: "#FF0000",
+				align: "center",
+				fontWeight: 'bold',
+				font: '26px Arial',
+				wordWrap: {
+					width: 800,
+					useAdvancedWrap: true
+				}
+        }).setInteractive();
+
+        exitText.on('pointerdown', ()=>{
+            for (var i = 0; i < this.spritesArray.length; i++){
+                this.spritesArray[i].destroy();
+            }
+            this.spritesArray.length = 0; //clear out array
+            this.scene.switch("WorldScene");
+        });
+
+        this.spritesArray = []; //array of party sprites
+        this.nameTextArray = []; //array of names
+        this.skillDescriptionTextArray = []; //array of skills and skill description texts
+
+
+
+        this.sys.events.on('wake', this.createMenu, this);
+        this.createMenu();
+    },
+
+    createMenu: function(){
+        //an array of only 4 for the party members
+        for (var i = 0; i < 4; i++){
+            var player = this.add.sprite(350, 80 + i*280, players[i].unitSprites).setInteractive()
+            player.anims.play(players[i].unitAnimations[0], false);
+            this.spritesArray.push(player);
+
+            var nameText = this.add.text(315, 145 + i*280, players[i].unitName +"\n" + "\n" +
+            "______________________________________________", {
+                color: "#FF0000",
+
+				fontWeight: 'bold',
+				font: '24px Arial',
+				wordWrap: {
+					width: 800,
+					useAdvancedWrap: true
+				}
+            }).setInteractive();
+            this.nameTextArray.push(nameText);
+        }
+
+        
+    },
+
+});
+
 
 
 
