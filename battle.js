@@ -319,7 +319,7 @@ var BattleScene = new Phaser.Class({
 
 		//this.scene.get('BattleScene').scene.stop('BattleScene');
 		// return to WorldScene and sleep current BattleScene
-		this.scene.switch('WorldScene');
+		this.scene.switch(currentScene);
 	}
 });
 

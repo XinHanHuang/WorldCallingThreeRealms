@@ -9,7 +9,7 @@ EnemyUIarray = []; //this array keeps track of all the UIs for every enemy on th
 menus = []; //keeps track of menus
 num_of_players = 4; //global variable to keep track of the number of players, will be set to 2 in actual game
 currentDialogStatus = "heaven1"; //This is a list of current dialog statuses, and this global variable will determine how conversations are accessed
-
+currentScene = "WorldScene"; //keeps track of the current scene to go back to 
 
 
 var BootScene = new Phaser.Class({
@@ -421,37 +421,20 @@ var WorldScene = new Phaser.Class({
         this.scene.start('BattleScene');                
     },
 
+    logBoi: function(){
+        console.log("boii");
+    },
+
 
     //this detects the nearest npc that the player bumps to, an a dialog will happen for that npc and the player
     //a bunch of if statements, different events will trigger depending on the different npcs encountered in this World
     onNpcDialog: function(player, npc){
         console.log(npc.texture.key);
         if (npc.texture.key === "Alyene"){
-            
-            unitAlyeneSkills1 = new unitSkills("Almighty God","Negates damage bonus from enemy critical hits, damage from opponent's attacks reduced by 50%", "almightygod");
-            unitAlyeneSkills2 = new unitSkills("Dragon Skin", "Negates the effects of all non-damaging status effects. Nullifies poison damage", "dragonskin");
-            unitAlyeneSkillArray = [unitAlyeneSkills1, unitAlyeneSkills2];
-            unitAlyeneStats = new unitStats(15, 30, 30, 15, 30, 30, 30); //this is Alyene's current stats
-            alyeneAnimations = ['rightalyene', 'leftalyene', 'attackalyene','defeatedalyene'];
-            unitAlyeneBattleSkills1 = new unitBattleSkills("Alyene is waiting for you to make a move", "Alyene is waiting for you to make a move", "null", "single");
-            unitAyleneBattleSkllArray = [unitAlyeneBattleSkills1];
-
-            unitAlyene = new unitInformation(this.alyene, "Alyene", alyeneAnimations, "alyenesprite", unitAlyeneSkillArray, unitAlyeneStats, null, unitAyleneBattleSkllArray, 5);
-            enemies.push(unitAlyene);
+            this.scene.switch('World1');
 
 
-            //this.cameras.main.shake(300);
-            this.input.stopPropagation();
-            //this.reena.y -= 80;
-            this.scene.run("DialogScene");
-            this.scene.pause("WorldScene");
-
-            //this.scene.switch('BattleScene');
-            //first disable all the keys 
-            this.cursors.left.enabled = false;
-            this.cursors.right.enabled = false;
-            this.cursors.up.enabled = false;
-            this.cursors.down.enabled = false; 
+           
 
 
             
@@ -686,7 +669,7 @@ var PartyMembersScene = new Phaser.Class({
             this.textsArray.length = 0;
             this.currentPartySprites.length = 0;
             this.currentPlayersSprites.length = 0;
-            this.scene.switch("WorldScene");
+            this.scene.switch(currentScene);
         });
 
 
@@ -785,7 +768,7 @@ var PartyMembersScene = new Phaser.Class({
                         this.textsArray.length = 0;
                         this.currentPartySprites.length = 0;
                         this.currentPlayersSprites.length = 0;
-                        this.scene.switch("WorldScene");
+                        this.scene.switch(currentScene);
                     }
                 });
                 this.textsArray.push(text1);
@@ -851,7 +834,7 @@ var PartyMembersScene = new Phaser.Class({
                         this.textsArray.length = 0;
                         this.currentPartySprites.length = 0;
                         this.currentPlayersSprites.length = 0;
-                        this.scene.switch("WorldScene");
+                        this.scene.switch(currentScene);
                     }
                 });
                 this.textsArray.push(text2);
@@ -917,7 +900,7 @@ var PartyMembersScene = new Phaser.Class({
                         this.textsArray.length = 0;
                         this.currentPartySprites.length = 0;
                         this.currentPlayersSprites.length = 0;
-                        this.scene.switch("WorldScene");
+                        this.scene.switch(currentScene);
                     }
                 });
                 this.textsArray.push(text3);
@@ -982,7 +965,7 @@ var PartyMembersScene = new Phaser.Class({
                         this.textsArray.length = 0;
                         this.currentPartySprites.length = 0;
                         this.currentPlayersSprites.length = 0;
-                        this.scene.switch("WorldScene");
+                        this.scene.switch(currentScene);
                     }
                 });
                 this.textsArray.push(text4);
@@ -1048,7 +1031,7 @@ var PartyMembersScene = new Phaser.Class({
                         this.textsArray.length = 0;
                         this.currentPartySprites.length = 0;
                         this.currentPlayersSprites.length = 0;
-                        this.scene.switch("WorldScene");
+                        this.scene.switch(currentScene);
                     }
                 });
                 this.textsArray.push(text5);
@@ -1114,7 +1097,7 @@ var PartyMembersScene = new Phaser.Class({
                         this.textsArray.length = 0;
                         this.currentPartySprites.length = 0;
                         this.currentPlayersSprites.length = 0;
-                        this.scene.switch("WorldScene");
+                        this.scene.switch(currentScene);
                     }
                 });
                 this.textsArray.push(text6);
@@ -1179,7 +1162,7 @@ var PartyMembersScene = new Phaser.Class({
                         this.textsArray.length = 0;
                         this.currentPartySprites.length = 0;
                         this.currentPlayersSprites.length = 0;
-                        this.scene.switch("WorldScene");
+                        this.scene.switch(currentScene);
                     }
                 });
                 this.textsArray.push(text7);
@@ -1246,7 +1229,7 @@ var PartyMembersScene = new Phaser.Class({
                         this.textsArray.length = 0;
                         this.currentPartySprites.length = 0;
                         this.currentPlayersSprites.length = 0;
-                        this.scene.switch("WorldScene");
+                        this.scene.switch(currentScene);
                     }
                 });
                 this.textsArray.push(text8);
@@ -1312,7 +1295,7 @@ var SkillScene = new Phaser.Class({
             this.nameTextArray.length = 0;
             this.skillDescriptionTextArray.length = 0;
             this.battleSkillDescriptionTextArray.length = 0;
-            this.scene.switch("WorldScene");
+            this.scene.switch(currentScene);
         });
 
         this.spritesArray = []; //array of party sprites
@@ -1465,7 +1448,212 @@ this.dialogBox.on("pointerdown", ()=>{
 
 
 
+var World1 = new Phaser.Class({
+    Extends: WorldScene,
 
+    initialize:
+
+    function World1 ()
+    {
+        Phaser.Scene.call(this, { key: 'World1' });
+    },
+    
+    create: function(){
+        var level0 = this.make.tilemap({
+            key: 'level0'
+        });
+        var tiles = level0.addTilesetImage('Mapset', 'tiles');
+        // creating the layers
+        this.traverse = level0.createStaticLayer('traverse', tiles, 0, 0);
+        this.blocked = level0.createStaticLayer('blocked', tiles, 0, 0);
+                //keep an array of all the npcs on this map 
+                var npcs = [];
+                // create the map
+                var level0 = this.make.tilemap({ key: 'level0' });
+                
+                // first parameter is the name of the tilemap in tiled
+                var tiles = level0.addTilesetImage('Mapset', 'tiles');
+                
+                // creating the layers
+                var traverse = level0.createStaticLayer('traverse', tiles, 0, 0);
+                var blocked = level0.createStaticLayer('blocked', tiles, 0, 0);
+                
+                // make all tiles in obstacles collidable
+                blocked.setCollisionByExclusion([-1]);
+        
+                //list of global attributes that the current player has 
+        
+                var animations = []; //a string of animations being stored 
+        
+                //conversations array;
+        
+        
+                
+                //  animation with key 'left', we don't need left and right as we will use one and flip the sprite
+                this.anims.create({
+                    key: 'left',
+                    frames: this.anims.generateFrameNumbers('Reena', { frames: [8,9,10,11,12,13,14,15]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+                
+                // animation with key 'right'
+                this.anims.create({
+                    key: 'right',
+                    frames: this.anims.generateFrameNumbers('Reena', { frames: [0,1,2,3,4,5,6,7] }),
+                    frameRate: 5,
+                    repeat: -1
+                });
+                this.anims.create({
+                    key: 'up',
+                    frames: this.anims.generateFrameNumbers('Reena', { frames: [8,9,10,11,12,13,14,15]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+                this.anims.create({
+                    key: 'down',
+                    frames: this.anims.generateFrameNumbers('Reena', { frames: [0,1,2,3,4,5,6,7] }),
+                    frameRate: 5,
+                    repeat: -1
+                });     
+        
+                this.anims.create({
+                    key: 'attack',
+                    frames: this.anims.generateFrameNumbers('Reena', { frames: [24,25,26,27,28,29,30,31] }),
+                    frameRate: 5,
+                });
+                
+                this.anims.create({
+                    key: 'defeated',
+                    frames: this.anims.generateFrameNumbers('Reena', {frames: [32]}),
+                    frameRate: 1,
+                    repeat: -1
+                })
+        
+                //alyene animations
+                this.anims.create({
+                    key: 'rightalyene',
+                    frames: this.anims.generateFrameNumbers('Alyene', { frames: [8,9,10,11,12,13,14,15]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+                this.anims.create({
+                    key: 'leftalyene',
+                    frames: this.anims.generateFrameNumbers('Alyene', { frames: [0,1,2,3,4,5,6,7]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+                this.anims.create({
+                    key: 'attackalyene',
+                    frames: this.anims.generateFrameNumbers('Alyene', { frames: [24,25,26,27,28,29,30,31]}),
+                    frameRate: 5,
+                });
+                this.anims.create({
+                    key: 'defeatedalyene',
+                    frames: this.anims.generateFrameNumbers('Alyene', { frames: [33]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+        
+                //yune animations
+                this.anims.create({
+                    key: 'rightyune',
+                    frames: this.anims.generateFrameNumbers('Yune', {frames: [8,9,10,11,12,13,14,15]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+                this.anims.create({
+                    key: 'leftyune',
+                    frames: this.anims.generateFrameNumbers('Yune', {frames: [0,1,2,3,4,5,6,7]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+        
+                // our player sprite created through the phycis system
+                this.reena = this.physics.add.sprite(640, 128+64, 'Reena', 6);
+                
+                // don't go out of the map
+                this.physics.world.bounds.width = level0.widthInPixels;
+                this.physics.world.bounds.height = level0.heightInPixels;
+                this.reena.setCollideWorldBounds(true);
+                
+                // don't walk on trees
+                this.physics.add.collider(this.reena, blocked);
+        
+                // limit camera to map
+                this.cameras.main.setBounds(0, 0, level0.widthInPixels, level0.heightInPixels);
+                this.cameras.main.startFollow(this.reena);
+                this.cameras.main.roundPixels = true; // avoid tile bleed
+
+                        // user input
+        //this.cursors = this.input.keyboard.createCursorKeys();
+        this.cursors = this.input.keyboard.addKeys({
+            up: 'W',
+            down: 'S',
+            left: 'A',
+            right: 'D'
+        });  // keys.up, keys.down, keys.left, keys.right
+
+
+        this.input.keyboard.on('keydown_F', ()=>{
+            this.scene.switch("PartyMembersScene");
+        });
+
+        this.input.keyboard.on('keydown_G', ()=>{
+            this.scene.switch("SkillScene");
+        });
+
+        currentScene = "World1";
+    },
+    
+    update: function (time, delta)
+    {             
+        this.reena.body.setVelocity(0);
+        
+        // Horizontal movement
+        if (this.cursors.left.isDown)
+        {
+            this.reena.body.setVelocityX(-550);
+        }
+        else if (this.cursors.right.isDown)
+        {
+            this.reena.body.setVelocityX(550);
+        }
+        // Vertical movement
+        if (this.cursors.up.isDown)
+        {
+            this.reena.body.setVelocityY(-550);
+        }
+        else if (this.cursors.down.isDown)
+        {
+            this.reena.body.setVelocityY(550);
+        }        
+
+        // Update the animation last and give left/right animations precedence over up/down animations
+        if (this.cursors.left.isDown)
+        {
+            this.reena.anims.play('left', true);
+            //this.reena.flipX = true;
+        }
+        else if (this.cursors.right.isDown)
+        {
+            this.reena.anims.play('right', true);
+            this.reena.flipX = false;
+        }
+        else if (this.cursors.up.isDown)
+        {
+            this.reena.anims.play('up', true);
+        }
+        else if (this.cursors.down.isDown)
+        {
+            this.reena.anims.play('down', true);
+        }
+        else
+        {
+            //this.reena.anims.stop();
+        }
+    }
+})
 
 
 
