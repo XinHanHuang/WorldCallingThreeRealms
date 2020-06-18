@@ -75,6 +75,7 @@ var BootScene = new Phaser.Class({
 
         //load a dialog box
         this.load.image('dialogbox', 'assets/dialogBox.png');
+        this.load.image('expbackground', 'assets/expbackground.png');
 
     },
 

@@ -28,7 +28,7 @@ var BattleScene = new Phaser.Class({
 			// creating the layers
 			this.traverse = level0.createStaticLayer('traverse', tiles, 0, 0);
 			this.blocked = level0.createStaticLayer('blocked', tiles, 0, 0);
-		}
+        }
 
 		this.startBattle();
 		// on wake event we call startBattle too
@@ -38,11 +38,11 @@ var BattleScene = new Phaser.Class({
 
 	startBattle: function () {
         // player character - warrior
-
 		this.heroes = [];
 		this.enemiesArray = [];
 		this.heroesStatusArray = [];
-		this.enemiesStatusArray = []; //hero and enemy status arrays
+        this.enemiesStatusArray = []; //hero and enemy status arrays
+        this.expArray = [];
 		for (var i = 0; i < 4; i++) {
 			//for each for loop we are gonna generate new fighting sprites 
 			if (i === 0 || i === 1) {
@@ -200,11 +200,11 @@ var BattleScene = new Phaser.Class({
 			callback: this.nextTurn,
 			callbackScope: this
 		});
-	},
-	endBattle: function () {
+    },
+    
+    endBattle: function(){
         // clear state, remove sprites, EXP system
         var enemyLevel = enemies[0].level; //get that level boi
-        var expArray = [];
         for (var i = 0; i < this.heroes.length; i++){
             var expGain = (enemyLevel - this.heroes[i].playerInformation.level) * 15; //level difference *15
             if (expGain > 100){
@@ -226,7 +226,7 @@ var BattleScene = new Phaser.Class({
                     useAdvancedWrap: true
                 }
             }).setInteractive();
-            expArray.push(expGainText);
+            this.expArray.push(expGainText);
 
             this.heroes[i].playerInformation.exp += expGain;
             if (this.heroes[i].playerInformation.exp >= 100){
@@ -251,10 +251,19 @@ var BattleScene = new Phaser.Class({
                         useAdvancedWrap: true
                     }
                 }).setInteractive();
-                expArray.push(levelupText);
+                this.expArray.push(levelupText);
             }
-
         }
+
+        this.time.addEvent({
+			delay: 3000,
+			callback: this.endBattle2,
+			callbackScope: this
+		});
+
+
+    },
+	endBattle2: function () {
 
 		for (var i = 0; i < this.heroes.length; i++) {
 			this.heroes[i] = null;
@@ -279,10 +288,10 @@ var BattleScene = new Phaser.Class({
             if(this.heroesStatusArray[i] != null){
 			this.heroesStatusArray[i].destroy();}
         }
-        for (var i = 0; i < expArray.length; i++){
-            expArray[i].destroy();
+        for (var i = 0; i < this.expArray.length; i++){
+            this.expArray[i].destroy();
         }
-        expArray.length = 0;
+        this.expArray.length = 0;
 		this.heroes.length = 0;
 		this.enemiesArray.length = 0;
 		enemies.length = 0;
