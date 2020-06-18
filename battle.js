@@ -213,6 +213,9 @@ var BattleScene = new Phaser.Class({
             if (expGain <= 0){
                 expGain = 1;
             }
+            if (this.checkEndBattle() === false){
+                expGain = 0;
+            }
             var expGainText = this.add.text(200, 200 + i*100, this.heroes[i].playerInformation.unitName + " has gained " + expGain + " EXP!", {
                 color: "#ff0000",
                 align: "center",
@@ -269,10 +272,12 @@ var BattleScene = new Phaser.Class({
 			EnemyUIarray[i] = null;
 		}
 		for (var i = 0; i < this.enemiesStatusArray.length; i++) {
-			this.enemiesStatusArray[i].destroy();
+            if(this.enemiesStatusArray[i] != null){
+			this.enemiesStatusArray[i].destroy();}
 		}
 		for (var i = 0; i < this.heroesStatusArray.length; i++) {
-			this.heroesStatusArray[i].destroy();
+            if(this.heroesStatusArray[i] != null){
+			this.heroesStatusArray[i].destroy();}
         }
         for (var i = 0; i < expArray.length; i++){
             expArray[i].destroy();
