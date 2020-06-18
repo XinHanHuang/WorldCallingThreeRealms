@@ -8,7 +8,7 @@ UIarray = []; //this array keeps track of all the UIs for every character on the
 EnemyUIarray = []; //this array keeps track of all the UIs for every enemy on the map
 menus = []; //keeps track of menus
 num_of_players = 4; //global variable to keep track of the number of players, will be set to 2 in actual game
-
+currentDialogStatus = "heaven1"; //This is a list of current dialog statuses, and this global variable will determine how conversations are accessed
 
 
 
@@ -73,7 +73,8 @@ var BootScene = new Phaser.Class({
         this.load.image('dragonskin', 'assets/skills/dragonskin.png');
         this.load.image('angelictruth', 'assets/skills/angelictruth.png');
 
-        
+        //load a dialog box
+        this.load.image('dialogbox', 'assets/dialogBox.png');
 
     },
 
@@ -121,7 +122,8 @@ var WorldScene = new Phaser.Class({
 
         var animations = []; //a string of animations being stored 
 
-        //load the main player sprite
+        //conversations array;
+
 
         
         //  animation with key 'left', we don't need left and right as we will use one and flip the sprite
@@ -394,7 +396,7 @@ var WorldScene = new Phaser.Class({
         // add collider
         //this.physics.add.overlap(this.player, this.spawns, this.onMeetEnemy, false, this);
         for (var i = 0; i < npcs.length; i++){
-            this.physics.add.collider(this.reena, npcs[i], this.onNpcDialog, false, this);
+            this.physics.add.collider(this.reena, npcs[i], this.onNpcDialog, false, this).name = "AlyeneCollider";
         }
         // we listen for 'wake' event
         this.sys.events.on('wake', this.wake, this);
@@ -418,12 +420,13 @@ var WorldScene = new Phaser.Class({
         this.scene.start('BattleScene');                
     },
 
+
     //this detects the nearest npc that the player bumps to, an a dialog will happen for that npc and the player
     //a bunch of if statements, different events will trigger depending on the different npcs encountered in this World
     onNpcDialog: function(player, npc){
         console.log(npc.texture.key);
         if (npc.texture.key === "Alyene"){
-
+            
             unitAlyeneSkills1 = new unitSkills("Almighty God","Negates damage bonus from enemy critical hits, damage from opponent's attacks reduced by 50%", "almightygod");
             unitAlyeneSkills2 = new unitSkills("Dragon Skin", "Negates the effects of all non-damaging status effects. Nullifies poison damage", "dragonskin");
             unitAlyeneSkillArray = [unitAlyeneSkills1, unitAlyeneSkills2];
@@ -436,11 +439,21 @@ var WorldScene = new Phaser.Class({
             enemies.push(unitAlyene);
 
 
-            this.cameras.main.shake(300);
+            //this.cameras.main.shake(300);
             this.input.stopPropagation();
-            this.reena.y -= 20;
+            //this.reena.y -= 80;
+            this.scene.run("DialogScene");
+            this.scene.pause("WorldScene");
 
-            this.scene.switch('BattleScene');
+            //this.scene.switch('BattleScene');
+            //first disable all the keys 
+            this.cursors.left.enabled = false;
+            this.cursors.right.enabled = false;
+            this.cursors.up.enabled = false;
+            this.cursors.down.enabled = false; 
+
+
+            
         }
         if (npc.texture.key === "Yune"){
 
@@ -598,6 +611,14 @@ class unitInformation {
         this.exp = 0;
     }
 
+}
+
+//a dialog class consists of an array of conversations, null-terminated, where each array holds a string of dialog
+class dialog{
+    constructor(conversationArray, name){
+        this.conversationArray = conversationArray;
+        this.name = name; 
+    }
 }
 
 var PartyMembersScene = new Phaser.Class({
@@ -1354,7 +1375,81 @@ var SkillScene = new Phaser.Class({
 
 });
 
+var DialogScene = new Phaser.Class({
 
+    Extends: Phaser.Scene,
+
+    initialize:
+        function DialogScene(){
+            Phaser.Scene.call(this, {
+                key: "DialogScene"
+            });
+        },
+    
+    create: function(){
+        this.dialogBox = this.add.sprite(640, 900, 'dialogbox').setInteractive();
+        this.convoText = this.add.text(240, 860, "TESTING TESTING TESTING TESTING TESTINSGD DSFNASDFA SDAOSDIJ" +
+        "ASDJFNASDFJAOSDIJFOASIDJFOASDJFOIAJFOJFA;OSDJF;OIAWEJFOISJAD;LFKJSADLKFMJ;LJEFAEFL;SJD;LFKJAS" +
+        "SDALFASDLFJASLD I really want to each your chicken", {
+            color: "#ff0000",
+            align: "center",
+            fontWeight: 'bold',
+            font: "22px Arial",
+            wordWrap: {
+                width:800,
+                useAdvancedWrap: true
+            }
+        }).setInteractive();
+        this.currentIndex = -1; //index to access the conversation arrays
+        this.convo1 = ["YO MAMA IS WHITE", "YO MAMA IS BLACK", "YO DADDY IS ASIAN", null]; //null terminated arrays
+        this.convo2 = ["conversation 2 Test", "Conversation 5 Test", null];
+
+            //click anywhere
+        this.input.on("pointerdown", ()=>{
+            if (currentDialogStatus === "heaven1"){
+                this.currentIndex++;
+                this.convoText.text = this.convo1[this.currentIndex];
+                if (this.convo1[this.currentIndex] === null){
+                    this.currentIndex = -1; //resest the index and trigger the event
+                    this.scene.switch('BattleScene');
+                }
+            }
+            else if (currentDialogStatus === "heaven2"){
+                this.currentIndex++;
+                this.convoText.text = this.convo2[this.currentIndex];
+                if (this.convo2[this.currentIndex] === null){
+                    
+                }
+            }
+        })
+        
+
+    },
+
+
+    //create all the conversations here, and then set interactive to update accordingly
+    
+
+});
+
+/*var alyenedialog1 = ["So you've come, at last", "You were always late for your training, what am I going to do with you?",
+"Well, what are we waiting for, let's get started...", null];
+var conversation1 = new dialog(alyenedialog1, "Alyene");
+var convoText = this.add.text(this.reena.x, this.reena.y,
+     "HEY HEY HEY", {
+        color: "#FF0000",
+        align: "center",
+        fontWeight: 'bold',
+        font: '26px Arial',
+        wordWrap: {
+            width: 800,
+            useAdvancedWrap: true
+        }
+}).setInteractive();
+
+this.dialogBox.on("pointerdown", ()=>{
+    convoText.text = "NO";
+})*/
 
 
 

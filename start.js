@@ -17,7 +17,8 @@ var config = {
         BattleScene,
         UIScene,
         PartyMembersScene,
-        SkillScene
+        SkillScene,
+        DialogScene
     ]
 };
 var game = new Phaser.Game(config);
