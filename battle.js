@@ -37,7 +37,8 @@ var BattleScene = new Phaser.Class({
 
 
 	startBattle: function () {
-		// player character - warrior
+        // player character - warrior
+
 		this.heroes = [];
 		this.enemiesArray = [];
 		this.heroesStatusArray = [];
@@ -201,7 +202,55 @@ var BattleScene = new Phaser.Class({
 		});
 	},
 	endBattle: function () {
-		// clear state, remove sprites
+        // clear state, remove sprites, EXP system
+        var enemyLevel = enemies[0].level; //get that level boi
+        var expArray = [];
+        for (var i = 0; i < this.heroes.length; i++){
+            var expGain = (enemyLevel - this.heroes[i].playerInformation.level) * 15; //level difference *15
+            if (expGain > 100){
+                expGain = 100; //cannot exceed 100
+            }
+            if (expGain <= 0){
+                expGain = 1;
+            }
+            var expGainText = this.add.text(200, 200 + i*100, this.heroes[i].playerInformation.unitName + " has gained " + expGain + " EXP!", {
+                color: "#ff0000",
+                align: "center",
+                fontWeight: 'bold',
+                font: "30px Arial",
+                wordWrap: {
+                    width:800,
+                    useAdvancedWrap: true
+                }
+            }).setInteractive();
+            expArray.push(expGainText);
+
+            this.heroes[i].playerInformation.exp += expGain;
+            if (this.heroes[i].playerInformation.exp >= 100){
+                this.heroes[i].playerInformation.exp = 0;
+                this.heroes[i].playerInformation.level += 1;
+                this.heroes[i].playerInformation.unitStats.HP += 5;
+                this.heroes[i].playerInformation.unitStats.MP += 5;
+                this.heroes[i].playerInformation.unitStats.atk += 2;
+                this.heroes[i].playerInformation.unitStats.def += 2;
+                this.heroes[i].playerInformation.unitStats.res += 2;
+                this.heroes[i].playerInformation.unitStats.spd += 2;
+                this.heroes[i].playerInformation.unitStats.luck += 2;
+                var levelupText = this.add.text(600, 200 + i*100, this.heroes[i].playerInformation.unitName + " has LEVELED UP", {
+                    color: "#ff0000",
+                    align: "center",
+                    fontWeight: 'bold',
+                    font: "30px Arial",
+                    wordWrap: {
+                        width:800,
+                        useAdvancedWrap: true
+                    }
+                }).setInteractive();
+                expArray.push(levelupText);
+            }
+
+        }
+
 		for (var i = 0; i < this.heroes.length; i++) {
 			this.heroes[i] = null;
 		}
@@ -222,7 +271,11 @@ var BattleScene = new Phaser.Class({
 		}
 		for (var i = 0; i < this.heroesStatusArray.length; i++) {
 			this.heroesStatusArray[i].destroy();
-		}
+        }
+        for (var i = 0; i < expArray.length; i++){
+            expArray[i].destroy();
+        }
+        expArray.length = 0;
 		this.heroes.length = 0;
 		this.enemiesArray.length = 0;
 		enemies.length = 0;
@@ -240,11 +293,14 @@ var BattleScene = new Phaser.Class({
 			// link item
 			this.units[i].destroy();
 		}
-		this.units.length = 0;
+        this.units.length = 0;
+        
+
 		// sleep the UI
 		//this.scene.sleep('UIScene');
 		this.scene.get('UIScene').scene.stop('UIScene');
-		this.destroyMessageBox();
+        this.destroyMessageBox();
+
 		//this.scene.get('BattleScene').scene.stop('BattleScene');
 		// return to WorldScene and sleep current BattleScene
 		this.scene.switch('WorldScene');
