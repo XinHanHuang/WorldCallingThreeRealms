@@ -1388,9 +1388,7 @@ var DialogScene = new Phaser.Class({
     
     create: function(){
         this.dialogBox = this.add.sprite(640, 900, 'dialogbox').setInteractive();
-        this.convoText = this.add.text(240, 860, "TESTING TESTING TESTING TESTING TESTINSGD DSFNASDFA SDAOSDIJ" +
-        "ASDJFNASDFJAOSDIJFOASIDJFOASDJFOIAJFOJFA;OSDJF;OIAWEJFOISJAD;LFKJSADLKFMJ;LJEFAEFL;SJD;LFKJAS" +
-        "SDALFASDLFJASLD I really want to each your chicken", {
+        this.convoText = this.add.text(240, 860, "", {
             color: "#ff0000",
             align: "center",
             fontWeight: 'bold',
@@ -1400,8 +1398,20 @@ var DialogScene = new Phaser.Class({
                 useAdvancedWrap: true
             }
         }).setInteractive();
+        this.convoName = this.add.text(400, 810, "TESTING", {
+            color: "#ff0000",
+            align: "center",
+            fontWeight: 'bold',
+            font: "30px Arial",
+            wordWrap: {
+                width:800,
+                useAdvancedWrap: true
+            }
+        }).setInteractive();
+
         this.currentIndex = -1; //index to access the conversation arrays
         this.convo1 = ["YO MAMA IS WHITE", "YO MAMA IS BLACK", "YO DADDY IS ASIAN", null]; //null terminated arrays
+        this.convoNames1 = ["Alyene", "Alyene", "Reena", null];
         this.convo2 = ["conversation 2 Test", "Conversation 5 Test", null];
 
             //click anywhere
@@ -1409,6 +1419,7 @@ var DialogScene = new Phaser.Class({
             if (currentDialogStatus === "heaven1"){
                 this.currentIndex++;
                 this.convoText.text = this.convo1[this.currentIndex];
+                this.convoName.text = this.convoNames1[this.currentIndex];
                 if (this.convo1[this.currentIndex] === null){
                     this.currentIndex = -1; //resest the index and trigger the event
                     this.scene.switch('BattleScene');
