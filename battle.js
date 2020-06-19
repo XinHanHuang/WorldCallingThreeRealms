@@ -43,7 +43,7 @@ var BattleScene = new Phaser.Class({
 		this.heroesStatusArray = [];
         this.enemiesStatusArray = []; //hero and enemy status arrays
         this.expArray = [];
-		for (var i = 0; i < 4; i++) {
+		for (var i = 0; i < players.length; i++) {
 			//for each for loop we are gonna generate new fighting sprites 
 			if (i === 0 || i === 1) {
 				var player = new PlayerCharacter(this, 1280 - 256, 256 + i * 130, players[i].unitName, 1, "Warrior", players[i].unitStats.hp, players[i]);
@@ -76,7 +76,7 @@ var BattleScene = new Phaser.Class({
 
 
 		// array with both parties, who will attack
-		this.units = this.heroes.concat(this.enemiesArray);
+        this.units = this.heroes.concat(this.enemiesArray);
 
 		this.createMessageBox();
 
@@ -300,7 +300,7 @@ var BattleScene = new Phaser.Class({
 		this.enemiesStatusArray.length = 0;
 		this.heroesStatusArray.length = 0;
 		//this.damageDeltArray.length = 0;
-		for (var i = 0; i < 4; i++) {
+		for (var i = 0; i < players.length; i++) {
 			players[i].unitStats.hp = players[i].unitStats.maxHP;
 			players[i].unitStats.mp = players[i].unitStats.maxMP;
 			players[i].unitStatus = null;
@@ -773,7 +773,7 @@ var UIScene = new Phaser.Class({
 								graphicsArray.length = 0;
 								skillsArray.length = 0;
 								if (currentPlayer.playerInformation.unitBattleSkills[0].type === "heal") {
-									for (var i = 0; i < 4 + 1; i++) {
+									for (var i = 0; i < players.length + 1; i++) {
 										if (i === 4) {
 											//if this is the last index, create an escape button
 											var escapetext2 = this.add.text(410, 1024 - 3 * 95 - 58 + i * 60, "BACK", {
@@ -1021,7 +1021,7 @@ var UIScene = new Phaser.Class({
 								graphicsArray.length = 0;
 								skillsArray.length = 0;
 								if (currentPlayer.playerInformation.unitBattleSkills[1].type === "heal") {
-									for (var i = 0; i < 4 + 1; i++) {
+									for (var i = 0; i < players.length + 1; i++) {
 										if (i === 4) {
 											//if this is the last index, create an escape button
 											var escapetext2 = this.add.text(410, 1024 - 3 * 95 - 58 + i * 60, "BACK", {
@@ -1270,7 +1270,7 @@ var UIScene = new Phaser.Class({
 								graphicsArray.length = 0;
 								skillsArray.length = 0;
 								if (currentPlayer.playerInformation.unitBattleSkills[2].type === "heal") {
-									for (var i = 0; i < 4 + 1; i++) {
+									for (var i = 0; i < players.length + 1; i++) {
 										if (i === 4) {
 											//if this is the last index, create an escape button
 											var escapetext3 = this.add.text(410, 1024 - 3 * 95 - 58 + i * 60, "BACK", {
@@ -1519,7 +1519,7 @@ var UIScene = new Phaser.Class({
 								graphicsArray.length = 0;
 								skillsArray.length = 0;
 								if (currentPlayer.playerInformation.unitBattleSkills[3].type === "heal") {
-									for (var i = 0; i < 4 + 1; i++) {
+									for (var i = 0; i < players.length + 1; i++) {
 										if (i === 4) {
 											//if this is the last index, create an escape button
 											var escapetext4 = this.add.text(410, 1024 - 3 * 95 - 58 + i * 60, "BACK", {
@@ -1796,7 +1796,11 @@ var UIScene = new Phaser.Class({
 			}
 			this.scene.get("BattleScene").updateMessageBox(player.unitName + " attacks " + target.unitName);
 			var criticalHit = false;
-			var criticalChance = 0;
+            var criticalChance = 0;
+            if (player.unitStatus === "attackdown"){
+                //halves attack
+                damagedelt = Math.floor(damagedelt/2);
+            }
 			if (player.unitStatus === "paralyzed") {
 				//lowers critical chance when paralyzed
 				criticalChance = Math.floor(((player.unitStats.spd / 4) - target.unitStats.spd) * (player.unitStats.luck / 10));
@@ -1990,7 +1994,7 @@ var UIScene = new Phaser.Class({
 				}
 			}
 			else if (isPlayer === false) {
-				for (var i = 0; i < 4; i++) {
+				for (var i = 0; i < players.length; i++) {
 					var damagedelt = player.unitStats.atk - players[i].unitStats.res;
 					if (damagedelt < 0) {
 						damagedelt = 0;
@@ -2021,7 +2025,7 @@ var UIScene = new Phaser.Class({
 			if (skillName === "Fire Magic" || skillName === "Water Magic" || skillName === "Earth Magic" ||
 				skillName === "Light Magic" || skillName === "Dark Magic") {
 				mpRequired = 5;
-				for (var i = 0; i < 4; i++) {
+				for (var i = 0; i < players.length; i++) {
 					if (players[i].unitName === target.unitName) {
 						//if the unit's name matches the i
 						target.unitStats.hp = target.unitStats.hp - this.damageDeltArray[i];
@@ -2050,7 +2054,7 @@ var UIScene = new Phaser.Class({
 				}
 				//damagedelt = Math.floor(damagedelt * 1.5);
 				mpRequired = 20;
-				for (var i = 0; i < 4; i++) {
+				for (var i = 0; i < players.length; i++) {
 					if (players[i].unitName === target.unitName) {
 						//if the unit's name matches the i
 						target.unitStats.hp = target.unitStats.hp - this.damageDeltArray[i];
@@ -2075,7 +2079,7 @@ var UIScene = new Phaser.Class({
 				//if (target.unitName === "Alyene", not paralyzed or something here)
 				target.unitStatus = "paralyzed"; //set paralyzed to unit status
 
-				for (var i = 0; i < 4; i++) {
+				for (var i = 0; i < players.length; i++) {
 					if (players[i].unitName === target.unitName) {
 						//if the unit's name matches the i
 						target.unitStats.hp = target.unitStats.hp - this.damageDeltArray[i];
@@ -2107,7 +2111,7 @@ var UIScene = new Phaser.Class({
 			else if (skillName === "Spirit Break") {
 				mpRequired = 5;
 				target.unitStatus = "attackdown";
-				for (var i = 0; i < 4; i++) {
+				for (var i = 0; i < players.length; i++) {
 					if (players[i].unitName === target.unitName) {
 						//if the unit's name matches the i
 						target.unitStats.hp = target.unitStats.hp - this.damageDeltArray[i];
@@ -2152,7 +2156,7 @@ var UIScene = new Phaser.Class({
 					}
 				}
 				else if (isPlayer === false) {
-					for (var i = 0; i < 4; i++) {
+					for (var i = 0; i < players.length; i++) {
 						players[i].unitStatus = "paralyzed";
 						players[i].unitStats.hp = players[i].unitStats.hp - this.damageDeltArray[i];
 						if (players[i].unitStats.hp < 0) {
@@ -2182,7 +2186,7 @@ var UIScene = new Phaser.Class({
 				}
 
 				else if (isPlayer === false) {
-					for (var i = 0; i < 4; i++) {
+					for (var i = 0; i < players.length; i++) {
 						players[i].unitStatus = "poisoned";
 						players[i].unitStats.hp = players[i].unitStats.hp - this.damageDeltArray[i];
 						if (players[i].unitStats.hp < 0) {
@@ -2377,12 +2381,15 @@ var UIScene = new Phaser.Class({
 						var status = this.add.sprite(180, 1024 - 9 - 3 * 95 + i * 120, "attackdown").setInteractive();
 						this.scene.get('BattleScene').enemiesStatusArray.push(status);
 					}
-					if (UIarray[i].name === player.unitName) {
-						//this is for decreasing magic
-						UIarray[i].mp_bar.decrease(mpRequired);
-						UIarray[i].mp_text.setText(player.unitStats.mp.toString() + "/" + player.unitStats.maxMP.toString());
-					}
-				}
+                }
+                for (var i = 0; i < UIarray.length; i++){
+                    if (UIarray[i].name === player.unitName) {
+                        //this is for decreasing magic
+                        UIarray[i].mp_bar.decrease(mpRequired);
+                        UIarray[i].mp_text.setText(player.unitStats.mp.toString() + "/" + player.unitStats.maxMP.toString());
+                    }
+                }
+
 				for (var i = 0; i < this.battleScene.enemiesArray.length; i++) {
 
 					this.damageText.push(this.battleScene.add.text(this.battleScene.enemiesArray[i].x - 20, this.battleScene.enemiesArray[i].y - 100, "-" + this.damageDeltArray[i], {
@@ -2492,7 +2499,7 @@ var UIScene = new Phaser.Class({
 		}
 
 		if (isPlayer === true) {
-			for (var i = 0; i < 4; i++) {
+			for (var i = 0; i < players.length; i++) {
 				this.damageHealedArray[i] = damagehealed;
 			}
 		}
@@ -2523,7 +2530,7 @@ var UIScene = new Phaser.Class({
 				target.unitStats.hp = target.unitStats.maxHP;
 				damagehealed = target.unitStats.maxHP - currentHP;
 			}
-			for (var i = 0; i < 4; i++) {
+			for (var i = 0; i < players.length; i++) {
 				if (target.unitName === players.unitName) {
 					this.damageHealedArray[i] = damagehealed;
 				}
@@ -2548,7 +2555,7 @@ var UIScene = new Phaser.Class({
 				}
 			}
 			else if (isPlayer === true) {
-				for (var i = 0; i < 4; i++) {
+				for (var i = 0; i < players.length; i++) {
 					var currentHP = players[i].unitStats.hp
 					players[i].unitStatus = null;
 					players[i].unitStats.hp = players[i].unitStats.hp + damagehealed;
@@ -2584,7 +2591,7 @@ var UIScene = new Phaser.Class({
 				}
 			}
 			else if (isPlayer === true) {
-				for (var i = 0; i < 4; i++) {
+				for (var i = 0; i < players.length; i++) {
 					if (this.scene.get('BattleScene').heroesStatusArray[i]) {
 						this.scene.get('BattleScene').heroesStatusArray[i].destroy();
 						this.scene.get('BattleScene').heroesStatusArray[i] = null;
@@ -2828,7 +2835,7 @@ var UIScene = new Phaser.Class({
 	createBattleSprites: function () {
 		//loop through all player sprites and create them
 		var incrY = 94; //increment y axis by intervals of 94 
-		for (var i = 0; i < 4; i++) {
+		for (var i = 0; i < players.length; i++) {
 			if (i === 0) {
 				//if there is only 1 player
 				var player1 = this.add.sprite(1280 - 95, 1024 - 3 * 95 - 40 + i * 93, players[i].unitSprites).setInteractive();

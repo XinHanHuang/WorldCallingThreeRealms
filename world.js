@@ -8,7 +8,7 @@ UIarray = []; //this array keeps track of all the UIs for every character on the
 EnemyUIarray = []; //this array keeps track of all the UIs for every enemy on the map
 menus = []; //keeps track of menus
 num_of_players = 4; //global variable to keep track of the number of players, will be set to 2 in actual game
-currentDialogStatus = "heaven1"; //This is a list of current dialog statuses, and this global variable will determine how conversations are accessed
+currentDialogStatus = "heaven0"; //This is a list of current dialog statuses, and this global variable will determine how conversations are accessed
 currentScene = "WorldScene"; //keeps track of the current scene to go back to 
 
 
@@ -82,7 +82,92 @@ var BootScene = new Phaser.Class({
     create: function ()
     {
         // start the WorldScene
-        this.scene.start('WorldScene');
+        // Here we actually create a splash art and a Menu
+        // Well we don't have the splash art at the moment so let's just do the menu
+        
+        this.cameras.main.setBackgroundColor('rgba(250, 218, 94, 1)');
+        this.graphics = this.add.graphics();
+        this.graphics.lineStyle(1, 0xffffff);
+        this.graphics.fillStyle(0x031f4c, 1);       
+
+        this.graphics.strokeRect(90, 600, 300, 50);
+        this.graphics.fillRect(90, 600, 300, 50);
+
+        this.graphics.strokeRect(90, 700, 300, 50);
+        this.graphics.fillRect(90, 700, 300, 50);
+
+        this.graphics.strokeRect(90, 800, 300, 50);
+        this.graphics.fillRect(90, 800, 300, 50);
+        
+        this.graphics.strokeRect(90, 900, 300, 50);
+        this.graphics.fillRect(90, 900, 300, 50);
+
+        var text = this.add.text(1280/2 - 200,
+			200, "World Calling: Three Realms", {
+				color: "#000000",
+				align: "center",
+				fontWeight: 'bold',
+				font: '60px Arial',
+				wordWrap: {
+					width: 800,
+					useAdvancedWrap: true
+				}
+        }).setInteractive();
+        
+        var text1 = this.add.text(185,
+			610, "    START    ", {
+				color: "#ffffff",
+				align: "center",
+				fontWeight: 'bold',
+				font: '32px Arial',
+				wordWrap: {
+					width: 800,
+					useAdvancedWrap: true
+				}
+        }).setInteractive();
+
+        text1.on('pointerdown', ()=>{
+            this.scene.start('DialogScene');
+        });
+
+        var text2 = this.add.text(185,
+			710, "LOAD", {
+				color: "#ffffff",
+				align: "center",
+				fontWeight: 'bold',
+				font: '32px Arial',
+				wordWrap: {
+					width: 800,
+					useAdvancedWrap: true
+				}
+        }).setInteractive();
+
+        var text3 = this.add.text(185,
+			810, "ABOUT", {
+				color: "#ffffff",
+				align: "center",
+				fontWeight: 'bold',
+				font: '32px Arial',
+				wordWrap: {
+					width: 800,
+					useAdvancedWrap: true
+				}
+        }).setInteractive();
+
+        var text4 = this.add.text(185,
+			910, "HELP", {
+				color: "#ffffff",
+				align: "center",
+				fontWeight: 'bold',
+				font: '32px Arial',
+				wordWrap: {
+					width: 800,
+					useAdvancedWrap: true
+				}
+        }).setInteractive();
+
+        
+        //this.scene.start('WorldScene');
     }
 });
 
@@ -236,126 +321,11 @@ var WorldScene = new Phaser.Class({
         unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2, unitReenaBattleSkills3, unitReenaBattleSkills4];
 
         //create a new unit information that stores all of Reena's information 
-        unitReena = new unitInformation(this.reena, "Reena", reenaAnimations, "yunesprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
+        unitReena = new unitInformation(this.reena, "Reena", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
         this.reena.anims.play('up', true);
         players.push(unitReena);
         playersCopy.push(unitReena);
 
-        unitReenaSkills1 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
-        unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
-        unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
-        unitReenaStats = new unitStats(28, 20, 45, 16, 22, 20, 7); //this is Reena's current stats
-        reenaAnimations = ['left', 'right', 'attack', 'defeated'];
-        //create a new unit information that stores all of Reena's information 
-        unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
-        unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x magical damage to opponent", 10, "magic", "single", "purehalo");
-        unitReenaBattleSkills3 = new unitBattleSkills("Rally Attack", "raises all ally's defense", 10, "heal", "single", "rallyattack");
-        unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2, unitReenaBattleSkills3];
-
-        //create a new unit information that stores all of Reena's information 
-        unitReena1 = new unitInformation(this.reena, "Reena2", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
-        this.reena.anims.play('up', true);
-        players.push(unitReena1);
-        playersCopy.push(unitReena1);
-
-        unitReenaSkills1 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
-        unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
-        unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
-        unitReenaStats = new unitStats(28, 20, 45, 16, 23, 20, 7); //this is Reena's current stats
-        reenaAnimations = ['left', 'right', 'attack', 'defeated'];
-        //create a new unit information that stores all of Reena's information 
-        unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
-        unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x physical damage to opponent", 10, "physical", "single", "purehalo");
-        unitReenaBattleSkills3 = new unitBattleSkills("Graceful Light", "Recovers HP for allies and nullifies all status effects", 10, "heal", "multiple", "gracefullight");
-        unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2, unitReenaBattleSkills3];
-
-        //create a new unit information that stores all of Reena's information 
-        unitReena1 = new unitInformation(this.reena, "Reena3", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
-        this.reena.anims.play('up', true);
-        players.push(unitReena1);
-        playersCopy.push(unitReena1);
-
-        unitReenaSkills1 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
-        unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
-        unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
-        unitReenaStats = new unitStats(28, 20, 45, 16, 25, 20, 7); //this is Reena's current stats
-        reenaAnimations = ['left', 'right', 'attack', 'defeated'];
-        //create a new unit information that stores all of Reena's information 
-        unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
-        unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x physical damage to opponent", 10, "physical", "single", "purehalo");
-        unitReenaBattleSkills3 = new unitBattleSkills("Light", "recovers HP for one ally and nullify status effects", 10, "heal", "single", "light");
-        unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2, unitReenaBattleSkills3];
-
-        //create a new unit information that stores all of Reena's information 
-        unitReena1 = new unitInformation(this.reena, "Reena4", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
-        this.reena.anims.play('up', true);
-        players.push(unitReena1);
-        playersCopy.push(unitReena1);
-
-
-
-
-        unitReenaSkills1 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
-        unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
-        unitReenaStats = new unitStats(28, 20, 45, 16, 25, 20, 7); //this is Reena's current stats
-        reenaAnimations = ['left', 'right', 'attack', 'defeated'];
-        //create a new unit information that stores all of Reena's information 
-        unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
-        unitReenaBattleSkillArray = [unitReenaBattleSkills1];
-
-        //create a new unit information that stores all of Reena's information 
-        unitReena1 = new unitInformation(this.reena, "Reena5", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
-        this.reena.anims.play('up', true);
-        players.push(unitReena1);
-        playersCopy.push(unitReena1);
-
-        
-        unitReenaSkills1 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
-        unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
-        unitReenaStats = new unitStats(28, 20, 45, 16, 25, 20, 7); //this is Reena's current stats
-        reenaAnimations = ['left', 'right', 'attack', 'defeated'];
-        //create a new unit information that stores all of Reena's information 
-        unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
-        unitReenaBattleSkillArray = [unitReenaBattleSkills1];
-
-        //create a new unit information that stores all of Reena's information 
-        unitReena1 = new unitInformation(this.reena, "Reena6", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
-        this.reena.anims.play('up', true);
-        players.push(unitReena1);
-        playersCopy.push(unitReena1);
-
-        
-        unitReenaSkills1 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
-        unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
-        unitReenaStats = new unitStats(28, 20, 45, 16, 25, 20, 7); //this is Reena's current stats
-        reenaAnimations = ['left', 'right', 'attack', 'defeated'];
-        //create a new unit information that stores all of Reena's information 
-        unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
-        unitReenaBattleSkillArray = [unitReenaBattleSkills1];
-
-        //create a new unit information that stores all of Reena's information 
-        unitReena1 = new unitInformation(this.reena, "Reena7", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
-        this.reena.anims.play('up', true);
-        players.push(unitReena1);
-        playersCopy.push(unitReena1);
-
-        
-        unitReenaSkills1 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
-        unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
-        unitReenaStats = new unitStats(28, 20, 45, 16, 25, 20, 7); //this is Reena's current stats
-        reenaAnimations = ['left', 'right', 'attack', 'defeated'];
-        //create a new unit information that stores all of Reena's information 
-        unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
-        unitReenaBattleSkillArray = [unitReenaBattleSkills1];
-
-        //create a new unit information that stores all of Reena's information 
-        unitReena1 = new unitInformation(this.reena, "Reena8", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
-        this.reena.anims.play('up', true);
-        players.push(unitReena1);
-        playersCopy.push(unitReena1);
-
-        
-        
 
         //alyene and yune
         this.alyene = this.physics.add.sprite(640, 2400, 'Alyene', 6).setImmovable();
@@ -365,7 +335,7 @@ var WorldScene = new Phaser.Class({
 
         this.yune = this.physics.add.sprite(768, 2400, 'Yune', 6).setImmovable();
         this.yune.anims.play('rightyune', true);
-        npcs.push(this.yune);
+        //npcs.push(this.yune);
     
 
         // user input
@@ -397,7 +367,7 @@ var WorldScene = new Phaser.Class({
         // add collider
         //this.physics.add.overlap(this.player, this.spawns, this.onMeetEnemy, false, this);
         for (var i = 0; i < npcs.length; i++){
-            this.physics.add.collider(this.reena, npcs[i], this.onNpcDialog, false, this).name = "AlyeneCollider";
+            this.physics.add.collider(this.reena, this.alyene, this.onNpcDialog, false, this).name = "AlyeneCollider";
         }
         // we listen for 'wake' event
         this.sys.events.on('wake', this.wake, this);
@@ -425,22 +395,19 @@ var WorldScene = new Phaser.Class({
         console.log("boii");
     },
 
+    startBattle: function(){
+        this.scene.switch('BattleScene');
+    },
+
 
     //this detects the nearest npc that the player bumps to, an a dialog will happen for that npc and the player
     //a bunch of if statements, different events will trigger depending on the different npcs encountered in this World
     onNpcDialog: function(player, npc){
         console.log(npc.texture.key);
         if (npc.texture.key === "Alyene"){
-            this.scene.switch('World1');
-
-
-           
-
-
-            
-        }
-        if (npc.texture.key === "Yune"){
-
+            currentDialogStatus = "heaven1";
+            this.reena.y -= 20;
+            this.reena.setVelocityY(0);
             unitAlyeneSkills1 = new unitSkills("Almighty God","Negates damage bonus from enemy critical hits, damage from opponent's attacks reduced by 50%", "almightygod");
             unitAlyeneSkills2 = new unitSkills("Dragon Skin", "Negates the effects of all non-damaging status effects. Nullifies poison damage", "dragonskin");
             unitAlyeneSkills3 = new unitSkills("Angelic Truth", "Halves skill damage received", "angelictruth");
@@ -467,13 +434,20 @@ var WorldScene = new Phaser.Class({
             unitYune = new unitInformation(this.yune, "Yune", YuneAnimations, "yunesprite", unitYuneSkillArray, unitYuneStats, null, unitYuneBattleSkllArray, 12);
             enemies.push(unitYune);
 
+            this.physics.world.colliders.getActive().find(function(i){
+                return i.name == 'AlyeneCollider';
+            }).destroy();
 
             this.cameras.main.shake(300);
             this.input.stopPropagation();
-            this.reena.y -= 20;
 
-            this.scene.switch('BattleScene');
+            this.scene.pause('WorldScene');
+            this.scene.run('DialogScene');
         }
+
+
+
+        
         
     },
 
@@ -700,7 +674,7 @@ var PartyMembersScene = new Phaser.Class({
     createMenu: function(){
         //an array of only 4 for the party members
 
-        for (var i = 0; i < 4; i++){
+        for (var i = 0; i < players.length; i++){
             var player = this.add.sprite(340 + i*200, 120, players[i].unitSprites).setInteractive();
             this.currentPartySprites.push(player);
         }
@@ -1310,7 +1284,7 @@ var SkillScene = new Phaser.Class({
 
     createMenu: function(){
         //an array of only 4 for the party members
-        for (var i = 0; i < 4; i++){
+        for (var i = 0; i < players.length; i++){
             var player = this.add.sprite(350, 80 + i*280, players[i].unitSprites).setInteractive()
             player.anims.play(players[i].unitAnimations[0], false);
             this.spritesArray.push(player);
@@ -1340,7 +1314,7 @@ var SkillScene = new Phaser.Class({
                 this.skillDescriptionTextArray.push(skillText);
             }
 
-            for (var k = 0; k < players[k].unitBattleSkills.length; k++){
+            for (var k = 0; k < players[i].unitBattleSkills.length; k++){
                 var battleSkillText = this.add.text(430, 105 + i*280 + k*15, players[i].unitBattleSkills[k].battleSkillName + " :" + 
                 players[i].unitBattleSkills[k].battleSkillDescription + "\n", {
                     fontWeight: 'bold',
@@ -1382,7 +1356,7 @@ var DialogScene = new Phaser.Class({
                 useAdvancedWrap: true
             }
         }).setInteractive();
-        this.convoName = this.add.text(400, 810, "TESTING", {
+        this.convoName = this.add.text(400, 810, "", {
             color: "#ff0000",
             align: "center",
             fontWeight: 'bold',
@@ -1394,19 +1368,39 @@ var DialogScene = new Phaser.Class({
         }).setInteractive();
 
         this.currentIndex = -1; //index to access the conversation arrays
-        this.convo1 = ["YO MAMA IS WHITE", "YO MAMA IS BLACK", "YO DADDY IS ASIAN", null]; //null terminated arrays
-        this.convoNames1 = ["Alyene", "Alyene", "Reena", null];
+        this.convo0 = ["Aestria, Earth, Rukkr", "These three realms make up what we call, the WORLD...", "Our father, the Engineer, judges the souls of humans...",
+        "and maintains balance between the three realms...", "The Engineer created us, the Gods, to maintain order in the realm of Aestria", 
+        "As well as Demons, to maintain order in the realm of Rukkr...", "This was the world I've always known since my creation... until...", null];
+        this.convo1 = ["You're late again for your training, Reena.", "Alyene... sorry but what are we even training for? It's so peaceful around here.", 
+        "Hmm, don't try to use that as an excuse again, if our Father learns about this, he probably won't forgive you for that.", 
+        "He won't forgive me huh, it's not like we've ever seen Father before. Ever since he created the realm of Aestria he's never been here again, who knows where he is... or if he even created us...",
+        "That's enough of your silly speculations, our training is starting, are you two ready, Yune, Reena?", "Yes big sister, let's start", null]; //null terminated arrays
+        this.convoNames1 = ["Alyene", "Reena", "Alyene", "Reena", "Alyene", "Yune", null];
         this.convo2 = ["conversation 2 Test", "Conversation 5 Test", null];
 
             //click anywhere
         this.input.on("pointerdown", ()=>{
-            if (currentDialogStatus === "heaven1"){
+            if (currentDialogStatus === "heaven0"){
+                this.currentIndex++;
+                this.convoText.text = this.convo0[this.currentIndex];
+                this.convoName.text = "Reena";
+                if(this.convo0[this.currentIndex] === null){
+                    this.currentIndex = -1;
+                    currentDialogStatus = "heaven1"
+                    this.scene.switch('WorldScene');
+                }
+            }
+            else if (currentDialogStatus === "heaven1"){
                 this.currentIndex++;
                 this.convoText.text = this.convo1[this.currentIndex];
                 this.convoName.text = this.convoNames1[this.currentIndex];
                 if (this.convo1[this.currentIndex] === null){
                     this.currentIndex = -1; //resest the index and trigger the event
-                    this.scene.switch('BattleScene');
+                    //this.scene.switch('WorldScene');
+                    this.scene.resume('WorldScene');
+                    this.scene.stop('DialogScene');
+                    //this.scene.start('BattleScene');
+                    this.scene.get('WorldScene').startBattle();
                 }
             }
             else if (currentDialogStatus === "heaven2"){
