@@ -239,15 +239,15 @@ var BattleScene = new Phaser.Class({
             if (this.heroes[i].playerInformation.exp >= 100){
                 this.heroes[i].playerInformation.exp = 0;
                 this.heroes[i].playerInformation.level += 1;
-                this.heroes[i].playerInformation.unitStats.hp += 5;
-                this.heroes[i].playerInformation.unitStats.mp += 5;
-                this.heroes[i].playerInformation.unitStats.maxHP += 5;
-                this.heroes[i].playerInformation.unitStats.maxMP += 5;
-                this.heroes[i].playerInformation.unitStats.atk += 2;
-                this.heroes[i].playerInformation.unitStats.def += 2;
-                this.heroes[i].playerInformation.unitStats.res += 2;
-                this.heroes[i].playerInformation.unitStats.spd += 2;
-                this.heroes[i].playerInformation.unitStats.luck += 2;
+                this.heroes[i].playerInformation.unitStats.hp += 2;
+                this.heroes[i].playerInformation.unitStats.mp += 1;
+                this.heroes[i].playerInformation.unitStats.maxHP += 1;
+                this.heroes[i].playerInformation.unitStats.maxMP += 1;
+                this.heroes[i].playerInformation.unitStats.atk += 1;
+                this.heroes[i].playerInformation.unitStats.def += 1;
+                this.heroes[i].playerInformation.unitStats.res += 1;
+                this.heroes[i].playerInformation.unitStats.spd += 1;
+                this.heroes[i].playerInformation.unitStats.luck += 1;
                 var levelupText = this.add.text(600, 200 + i*100, this.heroes[i].playerInformation.unitName + " has LEVELED UP", {
                     color: "#ff0000",
                     align: "center",

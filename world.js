@@ -30,6 +30,7 @@ var BootScene = new Phaser.Class({
         
         // map in json format
         this.load.tilemapTiledJSON('level0', 'assets/map/level0.json');
+        this.load.tilemapTiledJSON('level1', 'assets/map/level1.json');
         
         // enemies
         this.load.image("dragonblue", "assets/dragonblue.png");
@@ -39,6 +40,8 @@ var BootScene = new Phaser.Class({
         this.load.image("reenasprite", "assets/sprites/Reena.png");
         this.load.image("alyenesprite", "assets/sprites/Alyene.png");
         this.load.image('yunesprite', 'assets/sprites/Yune.png')
+        this.load.image('yuneallysprite', 'assets/sprites/Yune_Ally.png')
+        this.load.image('lostsoulsprite', 'assets/sprites/LostSoul.png')
         
         //load menu items
         this.load.image('attack', "assets/menu/attack.png");
@@ -65,6 +68,9 @@ var BootScene = new Phaser.Class({
         // load the other char for base world, level1 extends world
         this.load.spritesheet('Alyene', 'assets/Character Design/main_chara.png', {frameWidth: 128, frameHeight: 128});
         this.load.spritesheet('Yune', 'assets/Character Design/younger.png', {frameWidth: 128, frameHeight: 128});
+
+        //load the enemies
+        this.load.spritesheet('LostSoul', 'assets/enemies/lostsoul.png', {frameWidth: 128, frameHeight: 128});
 
         //load battle skills
         this.load.image('rightfulgod', 'assets/skills/rightfulgod.png');    
@@ -189,6 +195,7 @@ var WorldScene = new Phaser.Class({
 
     create: function ()
     {
+        this.spawns = null; //enemy spawns
         //keep an array of all the npcs on this map 
         var npcs = [];
         // create the map
@@ -303,6 +310,26 @@ var WorldScene = new Phaser.Class({
             repeat: -1
         });
 
+        //lost soul animations
+        this.anims.create({
+            key: 'attacklostsoul',
+            frames: this.anims.generateFrameNumbers('LostSoul', {frames: [8,9,10,11,12,13,14,15]}),
+            frameRate: 5,
+        });
+        this.anims.create({
+            key: 'idlelostsoul',
+            frames: this.anims.generateFrameNumbers('LostSoul', {frames: [0,1,2,3,4,5,6,7]}),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'defeatedlostsoul',
+            frames: this.anims.generateFrameNumbers('LostSoul', {frames: [0]}),
+            frameRate: 5,
+            repeat: -1
+        });
+
+
 
 
         // our player sprite created through the phycis system
@@ -369,16 +396,6 @@ var WorldScene = new Phaser.Class({
             this.scene.switch("SkillScene");
         });
         
-        // where the enemies will be
-        this.spawns = this.physics.add.group({ classType: Phaser.GameObjects.Zone });
-        for(var i = 0; i < 30; i++) {
-            var x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
-            var y = Phaser.Math.RND.between(0, this.physics.world.bounds.height);
-            // parameters are x, y, width, height
-            this.spawns.create(x, y, 20, 20);            
-        }        
-        // add collider
-        //this.physics.add.overlap(this.player, this.spawns, this.onMeetEnemy, false, this);
         for (var i = 0; i < npcs.length; i++){
             this.physics.add.collider(this.reena, this.alyene, this.onNpcDialog, false, this).name = "AlyeneCollider";
         }
@@ -393,20 +410,37 @@ var WorldScene = new Phaser.Class({
     },
     onMeetEnemy: function(player, zone) {        
         // we move the zone to some other location
-        zone.x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
-        zone.y = Phaser.Math.RND.between(0, this.physics.world.bounds.height);
-        
+        //zone.x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
+        //zone.y = Phaser.Math.RND.between(0, this.physics.world.bounds.height);
+        this.spawns.clear(true);
+        this.spawns = this.physics.add.group({ classType: Phaser.GameObjects.Zone });
+        for(var i = 0; i < 20; i++) {
+            var x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
+            var y = Phaser.Math.RND.between(0, this.physics.world.bounds.height);
+            // parameters are x, y, width, height
+            this.spawns.create(x, y, 30, 30);            
+        }  
+        this.physics.add.collider(this.reena, this.spawns, this.onMeetEnemy, false, this);
         // shake the world
         this.cameras.main.shake(300);
-        
         this.input.stopPropagation();
         // start battle 
-        this.scene.start('BattleScene');                
+        if (currentScene = "World1"){
+            //spawn lost souls randomly in world 1
+            lostSoulSkillArray = [];
+            lostSoulStats = new unitStats(Phaser.Math.RND.between(10, 20),
+            Phaser.Math.RND.between(10, 20), 
+            Phaser.Math.RND.between(10, 20), Phaser.Math.RND.between(10, 20), Phaser.Math.RND.between(10, 20), Phaser.Math.RND.between(10, 20),
+            Phaser.Math.RND.between(10, 20)); //this is Alyene's current stats
+            lostSoulAnimations = ['idlelostsoul', 'idlelostsoul','attacklostsoul','defeatedlostsoul'];
+            lostSoulBattleSkillArray = [];
+
+            lostSoul = new unitInformation(null, "LostSoul", lostSoulAnimations, "lostsoulsprite", lostSoulSkillArray, lostSoulStats, null,lostSoulBattleSkillArray, Phaser.Math.RND.between(5, 8));
+            enemies.push(lostSoul);
+        }
+        this.scene.switch('BattleScene');                
     },
 
-    logBoi: function(){
-        console.log("boii");
-    },
 
     startBattle: function(){
         this.scene.switch('BattleScene');
@@ -418,7 +452,7 @@ var WorldScene = new Phaser.Class({
             unitYuneSkills1 = new unitSkills("Angelic Truth", "Halves attack damage received", "angelictruth");
             unitYuneSkillArray = [unitYuneSkills1]; //an array with the two beginning skills
             unitYuneStats = new unitStats(15, 10, 20, 5, 18, 13, 14); //this is Reena's current stats
-            yuneAnimations = ['rightyune', 'leftyune', 'attackyune', 'defeatedyune'];
+            yuneAnimations = ['leftyune', 'rightyune', 'attackyune', 'defeatedyune'];
             //create a new unit information that stores all of Reena's information 
             unitYuneBattleSkills1 = new unitBattleSkills("Spirit Break", "inflicts attack down effect", 5, "magic", "single", "spiritbreak");
             //unitReenaBattleSkills3 = new unitBattleSkills("Chaos", "inflicts paralysis and deals damage", 5, "magic", "single", "chaos");
@@ -426,7 +460,7 @@ var WorldScene = new Phaser.Class({
             unitYuneBattleSkillArray = [unitYuneBattleSkills1];
     
             //create a new unit information that stores all of Reena's information 
-            unitYune = new unitInformation(this.yune, "Yune", yuneAnimations, "yunesprite", unitYuneSkillArray, unitYuneStats, null, unitYuneBattleSkillArray, 1); 
+            unitYune = new unitInformation(this.yune, "Yune", yuneAnimations, "yuneallysprite", unitYuneSkillArray, unitYuneStats, null, unitYuneBattleSkillArray, 1); 
             players.push(unitYune);
             playersCopy.push(unitYune);
             num_of_players = 2; //gain Yune as an ally and update skills
@@ -530,6 +564,7 @@ var WorldScene = new Phaser.Class({
         else
         {
             //this.reena.anims.stop();
+            this.reena.body.setVelocity(0);
         }
     }
     
@@ -1505,24 +1540,20 @@ var World1 = new Phaser.Class({
     },
     
     create: function(){
-        var level0 = this.make.tilemap({
-            key: 'level0'
+        var level1 = this.make.tilemap({
+            key: 'level1'
         });
-        var tiles = level0.addTilesetImage('Mapset', 'tiles');
-        // creating the layers
-        this.traverse = level0.createStaticLayer('traverse', tiles, 0, 0);
-        this.blocked = level0.createStaticLayer('blocked', tiles, 0, 0);
                 //keep an array of all the npcs on this map 
                 var npcs = [];
                 // create the map
-                var level0 = this.make.tilemap({ key: 'level0' });
+                var level1 = this.make.tilemap({ key: 'level1' });
                 
                 // first parameter is the name of the tilemap in tiled
-                var tiles = level0.addTilesetImage('Mapset', 'tiles');
+                var tiles = level1.addTilesetImage('Mapset', 'tiles');
                 
                 // creating the layers
-                var traverse = level0.createStaticLayer('traverse', tiles, 0, 0);
-                var blocked = level0.createStaticLayer('blocked', tiles, 0, 0);
+                var traverse = level1.createStaticLayer('traverse', tiles, 0, 0);
+                var blocked = level1.createStaticLayer('blocked', tiles, 0, 0);
                 
                 // make all tiles in obstacles collidable
                 blocked.setCollisionByExclusion([-1]);
@@ -1616,18 +1647,18 @@ var World1 = new Phaser.Class({
                 });
         
                 // our player sprite created through the phycis system
-                this.reena = this.physics.add.sprite(640, 128+64, 'Reena', 6);
+                this.reena = this.physics.add.sprite(128+64, 128+64, 'Reena', 6);
                 
                 // don't go out of the map
-                this.physics.world.bounds.width = level0.widthInPixels;
-                this.physics.world.bounds.height = level0.heightInPixels;
+                this.physics.world.bounds.width = level1.widthInPixels;
+                this.physics.world.bounds.height = level1.heightInPixels;
                 this.reena.setCollideWorldBounds(true);
                 
                 // don't walk on trees
                 this.physics.add.collider(this.reena, blocked);
         
                 // limit camera to map
-                this.cameras.main.setBounds(0, 0, level0.widthInPixels, level0.heightInPixels);
+                this.cameras.main.setBounds(0, 0, level1.widthInPixels, level1.heightInPixels);
                 this.cameras.main.startFollow(this.reena);
                 this.cameras.main.roundPixels = true; // avoid tile bleed
 
@@ -1650,6 +1681,19 @@ var World1 = new Phaser.Class({
         });
 
         currentScene = "World1";
+        // where the enemies will be
+        this.spawns = this.physics.add.group({ classType: Phaser.GameObjects.Zone });
+        for(var i = 0; i < 30; i++) {
+            var x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
+            var y = Phaser.Math.RND.between(0, this.physics.world.bounds.height);
+            // parameters are x, y, width, height
+            this.spawns.create(x, y, 30, 30);            
+        }        
+        // add collider
+        this.physics.add.collider(this.reena, this.spawns, this.onMeetEnemy, false, this);
+
+        // we listen for 'wake' event
+        this.sys.events.on('wake', this.wake, this);
     },
     
     update: function (time, delta)
@@ -1697,6 +1741,7 @@ var World1 = new Phaser.Class({
         else
         {
             //this.reena.anims.stop();
+            this.reena.body.setVelocity(0);
         }
     }
 })
