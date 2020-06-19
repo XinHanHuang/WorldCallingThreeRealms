@@ -317,9 +317,17 @@ var BattleScene = new Phaser.Class({
 		this.scene.get('UIScene').scene.stop('UIScene');
         this.destroyMessageBox();
 
+        if(currentDialogStatus === "heaven1"){
+            //HERE, CREATE ADDITIONAL DIALOG SITUATIONS FOR SPECIAL BATTLES USING CURRENT DIALOG STATUS
+            this.scene.switch(currentScene);
+            this.scene.get(currentScene).continueDialog();
+        }
+        else{
 		//this.scene.get('BattleScene').scene.stop('BattleScene');
 		// return to WorldScene and sleep current BattleScene
 		this.scene.switch(currentScene);
+        }
+
 	}
 });
 

@@ -7,7 +7,7 @@ enemy_hp_bars = [];
 UIarray = []; //this array keeps track of all the UIs for every character on the map. Needs to be cleared
 EnemyUIarray = []; //this array keeps track of all the UIs for every enemy on the map
 menus = []; //keeps track of menus
-num_of_players = 4; //global variable to keep track of the number of players, will be set to 2 in actual game
+num_of_players = 1; //global variable to keep track of the number of players, will be set to 2 in actual game
 currentDialogStatus = "heaven0"; //This is a list of current dialog statuses, and this global variable will determine how conversations are accessed
 currentScene = "WorldScene"; //keeps track of the current scene to go back to 
 
@@ -399,7 +399,15 @@ var WorldScene = new Phaser.Class({
         this.scene.switch('BattleScene');
     },
 
+    continueDialog: function(){
+        if (currentDialogStatus === "heaven1"){
+            currentDialogStatus = "heaven1extra";
+        }
+        this.scene.pause('WorldScene');
+        this.scene.run('DialogScene');
+        
 
+    },
     //this detects the nearest npc that the player bumps to, an a dialog will happen for that npc and the player
     //a bunch of if statements, different events will trigger depending on the different npcs encountered in this World
     onNpcDialog: function(player, npc){
@@ -1369,13 +1377,18 @@ var DialogScene = new Phaser.Class({
 
         this.currentIndex = -1; //index to access the conversation arrays
         this.convo0 = ["Aestria, Earth, Rukkr", "These three realms make up what we call, the WORLD...", "Our father, the Engineer, judges the souls of humans...",
-        "and maintains balance between the three realms...", "The Engineer created us, the Gods, to maintain order in the realm of Aestria", 
+        "and maintains balance between the three realms...", "The Engineer created us, the Gods, to maintain order in the realm of Aestria...", 
         "As well as Demons, to maintain order in the realm of Rukkr...", "This was the world I've always known since my creation... until...", null];
         this.convo1 = ["You're late again for your training, Reena.", "Alyene... sorry but what are we even training for? It's so peaceful around here.", 
         "Hmm, don't try to use that as an excuse again, if our Father learns about this, he probably won't forgive you for that.", 
         "He won't forgive me huh, it's not like we've ever seen Father before. Ever since he created the realm of Aestria he's never been here again, who knows where he is... or if he even created us...",
-        "That's enough of your silly speculations, our training is starting, are you two ready, Yune, Reena?", "Yes big sister, let's start", null]; //null terminated arrays
+        "That's enough of your silly speculations, our training is starting, are you two ready, Yune, Reena?", "Yes big sister, let's start.", null]; //null terminated arrays
         this.convoNames1 = ["Alyene", "Reena", "Alyene", "Reena", "Alyene", "Yune", null];
+        this.convo1Extra = ["Not bad Reena, you are truly blessed as a magic user after all.", "Don't tease me sister, I know you two are going easy on me.", "No, I truly mean it, you have great potential.",
+        "Heh, whatever you say sis... shall we continue?", "Wait big sis Alyene, big sis Reena, what's that?","...huh?","It's... a lost soul? What is it doing here?", "There... there's more!",
+        "What is going on?! How could there be so many lost souls here? Did something happen to Father?", "No time to waste sis, you need to go inform Mother right away, Yune, cover me!",
+        "O..OK!", null];
+        this.convoNames1Extra = ["Alyene", "Reena", "Alyene", "Reena", "Yune", "Reena", "Alyene", "Yune", "Alyene", "Reena", "Yune", null];
         this.convo2 = ["conversation 2 Test", "Conversation 5 Test", null];
 
             //click anywhere
@@ -1401,6 +1414,19 @@ var DialogScene = new Phaser.Class({
                     this.scene.stop('DialogScene');
                     //this.scene.start('BattleScene');
                     this.scene.get('WorldScene').startBattle();
+                }
+            }
+            else if (currentDialogStatus === "heaven1extra"){
+                this.currentIndex++;
+                this.convoText.text = this.convo1Extra[this.currentIndex];
+                this.convoName.text = this.convoNames1Extra[this.currentIndex];
+                if (this.convo1Extra[this.currentIndex] === null){
+                    this.currentIndex = -1; //resest the index and trigger the event
+                    //this.scene.switch('WorldScene');
+                    //this.scene.resume('WorldScene');
+                    this.scene.stop('DialogScene');
+                    //this.scene.start('BattleScene');
+                    this.scene.switch('World1');
                 }
             }
             else if (currentDialogStatus === "heaven2"){
