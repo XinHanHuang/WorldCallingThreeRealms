@@ -205,6 +205,7 @@ var BattleScene = new Phaser.Class({
     endBattle: function(){
         // clear state, remove sprites, EXP system
         var enemyLevel = enemies[0].level; //get that level boi
+        var partyWipeCounter = 0;
         for (var i = 0; i < this.heroes.length; i++){
             var expGain = (enemyLevel - this.heroes[i].playerInformation.level) * 15; //level difference *15
             if (expGain > 100){
@@ -216,6 +217,12 @@ var BattleScene = new Phaser.Class({
             if (this.checkEndBattle() === false){
                 expGain = 0;
             }
+
+            if (this.heroes[i].living === false){
+                expGain = 0;
+                partyWipeCounter++;
+            }
+
             var expGainText = this.add.text(200, 200 + i*100, this.heroes[i].playerInformation.unitName + " has gained " + expGain + " EXP!", {
                 color: "#ff0000",
                 align: "center",
@@ -251,9 +258,18 @@ var BattleScene = new Phaser.Class({
                         useAdvancedWrap: true
                     }
                 }).setInteractive();
+                //if (this.heroes[i].playerInformation.unitName === "Reena" && this.heroes[i].playerInformation.unitLevel === 10){
+                    //learns a new skill 
+                //}
                 this.expArray.push(levelupText);
             }
         }
+
+        if (partyWipeCounter === this.heroes.length){
+            //alert("You Lose");
+        }
+
+
 
         this.time.addEvent({
 			delay: 3000,
@@ -1798,7 +1814,26 @@ var UIScene = new Phaser.Class({
 		//simple attack
 
 		if (method_of_attack === "attack") {
-			var damagedelt = player.unitStats.atk - target.unitStats.def;
+            var damagedelt = player.unitStats.atk - target.unitStats.def;
+            
+			for (var i = 0; i < target.unitSkills.length; i++) {
+				if (target.unitSkills[i].skillName === "Almighty God") {
+					damagedelt = Math.floor(damagedelt / 2);
+				}
+				if (target.unitSkills[i].skillName === "Angelic Truth") {
+					damagedelt = Math.floor(damagedelt / 2);
+				}
+            }
+            
+            //check for skills for damage BUFF
+            for (var i = 0; i < player.unitSkills.length; i++){
+                if (player.unitSkills[i].skillName === "Rightful God"){
+                    damagedelt = Math.floor(damagedelt * 1.1);
+                }
+            }
+
+
+
 			if (target.isGuarding === true) {
 				damagedelt = Math.floor(damagedelt / 2);
 			}
@@ -1812,31 +1847,40 @@ var UIScene = new Phaser.Class({
 			if (player.unitStatus === "paralyzed") {
 				//lowers critical chance when paralyzed
 				criticalChance = Math.floor(((player.unitStats.spd / 4) - target.unitStats.spd) * (player.unitStats.luck / 10));
-			}
+            }
 			else {
 				criticalChance = Math.floor((player.unitStats.spd - target.unitStats.spd) * (player.unitStats.luck / 10));
-			}
+            }
+            //check for skills for critical chance increase
+            for (var i = 0; i < player.unitSkills.length; i++){
+                if (player.unitSkills[i].skillName === "Cloud Nine"){
+                    criticalChance = Math.floor(criticalChance * 1.05);
+                }
+            }
+
 			var randomNumber = Math.floor(Math.random() * 100) + 1; //1-100random
 			if (randomNumber < criticalChance) {
 				//if the random number generated is less than the critical chance 
 				criticalHit = true;
 			}
 
-			//now check for skills for damage reduction lmao 
-			for (var i = 0; i < target.unitSkills.length; i++) {
-				if (target.unitSkills[i].skillName === "Almighty God") {
-					damagedelt = Math.floor(damagedelt / 2);
-				}
-				if (target.unitSkills[i].skillName === "Angelic Truth") {
-					damagedelt = Math.floor(damagedelt / 2);
-				}
-			}
+
+
+
+
+
 			if (damagedelt < 0) {
 				damagedelt = 0;
 			}
 
 			if (criticalHit === true) {
-				damagedelt = Math.floor(damagedelt * 1.5); //1.5 the damage delt
+                damagedelt = Math.floor(damagedelt * 1.5); //1.5 the damage delt
+                //ignore critical hit skills
+                for (var i = 0; i < target.unitSkills.length; i++){
+                    if (target.unitSkills[i].skillName === "Almighty God"){
+                        damagedelt = Math.floor(damagedelt/1.5);
+                    }
+                }
 			}
 
 			//now we search for the target's HP bar 
@@ -1997,7 +2041,12 @@ var UIScene = new Phaser.Class({
 					var damagedelt = player.unitStats.atk - enemies[i].unitStats.res; //array of damages 
 					if (damagedelt < 0) {
 						damagedelt = 0;
-					}
+                    }
+                    if (player.unitStatus === "attackdown"){
+                        //halves attack
+                        damagedelt = Math.floor(damagedelt/2);
+                    }
+
 					this.damageDeltArray[i] = damagedelt;
 				}
 			}
@@ -2012,9 +2061,9 @@ var UIScene = new Phaser.Class({
 					}
 					this.damageDeltArray[i] = damagedelt;
 				}
+            }
+            			//now check for skills for damage reduction lmao 
 
-
-			}
 			//var damagedelt = player.unitStats.atk - target.unitStats.res; //skill is magical damage, calulcated using res instead of def
 			//if (damagedelt < 0){
 			//damagedelt = 0;
@@ -2061,7 +2110,7 @@ var UIScene = new Phaser.Class({
 					this.damageDeltArray[i] = Math.floor(this.damageDeltArray[i] * 1.5);
 				}
 				//damagedelt = Math.floor(damagedelt * 1.5);
-				mpRequired = 20;
+				mpRequired = 10;
 				for (var i = 0; i < players.length; i++) {
 					if (players[i].unitName === target.unitName) {
 						//if the unit's name matches the i

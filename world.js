@@ -291,6 +291,19 @@ var WorldScene = new Phaser.Class({
             frameRate: 5,
             repeat: -1
         });
+        this.anims.create({
+            key: 'attackyune',
+            frames: this.anims.generateFrameNumbers('Yune', {frames: [24,25,26,27,28,29,30,31]}),
+            frameRate: 5,
+        });
+        this.anims.create({
+            key: 'defeatedyune',
+            frames: this.anims.generateFrameNumbers('Yune', {frames: [32]}),
+            frameRate: 5,
+            repeat: -1
+        });
+
+
 
         // our player sprite created through the phycis system
         this.reena = this.physics.add.sprite(640, 128+64, 'Reena', 6);
@@ -308,20 +321,20 @@ var WorldScene = new Phaser.Class({
         this.cameras.main.startFollow(this.reena);
         this.cameras.main.roundPixels = true; // avoid tile bleed
 
-        unitReenaSkills1 = new unitSkills("Rightful God","Negates the damage bonus from enemy critical hits", "rightfulgod");
-        unitReenaSkills2 = new unitSkills("Cloud Nine","grants SPD + 10% during combat", "cloudnine");
+        unitReenaSkills1 = new unitSkills("Rightful God","Grants ATK + 10% when initiating combat", "rightfulgod");
+        unitReenaSkills2 = new unitSkills("Cloud Nine","increase critical hit chance by 5% when initiating combat", "cloudnine");
         unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
-        unitReenaStats = new unitStats(28, 20, 45, 16, 21, 20, 7); //this is Reena's current stats
+        unitReenaStats = new unitStats(20, 18, 25, 8, 14, 15, 13); //this is Reena's current stats
         reenaAnimations = ['left', 'right', 'attack', 'defeated'];
         //create a new unit information that stores all of Reena's information 
         unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
-        unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x physical damage to opponent", 2, "magic", "single", "purehalo");
-        unitReenaBattleSkills3 = new unitBattleSkills("Chaos", "inflicts paralysis and deals damage", 5, "magic", "single", "chaos");
-        unitReenaBattleSkills4 = new unitBattleSkills("Pure Chaos", "inflicts attack down effect to all opponents", 5, "magic", "single", "purechaos");
-        unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2, unitReenaBattleSkills3, unitReenaBattleSkills4];
+        unitReenaBattleSkills2 = new unitBattleSkills("Pure Halo", "deals 1.5x magical damage to opponent", 10, "magic", "single", "purehalo");
+        //unitReenaBattleSkills3 = new unitBattleSkills("Chaos", "inflicts paralysis and deals damage", 5, "magic", "single", "chaos");
+        //unitReenaBattleSkills4 = new unitBattleSkills("Pure Chaos", "inflicts attack down effect to all opponents", 5, "magic", "single", "purechaos");
+        unitReenaBattleSkillArray = [unitReenaBattleSkills1, unitReenaBattleSkills2];
 
         //create a new unit information that stores all of Reena's information 
-        unitReena = new unitInformation(this.reena, "Reena", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 5); 
+        unitReena = new unitInformation(this.reena, "Reena", reenaAnimations, "reenasprite", unitReenaSkillArray, unitReenaStats, null, unitReenaBattleSkillArray, 1); 
         this.reena.anims.play('up', true);
         players.push(unitReena);
         playersCopy.push(unitReena);
@@ -402,6 +415,21 @@ var WorldScene = new Phaser.Class({
     continueDialog: function(){
         if (currentDialogStatus === "heaven1"){
             currentDialogStatus = "heaven1extra";
+            unitYuneSkills1 = new unitSkills("Angelic Truth", "Halves attack damage received", "angelictruth");
+            unitYuneSkillArray = [unitYuneSkills1]; //an array with the two beginning skills
+            unitYuneStats = new unitStats(15, 10, 20, 5, 18, 13, 14); //this is Reena's current stats
+            yuneAnimations = ['rightyune', 'leftyune', 'attackyune', 'defeatedyune'];
+            //create a new unit information that stores all of Reena's information 
+            unitYuneBattleSkills1 = new unitBattleSkills("Spirit Break", "inflicts attack down effect", 5, "magic", "single", "spiritbreak");
+            //unitReenaBattleSkills3 = new unitBattleSkills("Chaos", "inflicts paralysis and deals damage", 5, "magic", "single", "chaos");
+            //unitReenaBattleSkills4 = new unitBattleSkills("Pure Chaos", "inflicts attack down effect to all opponents", 5, "magic", "single", "purechaos");
+            unitYuneBattleSkillArray = [unitYuneBattleSkills1];
+    
+            //create a new unit information that stores all of Reena's information 
+            unitYune = new unitInformation(this.yune, "Yune", yuneAnimations, "yunesprite", unitYuneSkillArray, unitYuneStats, null, unitYuneBattleSkillArray, 1); 
+            players.push(unitYune);
+            playersCopy.push(unitYune);
+            num_of_players = 2; //gain Yune as an ally and update skills
         }
         this.scene.pause('WorldScene');
         this.scene.run('DialogScene');
@@ -418,28 +446,26 @@ var WorldScene = new Phaser.Class({
             this.reena.setVelocityY(0);
             unitAlyeneSkills1 = new unitSkills("Almighty God","Negates damage bonus from enemy critical hits, damage from opponent's attacks reduced by 50%", "almightygod");
             unitAlyeneSkills2 = new unitSkills("Dragon Skin", "Negates the effects of all non-damaging status effects. Nullifies poison damage", "dragonskin");
-            unitAlyeneSkills3 = new unitSkills("Angelic Truth", "Halves skill damage received", "angelictruth");
+            unitAlyeneSkills3 = new unitSkills("Angelic Truth", "Halves attack damage received", "angelictruth");
             unitAlyeneSkillArray = [unitAlyeneSkills1, unitAlyeneSkills2, unitAlyeneSkills3];
-            unitAlyeneStats = new unitStats(30, 30, 30, 15, 30, 30, 30); //this is Alyene's current stats
+            unitAlyeneStats = new unitStats(13, 11, 12, 3, 5, 15, 12); //this is Alyene's current stats
             alyeneAnimations = ['rightalyene', 'leftalyene','attackalyene','defeatedalyene'];
             unitAlyeneBattleSkills1 = new unitBattleSkills("Mass Toxic", "inflicts poison and deals damage", 5, "magic", "single", "masstoxic");
             unitAlyeneBattleSkills2 = new unitBattleSkills("Toxic", "inflicts poison and deals damage", 5, "magic", "single", "toxic");
             unitAlyeneBattleSkills3 = new unitBattleSkills("Rally Break", "inflicts attack down effect to all opponents", 5, "magic", "multiple", "rallybreak");
             unitAyleneBattleSkllArray = [unitAlyeneBattleSkills1];
 
-            unitAlyene = new unitInformation(this.alyene, "Alyene", alyeneAnimations, "alyenesprite", unitAlyeneSkillArray, unitAlyeneStats, null, unitAyleneBattleSkllArray, 9);
+            unitAlyene = new unitInformation(this.alyene, "Alyene", alyeneAnimations, "alyenesprite", unitAlyeneSkillArray, unitAlyeneStats, null, unitAyleneBattleSkllArray, 5);
             enemies.push(unitAlyene);
 
-            unitYuneSkills1 = new unitSkills("Angelic Truth", "Halves skill damage received", "angelictruth");
-            unitYuneSkills2 = new unitSkills("Dragon Skin", "Negates the effects of all non-damaging status effects. Nullifies poison damage", "dragonskin");
-            unitYuneSkills3 = new unitSkills("Almighty God","Negates damage bonus from enemy critical hits, damage from opponent's attacks reduced by 50%", "almightygod");
-            unitYuneSkillArray = [unitYuneSkills1, unitYuneSkills2, unitYuneSkills3];
-            unitYuneStats = new unitStats(30, 30, 30, 30, 30, 30, 30); //this is Alyene's current stats
-            YuneAnimations = ['rightyune', 'leftyune'];
+            unitYuneSkills1 = new unitSkills("Angelic Truth", "Halves attack damage received", "angelictruth");
+            unitYuneSkillArray = [unitYuneSkills1];
+            unitYuneStats = new unitStats(15, 10, 16, 5, 18, 13, 14); //this is Alyene's current stats
+            YuneAnimations = ['rightyune', 'leftyune', 'attackyune', 'defeatedyune'];
             unitYuneBattleSkills1 = new unitBattleSkills("Spirit Break", "inflicts attack down effect", 5, "magic", "single", "spiritbreak");
             unitYuneBattleSkllArray = [unitAlyeneBattleSkills1];
 
-            unitYune = new unitInformation(this.yune, "Yune", YuneAnimations, "yunesprite", unitYuneSkillArray, unitYuneStats, null, unitYuneBattleSkllArray, 12);
+            unitYune = new unitInformation(this.yune, "Yune", YuneAnimations, "yunesprite", unitYuneSkillArray, unitYuneStats, null, unitYuneBattleSkllArray, 5);
             enemies.push(unitYune);
 
             this.physics.world.colliders.getActive().find(function(i){
@@ -1379,16 +1405,16 @@ var DialogScene = new Phaser.Class({
         this.convo0 = ["Aestria, Earth, Rukkr", "These three realms make up what we call, the WORLD...", "Our father, the Engineer, judges the souls of humans...",
         "and maintains balance between the three realms...", "The Engineer created us, the Gods, to maintain order in the realm of Aestria...", 
         "As well as Demons, to maintain order in the realm of Rukkr...", "This was the world I've always known since my creation... until...", null];
-        this.convo1 = ["You're late again for your training, Reena.", "Alyene... sorry but what are we even training for? It's so peaceful around here.", 
+        this.convo1 = ["You're late again for your training, Reena.", "Sister Alyene... sorry but what are we even training for? It's so peaceful around here.", 
         "Hmm, don't try to use that as an excuse again, if our Father learns about this, he probably won't forgive you for that.", 
         "He won't forgive me huh, it's not like we've ever seen Father before. Ever since he created the realm of Aestria he's never been here again, who knows where he is... or if he even created us...",
         "That's enough of your silly speculations, our training is starting, are you two ready, Yune, Reena?", "Yes big sister, let's start.", null]; //null terminated arrays
         this.convoNames1 = ["Alyene", "Reena", "Alyene", "Reena", "Alyene", "Yune", null];
         this.convo1Extra = ["Not bad Reena, you are truly blessed as a magic user after all.", "Don't tease me sister, I know you two are going easy on me.", "No, I truly mean it, you have great potential.",
         "Heh, whatever you say sis... shall we continue?", "Wait big sis Alyene, big sis Reena, what's that?","...huh?","It's... a lost soul? What is it doing here?", "There... there's more!",
-        "What is going on?! How could there be so many lost souls here? Did something happen to Father?", "No time to waste sis, you need to go inform Mother right away, Yune, cover me!",
-        "O..OK!", null];
-        this.convoNames1Extra = ["Alyene", "Reena", "Alyene", "Reena", "Yune", "Reena", "Alyene", "Yune", "Alyene", "Reena", "Yune", null];
+        "What is going on?! How could there be so many lost souls here? Did something happen to Father?", "I will head to the Medallion's entrance to investigate, Sister Alyene, you go sound the alarm and gather the army, Yune, cover me!",
+        "O..OK!", "Be careful, Yune, Reena!", null];
+        this.convoNames1Extra = ["Alyene", "Reena", "Alyene", "Reena", "Yune", "Reena", "Alyene", "Yune", "Alyene", "Reena", "Yune", "Alyene",null];
         this.convo2 = ["conversation 2 Test", "Conversation 5 Test", null];
 
             //click anywhere
