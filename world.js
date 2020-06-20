@@ -300,7 +300,7 @@ var WorldScene = new Phaser.Class({
         });
         this.anims.create({
             key: 'attackyune',
-            frames: this.anims.generateFrameNumbers('Yune', {frames: [24,25,26,27,28,29,30,31]}),
+            frames: this.anims.generateFrameNumbers('Yune', {frames: [16,17,18,19,20,21,22,23]}),
             frameRate: 5,
         });
         this.anims.create({
@@ -412,9 +412,10 @@ var WorldScene = new Phaser.Class({
         // we move the zone to some other location
         //zone.x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
         //zone.y = Phaser.Math.RND.between(0, this.physics.world.bounds.height);
+        this.reena.body.setVelocity(0);
         this.spawns.clear(true);
         this.spawns = this.physics.add.group({ classType: Phaser.GameObjects.Zone });
-        for(var i = 0; i < 20; i++) {
+        for(var i = 0; i < 15; i++) {
             var x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
             var y = Phaser.Math.RND.between(0, this.physics.world.bounds.height);
             // parameters are x, y, width, height
@@ -428,15 +429,38 @@ var WorldScene = new Phaser.Class({
         if (currentScene = "World1"){
             //spawn lost souls randomly in world 1
             lostSoulSkillArray = [];
+            lostSoulSkillArray2 = [];
+            lostSoulSkillArray3 = [];
             lostSoulStats = new unitStats(Phaser.Math.RND.between(10, 20),
             Phaser.Math.RND.between(10, 20), 
             Phaser.Math.RND.between(10, 20), Phaser.Math.RND.between(10, 20), Phaser.Math.RND.between(10, 20), Phaser.Math.RND.between(10, 20),
             Phaser.Math.RND.between(10, 20)); //this is Alyene's current stats
+            lostSoulStats2 = new unitStats(Phaser.Math.RND.between(10, 20),
+            Phaser.Math.RND.between(10, 20), 
+            Phaser.Math.RND.between(10, 20), Phaser.Math.RND.between(10, 20), Phaser.Math.RND.between(10, 20), Phaser.Math.RND.between(10, 20),
+            Phaser.Math.RND.between(10, 20)); //this is Alyene's current stats
+            lostSoulStats3 = new unitStats(Phaser.Math.RND.between(10, 20),
+            Phaser.Math.RND.between(10, 20), 
+            Phaser.Math.RND.between(10, 20), Phaser.Math.RND.between(10, 20), Phaser.Math.RND.between(10, 20), Phaser.Math.RND.between(10, 20),
+            Phaser.Math.RND.between(10, 20)); //this is Alyene's current stats
             lostSoulAnimations = ['idlelostsoul', 'idlelostsoul','attacklostsoul','defeatedlostsoul'];
+            lostSoulAnimations2 = ['idlelostsoul', 'idlelostsoul','attacklostsoul','defeatedlostsoul'];
+            lostSoulAnimations3 = ['idlelostsoul', 'idlelostsoul','attacklostsoul','defeatedlostsoul'];
             lostSoulBattleSkillArray = [];
+            lostSoulBattleSkillArray2 = [];
+            lostSoulBattleSkillArray3 = [];
 
-            lostSoul = new unitInformation(null, "LostSoul", lostSoulAnimations, "lostsoulsprite", lostSoulSkillArray, lostSoulStats, null,lostSoulBattleSkillArray, Phaser.Math.RND.between(5, 8));
+            var lostSoul = new unitInformation(null, "LostSoul", lostSoulAnimations, "lostsoulsprite", lostSoulSkillArray, lostSoulStats, null,lostSoulBattleSkillArray, Phaser.Math.RND.between(5, 8));
+            var lostSoul2 = new unitInformation(null, "LostSoul2", lostSoulAnimations2, "lostsoulsprite", lostSoulSkillArray2, lostSoulStats2, null,lostSoulBattleSkillArray2, Phaser.Math.RND.between(5, 8));
+            var lostSoul3 = new unitInformation(null, "LostSoul3", lostSoulAnimations3, "lostsoulsprite", lostSoulSkillArray3, lostSoulStats3, null,lostSoulBattleSkillArray3, Phaser.Math.RND.between(5, 8));
             enemies.push(lostSoul);
+            var secondSpawn = Phaser.Math.RND.between(0, 50);
+            if (secondSpawn < 25){
+                enemies.push(lostSoul2);
+            }
+            if (secondSpawn < 10){
+                enemies.push(lostSoul3);
+            }
         }
         this.scene.switch('BattleScene');                
     },

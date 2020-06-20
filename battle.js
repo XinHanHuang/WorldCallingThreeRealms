@@ -833,7 +833,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext4.on('pointerdown', (pointer) => {
-												this.heal(currentPlayer.playerInformation, players[0], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName, true);
+                                                this.heal(currentPlayer.playerInformation, players[0], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName, true,
+                                                currentPlayer.playerInformation.unitBattleSkills[0].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -856,7 +857,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext5.on('pointerdown', (pointer) => {
-												this.heal(currentPlayer.playerInformation, players[1], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName, true);
+                                                this.heal(currentPlayer.playerInformation, players[1], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName, true,
+                                                currentPlayer.playerInformation.unitBattleSkills[0].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -880,7 +882,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext6.on('pointerdown', (pointer) => {
-												this.heal(currentPlayer.playerInformation, players[2], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName, true);
+                                                this.heal(currentPlayer.playerInformation, players[2], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName, true,
+                                                currentPlayer.playerInformation.unitBattleSkills[0].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -903,7 +906,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext61.on('pointerdown', (pointer) => {
-												this.heal(currentPlayer.playerInformation, players[3], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName, true);
+                                                this.heal(currentPlayer.playerInformation, players[3], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName, true,
+                                                currentPlayer.playerInformation.unitBattleSkills[0].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -953,7 +957,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext4.on('pointerdown', (pointer) => {
-												this.battle(currentPlayer.playerInformation, enemies[0], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName, true);
+                                                this.battle(currentPlayer.playerInformation, enemies[0], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName, true, 
+                                                currentPlayer.playerInformation.unitBattleSkills[0].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -976,7 +981,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext5.on('pointerdown', (pointer) => {
-												this.battle(currentPlayer.playerInformation, enemies[1], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName, true);
+                                                this.battle(currentPlayer.playerInformation, enemies[1], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName, true,
+                                                currentPlayer.playerInformation.unitBattleSkills[0].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -1000,7 +1006,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext6.on('pointerdown', (pointer) => {
-												this.battle(currentPlayer.playerInformation, enemies[2], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName, true);
+                                                this.battle(currentPlayer.playerInformation, enemies[2], "skill", currentPlayer.playerInformation.unitBattleSkills[0].battleSkillName, true,
+                                                currentPlayer.playerInformation.unitBattleSkills[0].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -1081,7 +1088,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext7.on('pointerdown', (pointer) => {
-												this.heal(currentPlayer.playerInformation, players[0], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName, true);
+                                                this.heal(currentPlayer.playerInformation, players[0], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName, true,
+                                                currentPlayer.playerInformation.unitBattleSkills[1].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -1104,7 +1112,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext8.on('pointerdown', (pointer) => {
-												this.heal(currentPlayer.playerInformation, players[1], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName, true);
+                                                this.heal(currentPlayer.playerInformation, players[1], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName, true,
+                                                currentPlayer.playerInformation.unitBattleSkills[1].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -1128,7 +1137,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext9.on('pointerdown', (pointer) => {
-												this.heal(currentPlayer.playerInformation, players[2], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName, true);
+                                                this.heal(currentPlayer.playerInformation, players[2], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName, true,
+                                                currentPlayer.playerInformation.unitBattleSkills[1].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -1151,7 +1161,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext91.on('pointerdown', (pointer) => {
-												this.heal(currentPlayer.playerInformation, players[3], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName, true);
+                                                this.heal(currentPlayer.playerInformation, players[3], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName, true,
+                                                currentPlayer.playerInformation.unitBattleSkills[1].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -1201,7 +1212,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext7.on('pointerdown', (pointer) => {
-												this.battle(currentPlayer.playerInformation, enemies[0], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName, true);
+                                                this.battle(currentPlayer.playerInformation, enemies[0], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName, true,
+                                                currentPlayer.playerInformation.unitBattleSkills[1].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -1224,7 +1236,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext8.on('pointerdown', (pointer) => {
-												this.battle(currentPlayer.playerInformation, enemies[1], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName, true);
+                                                this.battle(currentPlayer.playerInformation, enemies[1], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName, true,
+                                                currentPlayer.playerInformation.unitBattleSkills[1].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -1248,7 +1261,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext9.on('pointerdown', (pointer) => {
-												this.battle(currentPlayer.playerInformation, enemies[2], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName, true);
+                                                this.battle(currentPlayer.playerInformation, enemies[2], "skill", currentPlayer.playerInformation.unitBattleSkills[1].battleSkillName, true,
+                                                currentPlayer.playerInformation.unitBattleSkills[1].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -1330,7 +1344,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext10.on('pointerdown', (pointer) => {
-												this.heal(currentPlayer.playerInformation, players[0], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName, true);
+                                                this.heal(currentPlayer.playerInformation, players[0], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName, true,
+                                                currentPlayer.playerInformation.unitBattleSkills[2].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -1353,7 +1368,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext11.on('pointerdown', (pointer) => {
-												this.heal(currentPlayer.playerInformation, players[1], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName, true);
+                                                this.heal(currentPlayer.playerInformation, players[1], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName, true,
+                                                currentPlayer.playerInformation.unitBattleSkills[2].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -1377,7 +1393,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext12.on('pointerdown', (pointer) => {
-												this.heal(currentPlayer.playerInformation, players[2], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName, true);
+                                                this.heal(currentPlayer.playerInformation, players[2], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName, true,
+                                                currentPlayer.playerInformation.unitBattleSkills[2].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -1400,7 +1417,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext121.on('pointerdown', (pointer) => {
-												this.heal(currentPlayer.playerInformation, players[3], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName, true);
+                                                this.heal(currentPlayer.playerInformation, players[3], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName, true),
+                                                currentPlayer.playerInformation.unitBattleSkills[2].mpRequired;
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -1450,7 +1468,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext10.on('pointerdown', (pointer) => {
-												this.battle(currentPlayer.playerInformation, enemies[0], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName, true);
+                                                this.battle(currentPlayer.playerInformation, enemies[0], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName, true,
+                                                currentPlayer.playerInformation.unitBattleSkills[2].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -1473,7 +1492,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext11.on('pointerdown', (pointer) => {
-												this.battle(currentPlayer.playerInformation, enemies[1], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName, true);
+                                                this.battle(currentPlayer.playerInformation, enemies[1], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName, true,
+                                                currentPlayer.playerInformation.unitBattleSkills[2].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -1497,7 +1517,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext12.on('pointerdown', (pointer) => {
-												this.battle(currentPlayer.playerInformation, enemies[2], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName, true);
+                                                this.battle(currentPlayer.playerInformation, enemies[2], "skill", currentPlayer.playerInformation.unitBattleSkills[2].battleSkillName, true,
+                                                currentPlayer.playerInformation.unitBattleSkills[2].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -1579,7 +1600,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext13.on('pointerdown', (pointer) => {
-												this.heal(currentPlayer.playerInformation, players[0], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName, true);
+                                                this.heal(currentPlayer.playerInformation, players[0], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName, true,
+                                                currentPlayer.playerInformation.unitBattleSkills[3].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -1602,7 +1624,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext14.on('pointerdown', (pointer) => {
-												this.heal(currentPlayer.playerInformation, players[1], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName, true);
+                                                this.heal(currentPlayer.playerInformation, players[1], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName, true,
+                                                currentPlayer.playerInformation.unitBattleSkills[3].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -1626,7 +1649,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext15.on('pointerdown', (pointer) => {
-												this.heal(currentPlayer.playerInformation, players[2], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName, true);
+                                                this.heal(currentPlayer.playerInformation, players[2], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName, true,
+                                                currentPlayer.playerInformation.unitBattleSkills[3].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -1649,7 +1673,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext151.on('pointerdown', (pointer) => {
-												this.heal(currentPlayer.playerInformation, players[3], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName, true);
+                                                this.heal(currentPlayer.playerInformation, players[3], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName, true),
+                                                currentPlayer.playerInformation.unitBattleSkills[3].mpRequired;
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -1699,7 +1724,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext13.on('pointerdown', (pointer) => {
-												this.battle(currentPlayer.playerInformation, enemies[0], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName, true);
+                                                this.battle(currentPlayer.playerInformation, enemies[0], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName, true,
+                                                currentPlayer.playerInformation.unitBattleSkills[3].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -1722,7 +1748,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext14.on('pointerdown', (pointer) => {
-												this.battle(currentPlayer.playerInformation, enemies[1], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName, true);
+                                                this.battle(currentPlayer.playerInformation, enemies[1], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName, true,
+                                                currentPlayer.playerInformation.unitBattleSkills[3].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -1746,7 +1773,8 @@ var UIScene = new Phaser.Class({
 												}
 											}).setInteractive();
 											enemytext15.on('pointerdown', (pointer) => {
-												this.battle(currentPlayer.playerInformation, enemies[2], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName, true);
+                                                this.battle(currentPlayer.playerInformation, enemies[2], "skill", currentPlayer.playerInformation.unitBattleSkills[3].battleSkillName, true,
+                                                currentPlayer.playerInformation.unitBattleSkills[3].mpRequired);
 												for (var i = 0; i < enemyTexts.length; i++) {
 													enemyTexts[i].destroy();
 												}
@@ -1810,7 +1838,7 @@ var UIScene = new Phaser.Class({
 	//battle is the main function that handles going to the next turn as well as damage updates/scene updates 
 	//isPlayer is used to identify whether or not the one attacking is the player, which is used to subtract MP for skills
 	//enemy do not have MP, so if isPlayer is false, that part does not have to update 
-	battle: function (player, target, method_of_attack, skillName, isPlayer) {
+	battle: function (player, target, method_of_attack, skillName, isPlayer, mpRequired) {
 		//simple attack
 
 		if (method_of_attack === "attack") {
@@ -1863,10 +1891,6 @@ var UIScene = new Phaser.Class({
 				//if the random number generated is less than the critical chance 
 				criticalHit = true;
 			}
-
-
-
-
 
 
 			if (damagedelt < 0) {
@@ -1955,7 +1979,7 @@ var UIScene = new Phaser.Class({
 			}
 
 			//now we decrease the hp
-			target.unitStats.hp = target.unitStats.hp - damagedelt;
+            target.unitStats.hp = target.unitStats.hp - damagedelt;
 			if (target.unitStats.hp < 0) {
 				target.unitStats.hp = 0;
 			}
@@ -2036,6 +2060,7 @@ var UIScene = new Phaser.Class({
 
 
 		if (method_of_attack === "skill") {
+            var showBox = true;
 			if (isPlayer === true) {
 				for (var i = 0; i < enemies.length; i++) {
 					var damagedelt = player.unitStats.atk - enemies[i].unitStats.res; //array of damages 
@@ -2068,13 +2093,26 @@ var UIScene = new Phaser.Class({
 			//if (damagedelt < 0){
 			//damagedelt = 0;
 			//}
-			var mpRequired = 0; //mpRequired variable 
 			var multiTarget = false; //whether or not its multi target
 			//there are also no such thing as critical hit in skill
 			//if (target.isGuarding === true){
 			//damagedelt = Math.floor(damagedelt/2); //guarding from magic also halves damage
 			//}
-
+            if (isPlayer === true){
+            var temp_mp = player.unitStats.mp - mpRequired;
+            if (temp_mp < 0) {
+                //if there is not enough mp 
+                mpRequired = 0;
+                for (var i = 0; i < this.damageDeltArray.length; i++) {
+                    this.damageDeltArray[i] = 0;
+                }
+                showBox = false;
+                this.scene.get("BattleScene").updateMessageBox(player.unitName + " doesn't have enough MP!");
+            }
+            else {
+                player.unitStats.mp = temp_mp;
+            }
+            }
 
 			//now go through the list of all the skills via skill names
 			//there are 3 types. normal magic that deals 1x magic does not get included in this if list, only those that are special do
@@ -2095,9 +2133,6 @@ var UIScene = new Phaser.Class({
 					if (enemies[i].unitName === target.unitName) {
 						//if the unit's name matches the i
 						target.unitStats.hp = target.unitStats.hp - this.damageDeltArray[i];
-					}
-					if (target.unitStats.hp < 0) {
-						target.unitStats.hp = 0;
 					}
 				}
 				//target.unitStats.hp = target.unitStats.hp - this.damageDeltArray[0];
@@ -2122,7 +2157,7 @@ var UIScene = new Phaser.Class({
 				}
 				for (var i = 0; i < enemies.length; i++) {
 					if (enemies[i].unitName === target.unitName) {
-						//if the unit's name matches the i
+                        //if the unit's name matches the i
 						target.unitStats.hp = target.unitStats.hp - this.damageDeltArray[i];
 					}
 					if (target.unitStats.hp < 0) {
@@ -2259,13 +2294,14 @@ var UIScene = new Phaser.Class({
 				//nothing happens
 			}
 			//now we search for the target's HP bar 
-
+            if (showBox === true){
 			if (multiTarget === false) {
 				this.scene.get("BattleScene").updateMessageBox(skillName);
 			}
 			else if (multiTarget === true) {
 				this.scene.get("BattleScene").updateMessageBox(skillName);
-			}
+            }
+            }
 
 
 			this.damageText = [];
@@ -2278,7 +2314,7 @@ var UIScene = new Phaser.Class({
 						() => {
 							hero.anims.play(player.unitAnimations[0], true)
 						});
-					var temp_mp = player.unitStats.mp - mpRequired;
+					/*var temp_mp = player.unitStats.mp - mpRequired;
 					if (temp_mp < 0) {
 						//if there is not enough mp 
 						mpRequired = 0;
@@ -2289,7 +2325,7 @@ var UIScene = new Phaser.Class({
 					}
 					else {
 						player.unitStats.mp = temp_mp;
-					}
+					}*/
 
 					break;
 				}
@@ -2547,7 +2583,7 @@ var UIScene = new Phaser.Class({
 	},
 
 
-	heal: function (player, target, method_of_attack, skillName, isPlayer) {
+	heal: function (player, target, method_of_attack, skillName, isPlayer, mpRequired) {
 
 		var damagehealed = Math.floor((player.unitStats.atk) / 2); //array of damages 
 
@@ -2567,13 +2603,27 @@ var UIScene = new Phaser.Class({
 			}
 		}
 
-		var mpRequired = 0; //mpRequired variable 
+
 		var multiTarget = false; //whether or not its multi target
 		//there are also no such thing as critical hit in skill
 		//if (target.isGuarding === true){
 		//damagedelt = Math.floor(damagedelt/2); //guarding from magic also halves damage
 		//}
-
+        if (isPlayer === true){
+            var temp_mp = player.unitStats.mp - mpRequired;
+            if (temp_mp < 0) {
+                //if there is not enough mp 
+                mpRequired = 0;
+                for (var i = 0; i < this.damageDeltArray.length; i++) {
+                    this.damageDeltArray[i] = 0;
+                }
+                showBox = false;
+                this.scene.get("BattleScene").updateMessageBox(player.unitName + " doesn't have enough MP!");
+            }
+            else {
+                player.unitStats.mp = temp_mp;
+            }
+            }
 
 		//now go through the list of all the skills via skill names
 		//there are 3 types. normal magic that deals 1x magic does not get included in this if list, only those that are special do
@@ -2689,16 +2739,6 @@ var UIScene = new Phaser.Class({
 					() => {
 						hero.anims.play(player.unitAnimations[0], true)
 					});
-				var temp_mp = player.unitStats.mp - mpRequired;
-				if (temp_mp < 0) {
-					//if there is not enough mp 
-					mpRequired = 0;
-					this.scene.get("BattleScene").updateMessageBox(player.unitName + " doesn't have enough MP!");
-				}
-				else {
-					player.unitStats.mp = temp_mp;
-				}
-
 				break;
 			}
 		}
