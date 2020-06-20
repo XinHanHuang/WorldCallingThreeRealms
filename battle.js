@@ -2630,7 +2630,7 @@ var UIScene = new Phaser.Class({
 		//there are also enemy exclusive skills that do not do anything. 
 		if (skillName === "Light" || skillName === "Prayer" || skillName === "God's Voice" ||
 			skillName === "Encore" || skillName === "God's Benevolence") {
-			mpRequired = 2;
+
 			var currentHP = target.unitStats.hp; //get the current HP 
 			target.unitStats.hp = target.unitStats.hp + damagehealed;
 			if (target.unitStats.hp > target.unitStats.maxHP) {
@@ -2647,7 +2647,7 @@ var UIScene = new Phaser.Class({
 		else if (skillName === "Graceful Light") {
 			var damagehealed2 = Math.floor(damagehealed * 1.5);
 			//damagedelt = Math.floor(damagedelt * 1.5);
-			mpRequired = 2;
+
 			multiTarget = true; //set to true
 			if (isPlayer === false) {
 				for (var i = 0; i < enemies.length; i++) {
@@ -2679,7 +2679,7 @@ var UIScene = new Phaser.Class({
 		else if (skillName === "Rally Attack") {
 			var damagehealed2 = Math.floor(damagehealed * 1.5);
 			//damagedelt = Math.floor(damagedelt * 1.5);
-			mpRequired = 2;
+
 			multiTarget = true; //set to true
 			if (isPlayer === false) {
 				for (var i = 0; i < enemies.length; i++) {
