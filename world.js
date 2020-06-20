@@ -414,7 +414,7 @@ var WorldScene = new Phaser.Class({
         //zone.x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
         //zone.y = Phaser.Math.RND.between(0, this.physics.world.bounds.height);
         this.reena.body.setVelocity(0,0);
-        this.spawns.destroy(true);
+        this.spawns.clear(true);
         this.spawns = this.physics.add.group({ classType: Phaser.GameObjects.Zone });
         for(var i = 0; i < 15; i++) {
             var x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
