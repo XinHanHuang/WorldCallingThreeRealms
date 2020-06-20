@@ -2119,7 +2119,7 @@ var UIScene = new Phaser.Class({
 			//there are also enemy exclusive skills that do not do anything. 
 			if (skillName === "Fire Magic" || skillName === "Water Magic" || skillName === "Earth Magic" ||
 				skillName === "Light Magic" || skillName === "Dark Magic") {
-				mpRequired = 5;
+
 				for (var i = 0; i < players.length; i++) {
 					if (players[i].unitName === target.unitName) {
 						//if the unit's name matches the i
@@ -2145,7 +2145,7 @@ var UIScene = new Phaser.Class({
 					this.damageDeltArray[i] = Math.floor(this.damageDeltArray[i] * 1.5);
 				}
 				//damagedelt = Math.floor(damagedelt * 1.5);
-				mpRequired = 10;
+
 				for (var i = 0; i < players.length; i++) {
 					if (players[i].unitName === target.unitName) {
 						//if the unit's name matches the i
@@ -2166,7 +2166,7 @@ var UIScene = new Phaser.Class({
 				}
 			}
 			else if (skillName === "Chaos" || skillName === "Thunderbrand") {
-				mpRequired = 5;
+
 				//also inflicts paralysis. (Status effects generally handled in 'next turn')
 				//if (target.unitName === "Alyene", not paralyzed or something here)
 				target.unitStatus = "paralyzed"; //set paralyzed to unit status
@@ -2201,7 +2201,7 @@ var UIScene = new Phaser.Class({
 			}
 
 			else if (skillName === "Spirit Break") {
-				mpRequired = 5;
+
 				target.unitStatus = "attackdown";
 				for (var i = 0; i < players.length; i++) {
 					if (players[i].unitName === target.unitName) {
@@ -2234,7 +2234,7 @@ var UIScene = new Phaser.Class({
 			//testing multi target
 			else if (skillName === "Pure Chaos") {
 				multiTarget = true; //set to true
-				mpRequired = 5;
+
 				if (isPlayer === true) {
 					for (var i = 0; i < enemies.length; i++) {
 						enemies[i].unitStatus = "paralyzed";
@@ -2262,7 +2262,7 @@ var UIScene = new Phaser.Class({
 			}
 
 			else if (skillName === "Mass Toxic") {
-				mpRequired = 5;
+
 				multiTarget = true; //set to true
 				if (isPlayer === true) {
 					for (var i = 0; i < enemies.length; i++) {

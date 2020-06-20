@@ -71,6 +71,7 @@ var BootScene = new Phaser.Class({
 
         //load the enemies
         this.load.spritesheet('LostSoul', 'assets/enemies/lostsoul.png', {frameWidth: 128, frameHeight: 128});
+        this.load.spritesheet('Incognito', 'assets/enemies/incognito.png', {frameWidth: 128, frameHeight: 128});
 
         //load battle skills
         this.load.image('rightfulgod', 'assets/skills/rightfulgod.png');    
@@ -310,7 +311,7 @@ var WorldScene = new Phaser.Class({
             repeat: -1
         });
 
-        //lost soul animations
+        //lost soul animations + enemy animations
         this.anims.create({
             key: 'attacklostsoul',
             frames: this.anims.generateFrameNumbers('LostSoul', {frames: [8,9,10,11,12,13,14,15]}),
@@ -328,8 +329,25 @@ var WorldScene = new Phaser.Class({
             frameRate: 5,
             repeat: -1
         });
+        this.anims.create({
+            key: 'attackincognito',
+            frames: this.anims.generateFrameNumbers('Incognito', {frames: [8,9,10,11,12,13,14,15]}),
+            frameRate: 5,
+        });
+        this.anims.create({
+            key: 'idleincognito',
+            frames: this.anims.generateFrameNumbers('Incognito', {frames: [0,1,2,3,4,5,6,7]}),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'defeatedincognito',
+            frames: this.anims.generateFrameNumbers('Incognito', {frames: [0]}),
+            frameRate: 5,
+            repeat: -1
+        });
 
-
+    
 
 
         // our player sprite created through the phycis system
@@ -506,9 +524,8 @@ var WorldScene = new Phaser.Class({
             this.reena.y -= 20;
             this.reena.body.setVelocity(0,0);
             unitAlyeneSkills1 = new unitSkills("Almighty God","Negates damage bonus from enemy critical hits, damage from opponent's attacks reduced by 50%", "almightygod");
-            unitAlyeneSkills2 = new unitSkills("Dragon Skin", "Negates the effects of all non-damaging status effects. Nullifies poison damage", "dragonskin");
             unitAlyeneSkills3 = new unitSkills("Angelic Truth", "Halves attack damage received", "angelictruth");
-            unitAlyeneSkillArray = [unitAlyeneSkills1, unitAlyeneSkills2, unitAlyeneSkills3];
+            unitAlyeneSkillArray = [unitAlyeneSkills1, unitAlyeneSkills3];
             unitAlyeneStats = new unitStats(13, 11, 12, 3, 5, 15, 12); //this is Alyene's current stats
             alyeneAnimations = ['rightalyene', 'leftalyene','attackalyene','defeatedalyene'];
             unitAlyeneBattleSkills1 = new unitBattleSkills("Mass Toxic", "inflicts poison and deals damage", 5, "magic", "single", "masstoxic");
@@ -540,6 +557,33 @@ var WorldScene = new Phaser.Class({
             this.scene.run('DialogScene');
         }
 
+        else if (npc.texture.key === "Incognito"){
+            currentDialogStatus = "earth1";
+            this.reena.y -= 20;
+            this.reena.body.setVelocity(0,0);
+
+            IncognitoSkills1 = new unitSkills("Almighty God","Negates damage bonus from enemy critical hits, damage from opponent's attacks reduced by 50%", "almightygod");
+            IncognitoSkills2 = new unitSkills("Dragon Skin", "Negates the effects of all non-damaging status effects. Nullifies poison damage", "dragonskin");
+            IncognitoSkills3 = new unitSkills("Angelic Truth", "Halves attack damage received", "angelictruth");
+            IncognitoSkillArray = [IncognitoSkills1, IncognitoSkills2, IncognitoSkills3];
+            IncognitoStats = new unitStats(80, 110, 46, 10, 3, 150, 120); //this is Alyene's current stats
+            IncognitoAnimations = ['idleincognito', 'idleincognito','attackincognito','defeatedincognito'];
+            IncognitoBattleSkills1 = new unitBattleSkills("Mass Toxic", "inflicts poison and deals damage", 5, "magic", "single", "masstoxic");
+            IncognitoBattleSkills2 = new unitBattleSkills("Toxic", "inflicts poison and deals damage", 5, "magic", "single", "toxic");
+            IncognitoBattleSkills3 = new unitBattleSkills("Rally Break", "inflicts attack down effect to all opponents", 5, "magic", "multiple", "rallybreak");
+            IncognitoBattleSkllArray = [IncognitoBattleSkills1, IncognitoBattleSkills2, IncognitoBattleSkills3];
+
+            Incognito = new unitInformation(null, "???", IncognitoAnimations, "incognitosprite", IncognitoSkillArray, IncognitoStats, null, IncognitoBattleSkllArray, 15);
+            enemies.push(Incognito);
+            this.physics.world.colliders.getActive().find(function(i){
+                return i.name == 'IncognitoCollider';
+            }).destroy();
+            this.cameras.main.shake(300);
+            this.input.stopPropagation();
+
+            this.scene.switch("BattleScene");
+        }
+
 
 
         
@@ -548,7 +592,7 @@ var WorldScene = new Phaser.Class({
 
     update: function (time, delta)
     {             
-        this.reena.body.setVelocity(0,0);
+        this.reena.body.setVelocity(0);
         
         // Horizontal movement
         if (this.cursors.left.isDown)
@@ -591,7 +635,7 @@ var WorldScene = new Phaser.Class({
         else
         {
             //this.reena.anims.stop();
-            this.reena.body.setVelocity(0,0);
+            this.reena.body.setVelocity(0);
         }
     }
     
@@ -1718,6 +1762,12 @@ var World1 = new Phaser.Class({
         }        
         // add collider
         this.physics.add.collider(this.reena, this.spawns, this.onMeetEnemy, false, this);
+
+        //Incognito NPC
+        this.incognito = this.physics.add.sprite(2560-128-64, 2560-128-64, 'Incognito', 6).setImmovable();
+        this.incognito.anims.play('idleincognito', true);
+        npcs.push(this.incognito);
+        this.physics.add.collider(this.reena, this.incognito, this.onNpcDialog, false, this).name = "IncognitoCollider";
 
         // we listen for 'wake' event
         this.sys.events.on('wake', this.wake, this);
