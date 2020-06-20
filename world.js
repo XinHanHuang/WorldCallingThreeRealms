@@ -403,6 +403,7 @@ var WorldScene = new Phaser.Class({
         this.sys.events.on('wake', this.wake, this);
     },
     wake: function() {
+        this.reena.body.setVelocity(0,0);
         this.cursors.left.reset();
         this.cursors.right.reset();
         this.cursors.up.reset();
@@ -412,8 +413,8 @@ var WorldScene = new Phaser.Class({
         // we move the zone to some other location
         //zone.x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
         //zone.y = Phaser.Math.RND.between(0, this.physics.world.bounds.height);
-        this.reena.body.setVelocity(0);
-        this.spawns.clear(true);
+        this.reena.body.setVelocity(0,0);
+        this.spawns.destroy(true);
         this.spawns = this.physics.add.group({ classType: Phaser.GameObjects.Zone });
         for(var i = 0; i < 15; i++) {
             var x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
@@ -449,10 +450,12 @@ var WorldScene = new Phaser.Class({
             lostSoulBattleSkillArray = [];
             lostSoulBattleSkillArray2 = [];
             lostSoulBattleSkillArray3 = [];
-
-            var lostSoul = new unitInformation(null, "LostSoul", lostSoulAnimations, "lostsoulsprite", lostSoulSkillArray, lostSoulStats, null,lostSoulBattleSkillArray, Phaser.Math.RND.between(5, 8));
-            var lostSoul2 = new unitInformation(null, "LostSoul2", lostSoulAnimations2, "lostsoulsprite", lostSoulSkillArray2, lostSoulStats2, null,lostSoulBattleSkillArray2, Phaser.Math.RND.between(5, 8));
-            var lostSoul3 = new unitInformation(null, "LostSoul3", lostSoulAnimations3, "lostsoulsprite", lostSoulSkillArray3, lostSoulStats3, null,lostSoulBattleSkillArray3, Phaser.Math.RND.between(5, 8));
+            var level1 = Phaser.Math.RND.between(5, 8);
+            var level2 = Phaser.Math.RND.between(5, 8);
+            var level3 = Phaser.Math.RND.between(5, 8);
+            var lostSoul = new unitInformation(null, "LostSoul Lv." + level1, lostSoulAnimations, "lostsoulsprite", lostSoulSkillArray, lostSoulStats, null,lostSoulBattleSkillArray, level1);
+            var lostSoul2 = new unitInformation(null, "LostSoul2 Lv." + level2, lostSoulAnimations2, "lostsoulsprite", lostSoulSkillArray2, lostSoulStats2, null,lostSoulBattleSkillArray2, level2);
+            var lostSoul3 = new unitInformation(null, "LostSoul3 Lv."+ level3, lostSoulAnimations3, "lostsoulsprite", lostSoulSkillArray3, lostSoulStats3, null,lostSoulBattleSkillArray3, level3);
             enemies.push(lostSoul);
             var secondSpawn = Phaser.Math.RND.between(0, 50);
             if (secondSpawn < 25){
@@ -501,7 +504,7 @@ var WorldScene = new Phaser.Class({
         if (npc.texture.key === "Alyene"){
             currentDialogStatus = "heaven1";
             this.reena.y -= 20;
-            this.reena.setVelocityY(0);
+            this.reena.body.setVelocity(0,0);
             unitAlyeneSkills1 = new unitSkills("Almighty God","Negates damage bonus from enemy critical hits, damage from opponent's attacks reduced by 50%", "almightygod");
             unitAlyeneSkills2 = new unitSkills("Dragon Skin", "Negates the effects of all non-damaging status effects. Nullifies poison damage", "dragonskin");
             unitAlyeneSkills3 = new unitSkills("Angelic Truth", "Halves attack damage received", "angelictruth");
@@ -545,7 +548,7 @@ var WorldScene = new Phaser.Class({
 
     update: function (time, delta)
     {             
-        this.reena.body.setVelocity(0);
+        this.reena.body.setVelocity(0,0);
         
         // Horizontal movement
         if (this.cursors.left.isDown)
@@ -588,7 +591,7 @@ var WorldScene = new Phaser.Class({
         else
         {
             //this.reena.anims.stop();
-            this.reena.body.setVelocity(0);
+            this.reena.body.setVelocity(0,0);
         }
     }
     
