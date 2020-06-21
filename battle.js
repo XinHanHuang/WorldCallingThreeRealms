@@ -258,15 +258,17 @@ var BattleScene = new Phaser.Class({
                         useAdvancedWrap: true
                     }
                 }).setInteractive();
-                //if (this.heroes[i].playerInformation.unitName === "Reena" && this.heroes[i].playerInformation.unitLevel === 10){
-                    //learns a new skill 
-                //}
+                if (this.heroes[i].playerInformation.unitName === "Yune" && this.heroes[i].playerInformation.level === 3){
+					//learns a new skill 
+					unitYuneBattleSkills2 = new unitBattleSkills("Chaos", "inflicts paralysis and deals magical damage", 5, "magic", "single", "chaos");
+					this.heroes[i].playerInformation.unitBattleSkills.push(unitYuneBattleSkills2); //learns a skill
+                }
                 this.expArray.push(levelupText);
             }
         }
 
         if (partyWipeCounter === this.heroes.length){
-            //alert("You Lose");
+            bossBattleVictory = false;
         }
 
 
@@ -306,7 +308,8 @@ var BattleScene = new Phaser.Class({
         }
         for (var i = 0; i < this.expArray.length; i++){
             this.expArray[i].destroy();
-        }
+		}
+		canEscape = true; //can escape now
         this.expArray.length = 0;
 		this.heroes.length = 0;
 		this.enemiesArray.length = 0;
@@ -333,14 +336,19 @@ var BattleScene = new Phaser.Class({
 		this.scene.get('UIScene').scene.stop('UIScene');
         this.destroyMessageBox();
 
-        if(currentDialogStatus === "heaven1"){
+        if(currentDialogStatus === "heaven1" && bossBattleVictory === true){
             //HERE, CREATE ADDITIONAL DIALOG SITUATIONS FOR SPECIAL BATTLES USING CURRENT DIALOG STATUS
             this.scene.switch(currentScene);
             this.scene.get(currentScene).continueDialog();
-        }
+		}
+		else if(currentDialogStatus === "heaven2" && bossBattleVictory === true){
+			this.scene.switch(currentScene);
+			this.scene.get(currentScene).continueDialog();
+		}
         else{
 		//this.scene.get('BattleScene').scene.stop('BattleScene');
 		// return to WorldScene and sleep current BattleScene
+		bossBattleVictory = true;
 		this.scene.switch(currentScene);
         }
 
@@ -2572,13 +2580,24 @@ var UIScene = new Phaser.Class({
 			this.scene.pause('UIScene');
 		}
 		if (method_of_attack === "escape") {
-			this.scene.get("BattleScene").updateMessageBox(player.unitName + "'s group has successfully escaped!");
-			timedEvent = this.battleScene.time.addEvent({
-				delay: 1500,
-				callback: this.battleScene.endBattle,
-				callbackScope: this.battleScene
-			});
-			this.scene.pause('UIScene');
+			if (canEscape === true){
+				this.scene.get("BattleScene").updateMessageBox(player.unitName + "'s group has successfully escaped!");
+				timedEvent = this.battleScene.time.addEvent({
+					delay: 1500,
+					callback: this.battleScene.endBattle,
+					callbackScope: this.battleScene
+				});
+				this.scene.pause('UIScene');
+			}
+			else if (canEscape === false){
+				this.scene.get("BattleScene").updateMessageBox(player.unitName + "'s group cannot escape!!");
+				timedEvent = this.battleScene.time.addEvent({
+					delay: 1500,
+					callback: this.battleScene.nextTurn,
+					callbackScope: this.battleScene
+				});
+				this.scene.pause('UIScene');
+			}
 		}
 	},
 
