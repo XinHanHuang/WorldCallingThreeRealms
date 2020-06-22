@@ -2062,6 +2062,7 @@ var UIScene = new Phaser.Class({
 						for (var i = 0; i < this.battleScene.heroes.length; i++) {
 							if (this.battleScene.heroes[i].playerInformation === target) {
 								this.battleScene.heroes[i].living = false;
+								players[i].living = false;
 								this.battleScene.heroes[i].anims.play(target.unitAnimations[3], false);
 							}
 						}
@@ -2079,6 +2080,7 @@ var UIScene = new Phaser.Class({
 						for (var i = 0; i < this.battleScene.enemiesArray.length; i++) {
 							if (this.battleScene.enemiesArray[i].playerInformation === target) {
 								this.battleScene.enemiesArray[i].living = false;
+								enemies[i].living = false;
 								this.battleScene.enemiesArray[i].anims.play(target.unitAnimations[3], false);
 							}
 						}
@@ -2414,6 +2416,7 @@ var UIScene = new Phaser.Class({
 							for (var i = 0; i < this.battleScene.enemiesArray.length; i++) {
 								if (this.battleScene.enemiesArray[i].playerInformation === target) {
 									this.battleScene.enemiesArray[i].living = false;
+									enemies[i].living = false;
 									this.battleScene.enemiesArray[i].anims.play(target.unitAnimations[3], false);
 								}
 							}
@@ -2447,6 +2450,7 @@ var UIScene = new Phaser.Class({
 							for (var i = 0; i < this.battleScene.heroes.length; i++) {
 								if (this.battleScene.heroes[i].playerInformation === target) {
 									this.battleScene.heroes[i].living = false;
+									players[i].living = false;
 									this.battleScene.heroes[i].anims.play(target.unitAnimations[3], false);
 								}
 							}
@@ -2505,6 +2509,7 @@ var UIScene = new Phaser.Class({
 					EnemyUIarray[i].hp_bar.decrease(this.damageDeltArray[i]);
 					if (enemies[i].unitStats.hp === 0) {
 						this.battleScene.enemiesArray[i].living = false;
+						enemies[i].living = false;
 						this.battleScene.enemiesArray[i].anims.play(enemies[i].unitAnimations[3], false);
 					}
 					if (enemies[i].unitStatus === "paralyzed") {
@@ -2558,6 +2563,7 @@ var UIScene = new Phaser.Class({
 					UIarray[i].hp_bar.decrease(this.damageDeltArray[i]);
 					if (players[i].unitStats.hp === 0) {
 						this.battleScene.heroes[i].living = false;
+						players[i].living = false;
 						this.battleScene.heroes[i].anims.play(players[i].unitAnimations[3], false);
 					}
 
@@ -2689,9 +2695,12 @@ var UIScene = new Phaser.Class({
 		//there are also enemy exclusive skills that do not do anything. 
 		if (skillName === "Light" || skillName === "Prayer" || skillName === "God's Voice" ||
 			skillName === "Encore" || skillName === "God's Benevolence") {
-
 			var currentHP = target.unitStats.hp; //get the current HP 
 			target.unitStats.hp = target.unitStats.hp + damagehealed;
+			if (target.living === false && damagehealed > 0){
+				target.living = true; //can revive
+				target.anims.play(target.unitAnimations[0], true);
+			}
 			if (target.unitStats.hp > target.unitStats.maxHP) {
 				target.unitStats.hp = target.unitStats.maxHP;
 				damagehealed = target.unitStats.maxHP - currentHP;
@@ -2713,6 +2722,10 @@ var UIScene = new Phaser.Class({
 					var currentHP = enemies[i].unitStats.hp; //get the current HP 
 					enemies[i].unitStatus = null;
 					enemies[i].unitStats.hp = enemies[i].unitStats.hp + damagehealed;
+					if (enemies[i].living === false && damagehealed > 0){
+						enemies[i].living = true;
+						enemies[i].anims.play(enemies[i].unitAnimations[0], true);
+					}
 					if (enemies[i].unitStats.hp > enemies[i].unitStats.maxHP) {
 						enemies[i].unitStats.hp = enemies[i].unitStats.maxHP;
 						damagehealed2 = enemies[i].unitStats.maxHP - currentHP;
@@ -2725,6 +2738,10 @@ var UIScene = new Phaser.Class({
 					var currentHP = players[i].unitStats.hp
 					players[i].unitStatus = null;
 					players[i].unitStats.hp = players[i].unitStats.hp + damagehealed;
+					if (players[i].living === false && damagehealed > 0){
+						players[i].living = true;
+						players[i].anims.play(players[i].unitAnimations[0], true);
+					}
 					if (players[i].unitStats.hp > players[i].unitStats.maxHP) {
 						players[i].unitStats.hp = players[i].unitStats.maxHP;
 						damagehealed2 = players[i].unitStats.maxHP - currentHP;
@@ -2748,7 +2765,7 @@ var UIScene = new Phaser.Class({
 					}
 					var currentHP = enemies[i].unitStats.hp; //get the current HP 
 					enemies[i].unitStatus = "attackup";
-					enemies[i].unitStats.hp = enemies[i].unitStats.hp + damagehealed;
+					enemies[i].unitStats.hp = enemies[i].unitStats.hp + 0;
 					if (enemies[i].unitStats.hp > enemies[i].unitStats.maxHP) {
 						enemies[i].unitStats.hp = enemies[i].unitStats.maxHP;
 						damagehealed2 = enemies[i].unitStats.maxHP - currentHP;
@@ -2764,7 +2781,7 @@ var UIScene = new Phaser.Class({
 					}
 					var currentHP = players[i].unitStats.hp
 					players[i].unitStatus = "attackup";
-					players[i].unitStats.hp = players[i].unitStats.hp + damagehealed;
+					players[i].unitStats.hp = players[i].unitStats.hp + 0;
 					if (players[i].unitStats.hp > players[i].unitStats.maxHP) {
 						players[i].unitStats.hp = players[i].unitStats.maxHP;
 						damagehealed2 = players[i].unitStats.maxHP - currentHP;

@@ -847,6 +847,7 @@ class unitInformation {
         this.isGuarding = false;
         this.level = level;
         this.exp = 0;
+        this.living = true;
     }
 
 }
