@@ -127,6 +127,41 @@ var BattleScene = new Phaser.Class({
 				} while (!this.heroes[r].living)
 				this.scene.get('UIScene').battle(this.units[this.index].playerInformation, this.heroes[r].playerInformation, "skill", "Spirit Break", false);
 			}
+			else if (currentEnemy.playerInformation.unitName.split(" ")[0] === "Crawler"){
+				var r;
+				do {
+					r = Math.floor(Math.random() * this.heroes.length);
+				} while (!this.heroes[r].living)
+				this.scene.get('UIScene').battle(this.units[this.index].playerInformation, this.heroes[r].playerInformation, "skill", "Snipe", false);
+			}
+			else if (currentEnemy.playerInformation.unitName.split(" ")[0] === "Drone"){
+				var r;
+				do {
+					r = Math.floor(Math.random() * this.heroes.length);
+				} while (!this.heroes[r].living)
+				this.scene.get('UIScene').battle(this.units[this.index].playerInformation, this.heroes[r].playerInformation, "skill", "Snipe", false);
+			}
+			else if (currentEnemy.playerInformation.unitName.split(" ")[0] === "Spirit"){
+				var r;
+				do {
+					r = Math.floor(Math.random() * this.heroes.length);
+				} while (!this.heroes[r].living)
+				this.scene.get('UIScene').battle(this.units[this.index].playerInformation, this.heroes[r].playerInformation, "skill", "Spirit Shackle", false);
+			}
+			else if (currentEnemy.playerInformation.unitName === "Colossus"){
+				var r;
+				do {
+					r = Math.floor(Math.random() * this.heroes.length);
+				} while (!this.heroes[r].living)
+				skillOrAttack = Phaser.Math.RND.between(0, 20);
+				if (skillOrAttack < 10){
+					this.scene.get('UIScene').battle(this.units[this.index].playerInformation, this.heroes[r].playerInformation, "skill", "Snipe", false);
+				}
+				else{
+					this.scene.get('UIScene').battle(this.units[this.index].playerInformation, this.heroes[r].playerInformation, "attack", null, false);
+				}
+			}
+
 			else {
 				//Random for all other random spawns 
 				// pick random living hero to be attacked
@@ -267,9 +302,14 @@ var BattleScene = new Phaser.Class({
             }
         }
 
-        if (partyWipeCounter === this.heroes.length){
+		if (partyWipeCounter === this.heroes.length && enemies[0].unitName === "???" ||
+		partyWipeCounter === this.heroes.length && enemies[0].unitName === "Colossus"){
             bossBattleVictory = false;
-        }
+		}
+		else if (partyWipeCounter != this.heroes.length && enemies[0].name === "???" ||
+		partyWipeCounter != this.heroes.length && enemies[0].name === "Colossus"){
+			bossBattleVictory = true;
+		}
 
 
 
@@ -348,7 +388,7 @@ var BattleScene = new Phaser.Class({
         else{
 		//this.scene.get('BattleScene').scene.stop('BattleScene');
 		// return to WorldScene and sleep current BattleScene
-		bossBattleVictory = true;
+		bossBattleVictory = false;
 		this.scene.switch(currentScene);
         }
 
@@ -2173,7 +2213,7 @@ var UIScene = new Phaser.Class({
 					}
 				}
 			}
-			else if (skillName === "Chaos" || skillName === "Thunderbrand") {
+			else if (skillName === "Chaos" || skillName === "Thunderbrand" || skillName === "Spirit Shackle") {
 
 				//also inflicts paralysis. (Status effects generally handled in 'next turn')
 				//if (target.unitName === "Alyene", not paralyzed or something here)
@@ -2208,7 +2248,7 @@ var UIScene = new Phaser.Class({
 				}
 			}
 
-			else if (skillName === "Spirit Break") {
+			else if (skillName === "Spirit Break" || skillName === "Snipe") {
 
 				target.unitStatus = "attackdown";
 				for (var i = 0; i < players.length; i++) {

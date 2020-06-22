@@ -46,6 +46,9 @@ var BootScene = new Phaser.Class({
         this.load.image('yuneallysprite', 'assets/sprites/Yune_Ally.png');
         this.load.image('lostsoulsprite', 'assets/sprites/LostSoul.png');
         this.load.image('incognitosprite', 'assets/sprites/Incognito.png');
+        this.load.image('crawlersprite', 'assets/sprites/Crawler.png');
+        this.load.image('flyersprite', 'assets/sprites/Flyer.png');
+        this.load.image('colossussprite', 'assets/sprites/Colossus.png');
         
         //load menu items
         this.load.image('attack', "assets/menu/attack.png");
@@ -76,6 +79,10 @@ var BootScene = new Phaser.Class({
         //load the enemies
         this.load.spritesheet('LostSoul', 'assets/enemies/lostsoul.png', {frameWidth: 128, frameHeight: 128});
         this.load.spritesheet('Incognito', 'assets/enemies/incognito.png', {frameWidth: 128, frameHeight: 128});
+        this.load.spritesheet('Crawler', 'assets/enemies/crawler.png', {frameWidth: 128, frameHeight: 128});
+        this.load.spritesheet('Flyer', 'assets/enemies/flyer.png', {frameWidth: 128, frameHeight: 128});
+        this.load.spritesheet('Colossus', 'assets/enemies/colossus.png', {frameWidth: 256, frameHeight: 256});
+
 
         //load battle skills
         this.load.image('rightfulgod', 'assets/skills/rightfulgod.png');    
@@ -87,6 +94,8 @@ var BootScene = new Phaser.Class({
         //load a dialog box
         this.load.image('dialogbox', 'assets/dialogBox.png');
         this.load.image('expbackground', 'assets/expbackground.png');
+
+
 
     },
 
@@ -350,6 +359,57 @@ var WorldScene = new Phaser.Class({
             frameRate: 5,
             repeat: -1
         });
+        this.anims.create({
+            key: 'attackflyer',
+            frames: this.anims.generateFrameNumbers('Flyer', {frames: [8,9,10,11,12,13,14,15]}),
+            frameRate: 5,
+        });
+        this.anims.create({
+            key: 'idleflyer',
+            frames: this.anims.generateFrameNumbers('Flyer', {frames: [0,1,2,3,4,5,6,7]}),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'defeatedflyer',
+            frames: this.anims.generateFrameNumbers('Flyer', {frames: [0]}),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'attackcrawler',
+            frames: this.anims.generateFrameNumbers('Crawler', {frames: [8,9,10,11,12,13,14,15]}),
+            frameRate: 5,
+        });
+        this.anims.create({
+            key: 'idlecrawler',
+            frames: this.anims.generateFrameNumbers('Crawler', {frames: [0,1,2,3,4,5,6,7]}),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'defeatedcrawler',
+            frames: this.anims.generateFrameNumbers('Crawler', {frames: [0]}),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'attackcolossus',
+            frames: this.anims.generateFrameNumbers('Colossus', {frames: [8,9,10,11,12,13,14,15]}),
+            frameRate: 5,
+        });
+        this.anims.create({
+            key: 'idlecolossus',
+            frames: this.anims.generateFrameNumbers('Colossus', {frames: [0,1,2,3,4,5,6,7]}),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'defeatedcolossus',
+            frames: this.anims.generateFrameNumbers('Colossus', {frames: [0]}),
+            frameRate: 5,
+            repeat: -1
+        });
 
     
 
@@ -436,20 +496,21 @@ var WorldScene = new Phaser.Class({
         //zone.x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
         //zone.y = Phaser.Math.RND.between(0, this.physics.world.bounds.height);
         this.reena.body.setVelocity(0,0);
-        this.spawns.clear(true);
-        this.spawns = this.physics.add.group({ classType: Phaser.GameObjects.Zone });
-        for(var i = 0; i < 15; i++) {
-            var x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
-            var y = Phaser.Math.RND.between(0, this.physics.world.bounds.height);
-            // parameters are x, y, width, height
-            this.spawns.create(x, y, 30, 30);            
-        }  
-        this.physics.add.collider(this.reena, this.spawns, this.onMeetEnemy, false, this);
+
         // shake the world
         this.cameras.main.shake(300);
         this.input.stopPropagation();
         // start battle 
-        if (currentScene = "World1"){
+        if (currentScene === "World1"){
+            this.spawns.clear(true);
+            this.spawns = this.physics.add.group({ classType: Phaser.GameObjects.Zone });
+            for(var i = 0; i < 15; i++) {
+                var x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
+                var y = Phaser.Math.RND.between(0, this.physics.world.bounds.height);
+                // parameters are x, y, width, height
+                this.spawns.create(x, y, 30, 30);            
+            }  
+            this.physics.add.collider(this.reena, this.spawns, this.onMeetEnemy, false, this);
             //spawn lost souls randomly in world 1
             lostSoulSkillArray = [];
             lostSoulSkillArray2 = [];
@@ -478,6 +539,55 @@ var WorldScene = new Phaser.Class({
             var lostSoul = new unitInformation(null, "LostSoul Lv." + level1, lostSoulAnimations, "lostsoulsprite", lostSoulSkillArray, lostSoulStats, null,lostSoulBattleSkillArray, level1);
             var lostSoul2 = new unitInformation(null, "LostSoul2 Lv." + level2, lostSoulAnimations2, "lostsoulsprite", lostSoulSkillArray2, lostSoulStats2, null,lostSoulBattleSkillArray2, level2);
             var lostSoul3 = new unitInformation(null, "LostSoul3 Lv."+ level3, lostSoulAnimations3, "lostsoulsprite", lostSoulSkillArray3, lostSoulStats3, null,lostSoulBattleSkillArray3, level3);
+            enemies.push(lostSoul);
+            var secondSpawn = Phaser.Math.RND.between(0, 50);
+            if (secondSpawn < 25){
+                enemies.push(lostSoul2);
+            }
+            if (secondSpawn < 10){
+                enemies.push(lostSoul3);
+            }
+        }
+        else if (currentScene === "World2"){
+            this.spawns.clear(true);
+            this.spawns = this.physics.add.group({ classType: Phaser.GameObjects.Zone });
+            for(var i = 0; i < 40; i++) {
+                var x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
+                var y = Phaser.Math.RND.between(0, this.physics.world.bounds.height);
+                // parameters are x, y, width, height
+                this.spawns.create(x, y, 30, 30);            
+            }  
+            this.physics.add.collider(this.reena, this.spawns, this.onMeetEnemy, false, this);
+            //spawn lost souls randomly in world 1
+            lostSoulSkillArray = [];
+            lostSoulSkillArray2 = [];
+            lostSoulSkillArray3 = [];
+            lostSoulStats = new unitStats(Phaser.Math.RND.between(15, 25),
+            Phaser.Math.RND.between(15, 25), 
+            Phaser.Math.RND.between(15, 25), Phaser.Math.RND.between(15, 25), Phaser.Math.RND.between(15, 20), Phaser.Math.RND.between(15, 25),
+            Phaser.Math.RND.between(15, 25)); //this is Alyene's current stats
+            lostSoulStats2 = new unitStats(Phaser.Math.RND.between(15, 25),
+            Phaser.Math.RND.between(15, 25), 
+            Phaser.Math.RND.between(15, 25), Phaser.Math.RND.between(15, 25), Phaser.Math.RND.between(15, 25), Phaser.Math.RND.between(15, 25),
+            Phaser.Math.RND.between(15, 25)); //this is Alyene's current stats
+            lostSoulStats3 = new unitStats(Phaser.Math.RND.between(15, 54),
+            Phaser.Math.RND.between(15, 25), 
+            Phaser.Math.RND.between(15, 25), Phaser.Math.RND.between(15, 25), Phaser.Math.RND.between(15, 25), Phaser.Math.RND.between(15, 25),
+            Phaser.Math.RND.between(15, 25)); //this is Alyene's current stats
+            lostSoulAnimations = ['idlecrawler', 'idlecrawler','attackcrawler','defeatedcrawler'];
+            lostSoulAnimations2 = ['idleflyer', 'idleflyer','attackflyer','defeatedflyer'];
+            lostSoulAnimations3 = ['idlelostsoul', 'idlelostsoul','attacklostsoul','defeatedlostsoul'];
+            unitReenaBattleSkills1 = new unitBattleSkills("Snipe", "deals 1x magical damage to opponent", 5, "magic", "single", "snipe");
+            unitReenaBattleSkills2 = new unitBattleSkills("Spirit Shackle", "deals 1.5x magical damage to opponent, inflict paralysis", 10, "magic", "single", "spiritshackle");
+            lostSoulBattleSkillArray = [unitReenaBattleSkills1];
+            lostSoulBattleSkillArray2 = [unitReenaBattleSkills1];
+            lostSoulBattleSkillArray3 = [unitReenaBattleSkills2];
+            var level1 = Phaser.Math.RND.between(8, 13);
+            var level2 = Phaser.Math.RND.between(8, 13);
+            var level3 = Phaser.Math.RND.between(9, 15);
+            var lostSoul = new unitInformation(null, "Crawler Lv." + level1, lostSoulAnimations, "crawlersprite", lostSoulSkillArray, lostSoulStats, null,lostSoulBattleSkillArray, level1);
+            var lostSoul2 = new unitInformation(null, "Drone Lv." + level2, lostSoulAnimations2, "flyersprite", lostSoulSkillArray2, lostSoulStats2, null,lostSoulBattleSkillArray2, level2);
+            var lostSoul3 = new unitInformation(null, "Spirit Lv."+ level3, lostSoulAnimations3, "lostsoulsprite", lostSoulSkillArray3, lostSoulStats3, null,lostSoulBattleSkillArray3, level3);
             enemies.push(lostSoul);
             var secondSpawn = Phaser.Math.RND.between(0, 50);
             if (secondSpawn < 25){
@@ -588,6 +698,26 @@ var WorldScene = new Phaser.Class({
             Incognito = new unitInformation(null, "???", IncognitoAnimations, "incognitosprite", IncognitoSkillArray, IncognitoStats, null, IncognitoBattleSkllArray, 15);
             enemies.push(Incognito);
 
+            this.cameras.main.shake(300);
+            this.input.stopPropagation();
+
+            this.scene.switch("BattleScene");
+        }
+
+        else if (npc.texture.key === "Colossus"){
+            canEscape = false;
+            currentDialogStatus = "earth1";
+            this.reena.y += 20;
+            this.reena.body.setVelocity(0,0);
+
+            ColossusSkillArray = [];
+            ColossusStats = new unitStats(250, 110, 66, 30, 10, 12, 13);
+            ColossusAnimations = ['idlecolossus', 'idlecolossus', "attackcolossus", 'defeatedcolossus'];
+            ColossusBattleSkills1 = new unitBattleSkills("Snipe", "inflicts paralysis and magic damage", 5, "magic", "single", "snipe");
+            ColossusBattleSkillArray = [ColossusBattleSkills1];
+
+            Colossus = new unitInformation(null, "Colossus", ColossusAnimations, "colossussprite", ColossusSkillArray, ColossusStats, null, ColossusBattleSkillArray, 20);
+            enemies.push(Colossus);
             this.cameras.main.shake(300);
             this.input.stopPropagation();
 
@@ -1581,6 +1711,7 @@ var DialogScene = new Phaser.Class({
                 this.convoName.text = this.convoNames2[this.currentIndex];
                 if (this.convo2[this.currentIndex] === null){
                     this.currentIndex = -1;
+                    currentDialogStatus = "earth1";
                     this.scene.stop('DialogScene');
                     this.scene.switch('World2');
                 }
@@ -1994,8 +2125,8 @@ var World2 = new Phaser.Class({
 
         currentScene = "World2";
         // where the enemies will be
-        /*this.spawns = this.physics.add.group({ classType: Phaser.GameObjects.Zone });
-        for(var i = 0; i < 30; i++) {
+        this.spawns = this.physics.add.group({ classType: Phaser.GameObjects.Zone });
+        for(var i = 0; i < 50; i++) {
             var x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
             var y = Phaser.Math.RND.between(0, this.physics.world.bounds.height);
             // parameters are x, y, width, height
@@ -2005,11 +2136,11 @@ var World2 = new Phaser.Class({
         this.physics.add.collider(this.reena, this.spawns, this.onMeetEnemy, false, this);
 
         //Incognito NPC
-        this.incognito = this.physics.add.sprite(2560-128-64, 2560-128-64, 'Incognito', 6).setImmovable();
-        this.incognito.anims.play('idleincognito', true);
-        npcs.push(this.incognito);
-        this.physics.add.collider(this.reena, this.incognito, this.onNpcDialog, false, this).name = "IncognitoCollider";
-        */
+        this.colossus= this.physics.add.sprite(3200-64, 500, 'Colossus', 6).setImmovable();
+        this.colossus.anims.play('idlecolossus', true);
+        npcs.push(this.colossus);
+        this.physics.add.collider(this.reena, this.colossus, this.onNpcDialog, false, this).name = "Colossuscollider";
+        
         // we listen for 'wake' event
         this.sys.events.on('wake', this.wake, this);
     },
