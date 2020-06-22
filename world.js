@@ -12,6 +12,7 @@ currentDialogStatus = "heaven0"; //This is a list of current dialog statuses, an
 currentScene = "WorldScene"; //keeps track of the current scene to go back to 
 canEscape = true; //boss fights cannot escape
 bossBattleVictory = true; //won a boss battle or not, false means that failed and need to repeat
+AnneJoined = false;
 
 
 var BootScene = new Phaser.Class({
@@ -49,6 +50,7 @@ var BootScene = new Phaser.Class({
         this.load.image('crawlersprite', 'assets/sprites/Crawler.png');
         this.load.image('flyersprite', 'assets/sprites/Flyer.png');
         this.load.image('colossussprite', 'assets/sprites/Colossus.png');
+        this.load.image('annesprite', 'assets/sprites/Anne.png');
         
         //load menu items
         this.load.image('attack', "assets/menu/attack.png");
@@ -75,6 +77,7 @@ var BootScene = new Phaser.Class({
         // load the other char for base world, level1 extends world
         this.load.spritesheet('Alyene', 'assets/Character Design/main_chara.png', {frameWidth: 128, frameHeight: 128});
         this.load.spritesheet('Yune', 'assets/Character Design/younger.png', {frameWidth: 128, frameHeight: 128});
+        this.load.spritesheet('Anne', 'assets/Character Design/Saint.png', {frameWidth: 128, frameHeight: 128});
 
         //load the enemies
         this.load.spritesheet('LostSoul', 'assets/enemies/lostsoul.png', {frameWidth: 128, frameHeight: 128});
@@ -90,6 +93,9 @@ var BootScene = new Phaser.Class({
         this.load.image('almightygod', 'assets/skills/almightygod.png');
         this.load.image('dragonskin', 'assets/skills/dragonskin.png');
         this.load.image('angelictruth', 'assets/skills/angelictruth.png');
+        this.load.image('godscale', 'assets/skills/godscale.png');
+        this.load.image('heavyarmor', 'assets/skills/heavyarmor.png');
+        this.load.image('walkingchurch', 'assets/skills/walkingchurch.png');
 
         //load a dialog box
         this.load.image('dialogbox', 'assets/dialogBox.png');
@@ -320,6 +326,30 @@ var WorldScene = new Phaser.Class({
         this.anims.create({
             key: 'defeatedyune',
             frames: this.anims.generateFrameNumbers('Yune', {frames: [32]}),
+            frameRate: 5,
+            repeat: -1
+        });
+        //yune animations
+        this.anims.create({
+            key: 'rightanne',
+            frames: this.anims.generateFrameNumbers('Anne', {frames: [8,9,10,11,12,13,14,15]}),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'leftanne',
+            frames: this.anims.generateFrameNumbers('Anne', {frames: [0,1,2,3,4,5,6,7]}),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'attackanne',
+            frames: this.anims.generateFrameNumbers('Anne', {frames: [16,17,18,19,20,21,22,23]}),
+            frameRate: 5,
+        });
+        this.anims.create({
+            key: 'defeatedanne',
+            frames: this.anims.generateFrameNumbers('Anne', {frames: [32]}),
             frameRate: 5,
             repeat: -1
         });
@@ -627,10 +657,16 @@ var WorldScene = new Phaser.Class({
             this.scene.run('DialogScene');
         }
         else if (currentDialogStatus === "heaven2"){
-            this.scene.pause('WorldScene');
+            this.scene.pause(currentScene);
             this.scene.run('DialogScene');
         }
-        this.scene.pause('WorldScene');
+
+        else if (currentDialogStatus === "earth1"){
+            this.scene.pause(currentScene);
+            this.scene.run('DialogScene');
+        }
+
+        this.scene.pause(currentScene);
         this.scene.run('DialogScene');
         
 
@@ -688,7 +724,7 @@ var WorldScene = new Phaser.Class({
             IncognitoSkills2 = new unitSkills("Dragon Skin", "Negates the effects of all non-damaging status effects. Nullifies poison damage", "dragonskin");
             IncognitoSkills3 = new unitSkills("Angelic Truth", "Halves attack damage received", "angelictruth");
             IncognitoSkillArray = [IncognitoSkills1, IncognitoSkills2, IncognitoSkills3];
-            IncognitoStats = new unitStats(100, 110, 22, 8, 9, 150, 120); //this is Alyene's current stats
+            IncognitoStats = new unitStats(1, 110, 22, 8, 9, 150, 120); //this is Alyene's current stats
             IncognitoAnimations = ['idleincognito', 'idleincognito','attackincognito','defeatedincognito'];
             IncognitoBattleSkills1 = new unitBattleSkills("Mass Toxic", "inflicts poison and deals damage", 5, "magic", "single", "masstoxic");
             IncognitoBattleSkills2 = new unitBattleSkills("Toxic", "inflicts poison and deals damage", 5, "magic", "single", "toxic");
@@ -705,12 +741,14 @@ var WorldScene = new Phaser.Class({
         }
 
         else if (npc.texture.key === "Colossus"){
+            
             canEscape = false;
             currentDialogStatus = "earth1";
             this.reena.y += 20;
             this.reena.body.setVelocity(0,0);
 
-            ColossusSkillArray = [];
+            ColossusSkills1 = new unitSkills("Heavy Armor", "Drastically reduces physical damage received. Nullifies poison damage", "heavyarmor");
+            ColossusSkillArray = [ColossusSkills1];
             ColossusStats = new unitStats(250, 110, 66, 30, 10, 12, 13);
             ColossusAnimations = ['idlecolossus', 'idlecolossus', "attackcolossus", 'defeatedcolossus'];
             ColossusBattleSkills1 = new unitBattleSkills("Snipe", "inflicts paralysis and magic damage", 5, "magic", "single", "snipe");
@@ -720,10 +758,31 @@ var WorldScene = new Phaser.Class({
             enemies.push(Colossus);
             this.cameras.main.shake(300);
             this.input.stopPropagation();
+            if (AnneJoined === false){
+            AnneJoined = true;
+            unitAnneSkills1 = new unitSkills("Walking Church", "Nullifies physical damage", "walkingchurch");
+            unitAnneSkillArray = [unitAnneSkills1]; //an array with the two beginning skills
+            unitAnneStats = new unitStats(35, 30, 25, 20, 38, 2, 11); //this is Anne's current stats
+            anneAnimations = ['leftanne', 'rightanne', 'attackanne', 'defeatedanne'];
+            //create a new unit information that stores all of Reena's information 
+            unitAnneBattleSkills1 = new unitBattleSkills("Prayer", "Recovers HP for one target.", 5, "heal", "single", "spiritbreak");
+            //unitReenaBattleSkills3 = new unitBattleSkills("Chaos", "inflicts paralysis and deals damage", 5, "magic", "single", "chaos");
+            //unitReenaBattleSkills4 = new unitBattleSkills("Pure Chaos", "inflicts attack down effect to all opponents", 5, "magic", "single", "purechaos");
+            unitAnneBattleSkillArray = [unitAnneBattleSkills1];
+    
+            //create a new unit information that stores all of Reena's information 
+            unitAnne = new unitInformation(null, "Anne", anneAnimations, "annesprite", unitAnneSkillArray, unitAnneStats, null, unitAnneBattleSkillArray, 13); 
+            players.push(unitAnne);
+            playersCopy.push(unitAnne);
+            num_of_players = 3; //gain Yune as an ally and update skills
+            }
 
-            this.scene.switch("BattleScene");
+            this.scene.pause(currentScene);
+            this.scene.run('DialogScene');
+            //this.scene.switch("BattleScene");
         }
-
+        this.scene.pause(currentScene);
+        this.scene.run('DialogScene');
 
 
         
@@ -1667,6 +1726,8 @@ var DialogScene = new Phaser.Class({
         "But what about big sis Alyene? Will she be alright?", "Silly little sister, Alyene would be fine, these things are no match for her, she is the leader of the heavenly army!", "Ok then big sis, let's find out what exactly is going on...", 
         "Alright here we go, we are going to use Medallion's power to travel to the other realm.", null];
         this.convoNames2 = ["Yune", "Reena", "Yune", "Reena", "Yune", "Reena","Yune", "Reena", "Yune", "Alyene",null];
+        this.convo3 = ["Watch out! Don't approach that thing!", "Huh? Who are you... a human who can see us?", "My name is Anne, but there is no more time, you've just activated a Colossus, we need to destroy it!", null];
+        this.convoNames3 = ["???", "Reena", "Anne", null];
 
             //click anywhere
         this.input.on("pointerdown", ()=>{
@@ -1712,14 +1773,26 @@ var DialogScene = new Phaser.Class({
                 this.convoName.text = this.convoNames2[this.currentIndex];
                 if (this.convo2[this.currentIndex] === null){
                     this.currentIndex = -1;
-                    currentDialogStatus = "earth1";
                     this.scene.stop('DialogScene');
                     this.scene.switch('World2');
                 }
             }
-        })
-        
 
+            else if (currentDialogStatus === "earth1"){
+                
+                this.currentIndex++;
+                this.convoText.text = this.convo3[this.currentIndex];
+                this.convoName.text = this.convoNames3[this.currentIndex];
+                if (this.convo3[this.currentIndex] === null){
+                    this.currentIndex = -1; //resest the index and trigger the event
+                    //this.scene.switch('WorldScene');
+                    this.scene.resume(currentScene);
+                    this.scene.stop('DialogScene');
+                    //this.scene.start('BattleScene');
+                    this.scene.get(currentScene).startBattle();
+                }
+            }
+        })
     },
 
 
@@ -1909,8 +1982,8 @@ var World1 = new Phaser.Class({
             // parameters are x, y, width, height
             this.spawns.create(x, y, 30, 30);            
         }        
-        // add collider
-        this.physics.add.collider(this.reena, this.spawns, this.onMeetEnemy, false, this);
+        // add collider lostsoul
+        //this.physics.add.collider(this.reena, this.spawns, this.onMeetEnemy, false, this);
 
         //Incognito NPC
         this.incognito = this.physics.add.sprite(2560-128-64, 2560-128-64, 'Incognito', 6).setImmovable();
@@ -1929,20 +2002,20 @@ var World1 = new Phaser.Class({
         // Horizontal movement
         if (this.cursors.left.isDown)
         {
-            this.reena.body.setVelocityX(-550);
+            this.reena.body.setVelocityX(-1550);
         }
         else if (this.cursors.right.isDown)
         {
-            this.reena.body.setVelocityX(550);
+            this.reena.body.setVelocityX(1550);
         }
         // Vertical movement
         if (this.cursors.up.isDown)
         {
-            this.reena.body.setVelocityY(-550);
+            this.reena.body.setVelocityY(-1550);
         }
         else if (this.cursors.down.isDown)
         {
-            this.reena.body.setVelocityY(550);
+            this.reena.body.setVelocityY(1550);
         }        
 
         // Update the animation last and give left/right animations precedence over up/down animations
@@ -2008,7 +2081,7 @@ var World2 = new Phaser.Class({
         
                 //conversations array;
         
-        
+                battlescenemap = "earth";
                 
                 //  animation with key 'left', we don't need left and right as we will use one and flip the sprite
                 this.anims.create({
@@ -2133,8 +2206,8 @@ var World2 = new Phaser.Class({
             // parameters are x, y, width, height
             this.spawns.create(x, y, 30, 30);            
         }        
-        // add collider
-        this.physics.add.collider(this.reena, this.spawns, this.onMeetEnemy, false, this);
+        // add collider robot
+        //this.physics.add.collider(this.reena, this.spawns, this.onMeetEnemy, false, this);
 
         //Incognito NPC
         this.colossus= this.physics.add.sprite(3200-64, 500, 'Colossus', 6).setImmovable();
@@ -2153,20 +2226,20 @@ var World2 = new Phaser.Class({
         // Horizontal movement
         if (this.cursors.left.isDown)
         {
-            this.reena.body.setVelocityX(-550);
+            this.reena.body.setVelocityX(-1550);
         }
         else if (this.cursors.right.isDown)
         {
-            this.reena.body.setVelocityX(550);
+            this.reena.body.setVelocityX(1550);
         }
         // Vertical movement
         if (this.cursors.up.isDown)
         {
-            this.reena.body.setVelocityY(-550);
+            this.reena.body.setVelocityY(-1550);
         }
         else if (this.cursors.down.isDown)
         {
-            this.reena.body.setVelocityY(550);
+            this.reena.body.setVelocityY(1550);
         }        
 
         // Update the animation last and give left/right animations precedence over up/down animations

@@ -15,20 +15,10 @@ var BattleScene = new Phaser.Class({
 	create: function () {
 		// change the background to green
 		// create the map according to the battle scene (if statements)
-
 		menus = ['attack', 'guard', 'skill', 'items', 'skip', 'escape'];
 		menuBackup = []
 		textTurn = ""; //keeps track of the text
 		this.messagebox = null;
-		if (battlescenemap === "heaven") {
-			var level0 = this.make.tilemap({
-				key: 'level0'
-			});
-			var tiles = level0.addTilesetImage('Mapset', 'tiles');
-			// creating the layers
-			this.traverse = level0.createStaticLayer('traverse', tiles, 0, 0);
-			this.blocked = level0.createStaticLayer('blocked', tiles, 0, 0);
-        }
 
 		this.startBattle();
 		// on wake event we call startBattle too
@@ -37,6 +27,27 @@ var BattleScene = new Phaser.Class({
 
 
 	startBattle: function () {
+		if (battlescenemap === "heaven") {
+			this.level = this.make.tilemap({
+				key: 'level0'
+			});
+			this.tiles = this.level.addTilesetImage('Mapset', 'tiles');
+			// creating the layers
+			this.traverse = this.level.createStaticLayer('traverse', this.tiles, 0, 0);
+			this.blocked = this.level.createStaticLayer('blocked', this.tiles, 0, 0);
+		}
+		
+		else if (battlescenemap === "earth") {
+			// create the map
+            this.level = this.make.tilemap({ key: 'level2' });
+                
+            // first parameter is the name of the tilemap in tiled
+            this.tiles = this.level.addTilesetImage('Mapset', 'tiles');
+                
+            // creating the layers
+            this.traverse = this.level.createStaticLayer('traverse', this.tiles, 0, 0);
+            this.blocked = this.level.createStaticLayer('blocked', this.tiles, 0, 0);
+		}
         // player character - warrior
 		this.heroes = [];
 		this.enemiesArray = [];
@@ -306,8 +317,8 @@ var BattleScene = new Phaser.Class({
 		partyWipeCounter === this.heroes.length && enemies[0].unitName === "Colossus"){
             bossBattleVictory = false;
 		}
-		else if (partyWipeCounter != this.heroes.length && enemies[0].name === "???" ||
-		partyWipeCounter != this.heroes.length && enemies[0].name === "Colossus"){
+		else if (partyWipeCounter != this.heroes.length && enemies[0].unitName === "???" ||
+		partyWipeCounter != this.heroes.length && enemies[0].unitName === "Colossus"){
 			bossBattleVictory = true;
 		}
 
@@ -368,9 +379,9 @@ var BattleScene = new Phaser.Class({
 			// link item
 			this.units[i].destroy();
 		}
-        this.units.length = 0;
+		this.units.length = 0;
+		this.level.destroy();
         
-
 		// sleep the UI
 		//this.scene.sleep('UIScene');
 		this.scene.get('UIScene').scene.stop('UIScene');
@@ -382,6 +393,10 @@ var BattleScene = new Phaser.Class({
             this.scene.get(currentScene).continueDialog();
 		}
 		else if(currentDialogStatus === "heaven2" && bossBattleVictory === true){
+			this.scene.switch(currentScene);
+			this.scene.get(currentScene).continueDialog();
+		}
+		else if(currentDialogStatus === "earth1" && bossBattleVictory === true){
 			this.scene.switch(currentScene);
 			this.scene.get(currentScene).continueDialog();
 		}
@@ -1899,6 +1914,9 @@ var UIScene = new Phaser.Class({
 				if (target.unitSkills[i].skillName === "Angelic Truth") {
 					damagedelt = Math.floor(damagedelt / 2);
 				}
+				if (target.unitSkills[i].skillName === "Walking Church"){
+					damagedelt = 0;
+				}
             }
             
             //check for skills for damage BUFF
@@ -2696,17 +2714,17 @@ var UIScene = new Phaser.Class({
 		if (skillName === "Light" || skillName === "Prayer" || skillName === "God's Voice" ||
 			skillName === "Encore" || skillName === "God's Benevolence") {
 			var currentHP = target.unitStats.hp; //get the current HP 
-			target.unitStats.hp = target.unitStats.hp + damagehealed;
-			if (target.living === false && damagehealed > 0){
-				target.living = true; //can revive
-				target.anims.play(target.unitAnimations[0], true);
+			if (target.living === false){
+				damagehealed = 0;
 			}
+			target.unitStats.hp = target.unitStats.hp + damagehealed;
+
 			if (target.unitStats.hp > target.unitStats.maxHP) {
 				target.unitStats.hp = target.unitStats.maxHP;
 				damagehealed = target.unitStats.maxHP - currentHP;
 			}
 			for (var i = 0; i < players.length; i++) {
-				if (target.unitName === players.unitName) {
+				if (target.unitName === players[i].unitName) {
 					this.damageHealedArray[i] = damagehealed;
 				}
 			}
@@ -2721,11 +2739,11 @@ var UIScene = new Phaser.Class({
 				for (var i = 0; i < enemies.length; i++) {
 					var currentHP = enemies[i].unitStats.hp; //get the current HP 
 					enemies[i].unitStatus = null;
-					enemies[i].unitStats.hp = enemies[i].unitStats.hp + damagehealed;
-					if (enemies[i].living === false && damagehealed > 0){
-						enemies[i].living = true;
-						enemies[i].anims.play(enemies[i].unitAnimations[0], true);
+					if (enemies[i].living === false){
+						damagehealed = 0;
 					}
+					enemies[i].unitStats.hp = enemies[i].unitStats.hp + damagehealed;
+
 					if (enemies[i].unitStats.hp > enemies[i].unitStats.maxHP) {
 						enemies[i].unitStats.hp = enemies[i].unitStats.maxHP;
 						damagehealed2 = enemies[i].unitStats.maxHP - currentHP;
@@ -4857,6 +4875,10 @@ class HealthBar {
 
 	increase(amount) {
 		this.value += amount;
+
+		if (this.value >= this.maxHP){
+			this.value = this.maxHP;
+		}
 		this.draw();
 	}
 
