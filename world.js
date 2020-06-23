@@ -35,6 +35,7 @@ var BootScene = new Phaser.Class({
         this.load.tilemapTiledJSON('level0', 'assets/map/level0.json');
         this.load.tilemapTiledJSON('level1', 'assets/map/level1.json');
         this.load.tilemapTiledJSON('level2', 'assets/map/level2.json');
+        this.load.tilemapTiledJSON('level3', 'assets/map/level3.json');
         
         // enemies
         this.load.image("dragonblue", "assets/dragonblue.png");
@@ -662,6 +663,7 @@ var WorldScene = new Phaser.Class({
         }
 
         else if (currentDialogStatus === "earth1"){
+            currentDialogStatus = "earth1extra"
             this.scene.pause(currentScene);
             this.scene.run('DialogScene');
         }
@@ -724,7 +726,7 @@ var WorldScene = new Phaser.Class({
             IncognitoSkills2 = new unitSkills("Dragon Skin", "Negates the effects of all non-damaging status effects. Nullifies poison damage", "dragonskin");
             IncognitoSkills3 = new unitSkills("Angelic Truth", "Halves attack damage received", "angelictruth");
             IncognitoSkillArray = [IncognitoSkills1, IncognitoSkills2, IncognitoSkills3];
-            IncognitoStats = new unitStats(1, 110, 22, 8, 9, 150, 120); //this is Alyene's current stats
+            IncognitoStats = new unitStats(10, 110, 22, 8, 9, 150, 120); //this is Alyene's current stats
             IncognitoAnimations = ['idleincognito', 'idleincognito','attackincognito','defeatedincognito'];
             IncognitoBattleSkills1 = new unitBattleSkills("Mass Toxic", "inflicts poison and deals damage", 5, "magic", "single", "masstoxic");
             IncognitoBattleSkills2 = new unitBattleSkills("Toxic", "inflicts poison and deals damage", 5, "magic", "single", "toxic");
@@ -749,7 +751,7 @@ var WorldScene = new Phaser.Class({
 
             ColossusSkills1 = new unitSkills("Heavy Armor", "Drastically reduces physical damage received. Nullifies poison damage", "heavyarmor");
             ColossusSkillArray = [ColossusSkills1];
-            ColossusStats = new unitStats(250, 110, 66, 30, 10, 12, 13);
+            ColossusStats = new unitStats(25, 110, 66, 30, 10, 12, 13);
             ColossusAnimations = ['idlecolossus', 'idlecolossus', "attackcolossus", 'defeatedcolossus'];
             ColossusBattleSkills1 = new unitBattleSkills("Snipe", "inflicts paralysis and magic damage", 5, "magic", "single", "snipe");
             ColossusBattleSkillArray = [ColossusBattleSkills1];
@@ -1728,6 +1730,8 @@ var DialogScene = new Phaser.Class({
         this.convoNames2 = ["Yune", "Reena", "Yune", "Reena", "Yune", "Reena","Yune", "Reena", "Yune", "Alyene",null];
         this.convo3 = ["Watch out! Don't approach that thing!", "Huh? Who are you... a human who can see us?", "My name is Anne, but there is no more time, you've just activated a Colossus, we need to destroy it!", null];
         this.convoNames3 = ["???", "Reena", "Anne", null];
+        this.convo4 = ["test", null];
+        this.convoNames4 = ["Reena", null];
 
             //click anywhere
         this.input.on("pointerdown", ()=>{
@@ -1779,7 +1783,6 @@ var DialogScene = new Phaser.Class({
             }
 
             else if (currentDialogStatus === "earth1"){
-                
                 this.currentIndex++;
                 this.convoText.text = this.convo3[this.currentIndex];
                 this.convoName.text = this.convoNames3[this.currentIndex];
@@ -1792,6 +1795,20 @@ var DialogScene = new Phaser.Class({
                     this.scene.get(currentScene).startBattle();
                 }
             }
+
+            else if (currentDialogStatus === "earth1extra"){
+                this.currentIndex++;
+                this.convoText.text = this.convo4[this.currentIndex];
+                this.convoName.text = this.convoNames4[this.currentIndex];
+                if (this.convo4[this.currentIndex] === null){
+                    currentDialogStatus = "earth2";
+                    this.currentIndex = -1;
+                    this.scene.stop('DialogScene');
+                    this.scene.switch('World3');
+                }
+            }
+
+
         })
     },
 
@@ -2214,6 +2231,230 @@ var World2 = new Phaser.Class({
         this.colossus.anims.play('idlecolossus', true);
         npcs.push(this.colossus);
         this.physics.add.collider(this.reena, this.colossus, this.onNpcDialog, false, this).name = "Colossuscollider";
+        
+        // we listen for 'wake' event
+        this.sys.events.on('wake', this.wake, this);
+    },
+    
+    update: function (time, delta)
+    {             
+        this.reena.body.setVelocity(0);
+        
+        // Horizontal movement
+        if (this.cursors.left.isDown)
+        {
+            this.reena.body.setVelocityX(-1550);
+        }
+        else if (this.cursors.right.isDown)
+        {
+            this.reena.body.setVelocityX(1550);
+        }
+        // Vertical movement
+        if (this.cursors.up.isDown)
+        {
+            this.reena.body.setVelocityY(-1550);
+        }
+        else if (this.cursors.down.isDown)
+        {
+            this.reena.body.setVelocityY(1550);
+        }        
+
+        // Update the animation last and give left/right animations precedence over up/down animations
+        if (this.cursors.left.isDown)
+        {
+            this.reena.anims.play('left', true);
+            //this.reena.flipX = true;
+        }
+        else if (this.cursors.right.isDown)
+        {
+            this.reena.anims.play('right', true);
+            this.reena.flipX = false;
+        }
+        else if (this.cursors.up.isDown)
+        {
+            this.reena.anims.play('up', true);
+        }
+        else if (this.cursors.down.isDown)
+        {
+            this.reena.anims.play('down', true);
+        }
+        else
+        {
+            //this.reena.anims.stop();
+            this.reena.body.setVelocity(0);
+        }
+    }
+});
+
+var World3 = new Phaser.Class({
+    Extends: WorldScene,
+
+    initialize:
+
+    function World3 ()
+    {
+        Phaser.Scene.call(this, { key: 'World3' });
+    },
+    
+    create: function(){
+        var level3 = this.make.tilemap({
+            key: 'level3'
+        });
+                //keep an array of all the npcs on this map 
+                var npcs = [];
+
+                // create the map
+                var level3 = this.make.tilemap({ key: 'level3' });
+                
+                // first parameter is the name of the tilemap in tiled
+                var tiles = level3.addTilesetImage('Mapset2', 'tiles');
+                
+                // creating the layers
+                var traverse = level3.createStaticLayer('traverse', tiles, 0, 0);
+                var blocked = level3.createStaticLayer('blocked', tiles, 0, 0);
+                
+                // make all tiles in obstacles collidable
+                blocked.setCollisionByExclusion([-1]);
+        
+                //list of global attributes that the current player has 
+        
+                var animations = []; //a string of animations being stored 
+        
+                //conversations array;
+        
+                battlescenemap = "earth";
+                
+                //  animation with key 'left', we don't need left and right as we will use one and flip the sprite
+                this.anims.create({
+                    key: 'left',
+                    frames: this.anims.generateFrameNumbers('Reena', { frames: [8,9,10,11,12,13,14,15]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+                
+                // animation with key 'right'
+                this.anims.create({
+                    key: 'right',
+                    frames: this.anims.generateFrameNumbers('Reena', { frames: [0,1,2,3,4,5,6,7] }),
+                    frameRate: 5,
+                    repeat: -1
+                });
+                this.anims.create({
+                    key: 'up',
+                    frames: this.anims.generateFrameNumbers('Reena', { frames: [8,9,10,11,12,13,14,15]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+                this.anims.create({
+                    key: 'down',
+                    frames: this.anims.generateFrameNumbers('Reena', { frames: [0,1,2,3,4,5,6,7] }),
+                    frameRate: 5,
+                    repeat: -1
+                });     
+        
+                this.anims.create({
+                    key: 'attack',
+                    frames: this.anims.generateFrameNumbers('Reena', { frames: [24,25,26,27,28,29,30,31] }),
+                    frameRate: 5,
+                });
+                
+                this.anims.create({
+                    key: 'defeated',
+                    frames: this.anims.generateFrameNumbers('Reena', {frames: [32]}),
+                    frameRate: 1,
+                    repeat: -1
+                })
+        
+                //alyene animations
+                this.anims.create({
+                    key: 'rightalyene',
+                    frames: this.anims.generateFrameNumbers('Alyene', { frames: [8,9,10,11,12,13,14,15]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+                this.anims.create({
+                    key: 'leftalyene',
+                    frames: this.anims.generateFrameNumbers('Alyene', { frames: [0,1,2,3,4,5,6,7]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+                this.anims.create({
+                    key: 'attackalyene',
+                    frames: this.anims.generateFrameNumbers('Alyene', { frames: [24,25,26,27,28,29,30,31]}),
+                    frameRate: 5,
+                });
+                this.anims.create({
+                    key: 'defeatedalyene',
+                    frames: this.anims.generateFrameNumbers('Alyene', { frames: [33]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+        
+                //yune animations
+                this.anims.create({
+                    key: 'rightyune',
+                    frames: this.anims.generateFrameNumbers('Yune', {frames: [8,9,10,11,12,13,14,15]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+                this.anims.create({
+                    key: 'leftyune',
+                    frames: this.anims.generateFrameNumbers('Yune', {frames: [0,1,2,3,4,5,6,7]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+        
+                // our player sprite created through the phycis system
+                this.reena = this.physics.add.sprite(128+64, 8768, 'Reena', 6);
+                
+                // don't go out of the map
+                this.physics.world.bounds.width = level3.widthInPixels;
+                this.physics.world.bounds.height = level3.heightInPixels;
+                this.reena.setCollideWorldBounds(true);
+                
+                // don't walk on trees
+                this.physics.add.collider(this.reena, blocked);
+        
+                // limit camera to map
+                this.cameras.main.setBounds(0, 0, level3.widthInPixels, level3.heightInPixels);
+                this.cameras.main.startFollow(this.reena);
+                this.cameras.main.roundPixels = true; // avoid tile bleed
+
+                        // user input
+        //this.cursors = this.input.keyboard.createCursorKeys();
+        this.cursors = this.input.keyboard.addKeys({
+            up: 'W',
+            down: 'S',
+            left: 'A',
+            right: 'D'
+        });  // keys.up, keys.down, keys.left, keys.right
+
+
+        this.input.keyboard.on('keydown_F', ()=>{
+            this.scene.switch("PartyMembersScene");
+        });
+
+        this.input.keyboard.on('keydown_G', ()=>{
+            this.scene.switch("SkillScene");
+        });
+
+        currentScene = "World3";
+        // where the enemies will be
+        this.spawns = this.physics.add.group({ classType: Phaser.GameObjects.Zone });
+        for(var i = 0; i < 25; i++) {
+            var x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
+            var y = Phaser.Math.RND.between(0, this.physics.world.bounds.height);
+            // parameters are x, y, width, height
+            this.spawns.create(x, y, 30, 30);            
+        }        
+        // add collider robot
+        //this.physics.add.collider(this.reena, this.spawns, this.onMeetEnemy, false, this);
+
+        //Incognito NPC
+        //this.colossus= this.physics.add.sprite(3200-64, 500, 'Colossus', 6).setImmovable();
+        //this.colossus.anims.play('idlecolossus', true);
+        //npcs.push(this.colossus);
+        //this.physics.add.collider(this.reena, this.colossus, this.onNpcDialog, false, this).name = "Colossuscollider";
         
         // we listen for 'wake' event
         this.sys.events.on('wake', this.wake, this);
