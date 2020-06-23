@@ -17,6 +17,7 @@ var config = {
         World1,
         World2,
         World3,
+        World4,
         BattleScene,
         UIScene,
         PartyMembersScene,

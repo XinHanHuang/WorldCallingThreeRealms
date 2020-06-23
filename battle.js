@@ -48,6 +48,13 @@ var BattleScene = new Phaser.Class({
             this.traverse = this.level.createStaticLayer('traverse', this.tiles, 0, 0);
             this.blocked = this.level.createStaticLayer('blocked', this.tiles, 0, 0);
 		}
+
+		else if (battlescenemap === "earthDestroyed"){
+			this.level = this.make.tilemap({key: 'level3'});
+			this.tiles = this.level.addTilesetImage('Mapset2', 'tiles');
+			this.traverse = this.level.createStaticLayer('traverse', this.tiles, 0, 0);
+			this.blocked = this.level.createStaticLayer('blocked', this.tiles, 0, 0);
+		}
         // player character - warrior
 		this.heroes = [];
 		this.enemiesArray = [];
@@ -160,6 +167,19 @@ var BattleScene = new Phaser.Class({
 				this.scene.get('UIScene').battle(this.units[this.index].playerInformation, this.heroes[r].playerInformation, "skill", "Spirit Shackle", false);
 			}
 			else if (currentEnemy.playerInformation.unitName === "Colossus"){
+				var r;
+				do {
+					r = Math.floor(Math.random() * this.heroes.length);
+				} while (!this.heroes[r].living)
+				skillOrAttack = Phaser.Math.RND.between(0, 20);
+				if (skillOrAttack < 10){
+					this.scene.get('UIScene').battle(this.units[this.index].playerInformation, this.heroes[r].playerInformation, "skill", "Snipe", false);
+				}
+				else{
+					this.scene.get('UIScene').battle(this.units[this.index].playerInformation, this.heroes[r].playerInformation, "attack", null, false);
+				}
+			}
+			else if (currentEnemy.playerInformation.unitName === "Soldier"){
 				var r;
 				do {
 					r = Math.floor(Math.random() * this.heroes.length);
@@ -314,13 +334,16 @@ var BattleScene = new Phaser.Class({
         }
 
 		if (partyWipeCounter === this.heroes.length && enemies[0].unitName === "???" ||
-		partyWipeCounter === this.heroes.length && enemies[0].unitName === "Colossus"){
+		partyWipeCounter === this.heroes.length && enemies[0].unitName === "Colossus"||
+		partyWipeCounter === this.heroes.length && enemies[0].unitName === "Soldier"){
             bossBattleVictory = false;
 		}
 		else if (partyWipeCounter != this.heroes.length && enemies[0].unitName === "???" ||
-		partyWipeCounter != this.heroes.length && enemies[0].unitName === "Colossus"){
+		partyWipeCounter != this.heroes.length && enemies[0].unitName === "Colossus" ||
+		partyWipeCounter != this.heroes.length && enemies[0].unitName === "Soldier"){
 			bossBattleVictory = true;
 		}
+		
 
 
 
@@ -386,7 +409,6 @@ var BattleScene = new Phaser.Class({
 		//this.scene.sleep('UIScene');
 		this.scene.get('UIScene').scene.stop('UIScene');
         this.destroyMessageBox();
-
         if(currentDialogStatus === "heaven1" && bossBattleVictory === true){
             //HERE, CREATE ADDITIONAL DIALOG SITUATIONS FOR SPECIAL BATTLES USING CURRENT DIALOG STATUS
             this.scene.switch(currentScene);
@@ -397,6 +419,10 @@ var BattleScene = new Phaser.Class({
 			this.scene.get(currentScene).continueDialog();
 		}
 		else if(currentDialogStatus === "earth1" && bossBattleVictory === true){
+			this.scene.switch(currentScene);
+			this.scene.get(currentScene).continueDialog();
+		}
+		else if(currentDialogStatus === "earth2extra" && bossBattleVictory === true){
 			this.scene.switch(currentScene);
 			this.scene.get(currentScene).continueDialog();
 		}
@@ -1917,13 +1943,22 @@ var UIScene = new Phaser.Class({
 				if (target.unitSkills[i].skillName === "Walking Church"){
 					damagedelt = 0;
 				}
+				if (target.unitSkills[i].skillName === "Devilbound"){
+					damagedelt = Math.floor(damagedelt * 1.25);
+				}
             }
             
             //check for skills for damage BUFF
             for (var i = 0; i < player.unitSkills.length; i++){
                 if (player.unitSkills[i].skillName === "Rightful God"){
                     damagedelt = Math.floor(damagedelt * 1.1);
-                }
+				}
+				if (player.unitSkills[i].skillName === "Fury"){
+					damagedelt = Math.floor(damagedelt * 1.1);
+				}
+				if (player.unitSkills[i].skillName === "Devilbound"){
+					damagedelt = Math.floor(damagedelt * 1.25);
+				}
             }
 
 
@@ -1949,7 +1984,10 @@ var UIScene = new Phaser.Class({
             for (var i = 0; i < player.unitSkills.length; i++){
                 if (player.unitSkills[i].skillName === "Cloud Nine"){
                     criticalChance = Math.floor(criticalChance * 1.05);
-                }
+				}
+				if (player.unitSkills[i].skillName === "Hawkeye"){
+					criticalChance = Math.floor(criticalChance * 1.25);
+				}
             }
 
 			var randomNumber = Math.floor(Math.random() * 100) + 1; //1-100random
