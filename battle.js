@@ -353,13 +353,13 @@ var BattleScene = new Phaser.Class({
 		if (partyWipeCounter === this.heroes.length && enemies[0].unitName === "???" ||
 		partyWipeCounter === this.heroes.length && enemies[0].unitName === "Colossus"||
 		partyWipeCounter === this.heroes.length && enemies[0].unitName === "Soldier" ||
-		partyWipeCounter === this.heroes.length && enemies[0].unitName === "Android"){
+		partyWipeCounter === this.heroes.length && enemies[0].unitName.split(" ")[0] === "Android"){
             bossBattleVictory = false;
 		}
 		else if (partyWipeCounter != this.heroes.length && enemies[0].unitName === "???" ||
 		partyWipeCounter != this.heroes.length && enemies[0].unitName === "Colossus" ||
 		partyWipeCounter != this.heroes.length && enemies[0].unitName === "Soldier" ||
-		partyWipeCounter != this.heroes.length && enemies[0].unitName === "Android"){
+		partyWipeCounter != this.heroes.length && enemies[0].unitName.split(" ")[0] === "Android"){
 			bossBattleVictory = true;
 		}
 		
@@ -1986,7 +1986,7 @@ var UIScene = new Phaser.Class({
 				if (player.unitSkills[i].skillName === "Devilbound"){
 					damagedelt = Math.floor(damagedelt * 1.25);
 				}
-				if (target.unitSkills[i].skillName === "Overdrive"){
+				if (player.unitSkills[i].skillName === "Overdrive"){
 					damagedelt = Math.floor(damagedelt * 1.25);
 				}
             }

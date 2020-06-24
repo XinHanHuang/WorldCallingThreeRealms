@@ -829,6 +829,9 @@ var WorldScene = new Phaser.Class({
 
             this.scene.pause(currentScene);
             this.scene.run('DialogScene');
+
+            this.scene.pause(currentScene);
+            this.scene.run('DialogScene');
         }
 
         else if (npc.texture.key === "Incognito"){
@@ -930,11 +933,12 @@ var WorldScene = new Phaser.Class({
             this.scene.pause(currentScene);
             this.scene.run('DialogScene');
             //this.scene.switch("BattleScene");
+            this.scene.pause(currentScene);
+            this.scene.run('DialogScene');
         }
 
 
-        this.scene.pause(currentScene);
-        this.scene.run('DialogScene');
+
 
 
         
@@ -3059,7 +3063,7 @@ var World5 = new Phaser.Class({
                 });
         
                 // our player sprite created through the phycis system
-                this.reena = this.physics.add.sprite(128+64, 8768, 'Reena', 6);
+                this.reena = this.physics.add.sprite(3840/2, 3840 - 128, 'Reena', 6);
                 
                 // don't go out of the map
                 this.physics.world.bounds.width = level5.widthInPixels;
