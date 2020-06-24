@@ -193,6 +193,23 @@ var BattleScene = new Phaser.Class({
 				}
 			}
 
+			else if (currentEnemy.playerInformation.unitName.split(" ")[0] === "Android"){
+				var r;
+				do{
+					r = Math.floor(Math.random() * this.heroes.length);
+				} while (!this.heroes[r].living)
+				skillOrAttack = Phaser.Math.RND.between(0, 20);
+				if (skillOrAttack <= 5){
+					this.scene.get('UIScene').battle(this.units[this.index].playerInformation, this.heroes[r].playerInformation, "skill", "Snipe", false);
+				}
+				else if (skillOrAttack > 5 && skillOrAttack <= 10){
+					this.scene.get('UIScene').battle(this.units[this.index].playerInformation, this.heroes[r].playerInformation, "skill", "Energy Leak", false);
+				}
+				else{
+					this.scene.get('UIScene').battle(this.units[this.index].playerInformation, this.heroes[r].playerInformation, "attack", null, false);
+				}
+			}
+
 			else {
 				//Random for all other random spawns 
 				// pick random living hero to be attacked
@@ -335,12 +352,14 @@ var BattleScene = new Phaser.Class({
 
 		if (partyWipeCounter === this.heroes.length && enemies[0].unitName === "???" ||
 		partyWipeCounter === this.heroes.length && enemies[0].unitName === "Colossus"||
-		partyWipeCounter === this.heroes.length && enemies[0].unitName === "Soldier"){
+		partyWipeCounter === this.heroes.length && enemies[0].unitName === "Soldier" ||
+		partyWipeCounter === this.heroes.length && enemies[0].unitName === "Android"){
             bossBattleVictory = false;
 		}
 		else if (partyWipeCounter != this.heroes.length && enemies[0].unitName === "???" ||
 		partyWipeCounter != this.heroes.length && enemies[0].unitName === "Colossus" ||
-		partyWipeCounter != this.heroes.length && enemies[0].unitName === "Soldier"){
+		partyWipeCounter != this.heroes.length && enemies[0].unitName === "Soldier" ||
+		partyWipeCounter != this.heroes.length && enemies[0].unitName === "Android"){
 			bossBattleVictory = true;
 		}
 		
@@ -423,6 +442,10 @@ var BattleScene = new Phaser.Class({
 			this.scene.get(currentScene).continueDialog();
 		}
 		else if(currentDialogStatus === "earth2extra" && bossBattleVictory === true){
+			this.scene.switch(currentScene);
+			this.scene.get(currentScene).continueDialog();
+		}
+		else if(currentDialogStatus === "earth3" && bossBattleVictory === true){
 			this.scene.switch(currentScene);
 			this.scene.get(currentScene).continueDialog();
 		}
@@ -1946,6 +1969,10 @@ var UIScene = new Phaser.Class({
 				if (target.unitSkills[i].skillName === "Devilbound"){
 					damagedelt = Math.floor(damagedelt * 1.25);
 				}
+				if (target.unitSkills[i].skillName === "Overdrive"){
+					damagedelt = Math.floor(damagedelt * 1.5);
+				}
+				
             }
             
             //check for skills for damage BUFF
@@ -1957,6 +1984,9 @@ var UIScene = new Phaser.Class({
 					damagedelt = Math.floor(damagedelt * 1.1);
 				}
 				if (player.unitSkills[i].skillName === "Devilbound"){
+					damagedelt = Math.floor(damagedelt * 1.25);
+				}
+				if (target.unitSkills[i].skillName === "Overdrive"){
 					damagedelt = Math.floor(damagedelt * 1.25);
 				}
             }
@@ -1986,6 +2016,9 @@ var UIScene = new Phaser.Class({
                     criticalChance = Math.floor(criticalChance * 1.05);
 				}
 				if (player.unitSkills[i].skillName === "Hawkeye"){
+					criticalChance = Math.floor(criticalChance * 1.25);
+				}
+				if (player.unitSkills[i].skillName === "Overdrive"){
 					criticalChance = Math.floor(criticalChance * 1.25);
 				}
             }
@@ -2338,7 +2371,7 @@ var UIScene = new Phaser.Class({
 
 			}
 			//testing multi target
-			else if (skillName === "Pure Chaos") {
+			else if (skillName === "Pure Chaos" || skillName === "Energy Leak") {
 				multiTarget = true; //set to true
 
 				if (isPlayer === true) {

@@ -38,6 +38,7 @@ var BootScene = new Phaser.Class({
         this.load.tilemapTiledJSON('level2', 'assets/map/level2.json');
         this.load.tilemapTiledJSON('level3', 'assets/map/level3.json');
         this.load.tilemapTiledJSON('level4', 'assets/map/level4.json');
+        this.load.tilemapTiledJSON('level5', 'assets/map/level5.json');
         
         // enemies
         this.load.image("dragonblue", "assets/dragonblue.png");
@@ -58,6 +59,7 @@ var BootScene = new Phaser.Class({
         this.load.image('annesprite', 'assets/sprites/Anne.png');
         this.load.image('soldiersprite', 'assets/sprites/Soldier.png');
         this.load.image('soldierallysprite', 'assets/sprites/Soldier_Ally.png');
+        this.load.image('androidsprite', 'assets/sprites/Android.png');
         
         //load menu items
         this.load.image('attack', "assets/menu/attack.png");
@@ -93,6 +95,7 @@ var BootScene = new Phaser.Class({
         this.load.spritesheet('Crawler', 'assets/enemies/crawler.png', {frameWidth: 128, frameHeight: 128});
         this.load.spritesheet('Flyer', 'assets/enemies/flyer.png', {frameWidth: 128, frameHeight: 128});
         this.load.spritesheet('Colossus', 'assets/enemies/colossus.png', {frameWidth: 256, frameHeight: 256});
+        this.load.spritesheet('Android', 'assets/Character Design/FireGirl.png', {frameWidth: 128, frameHeight: 128});
         
 
         //load battle skills
@@ -107,6 +110,8 @@ var BootScene = new Phaser.Class({
         this.load.image('devilbound', 'assets/skills/devilbound.png');
         this.load.image('fury', 'assets/skills/fury.png');
         this.load.image('hawkeye', 'assets/skills/hawkeye.png');
+        this.load.image('eagleeye', 'assets/skills/eagleeye.png');
+        this.load.image('overdrive', 'assets/skills/overdrive.png');
 
         //load a dialog box
         this.load.image('dialogbox', 'assets/dialogBox.png');
@@ -386,10 +391,34 @@ var WorldScene = new Phaser.Class({
             key: "attackrightsoldier",
             frames: this.anims.generateFrameNumbers('Soldier', {frames: [24,25,26,27,28,29,30,31]}),
             frameRate: 5
-        })
+        });
         this.anims.create({
             key: 'defeatedsoldier',
             frames: this.anims.generateFrameNumbers('Soldier', {frames: [32]}),
+            frameRate: 5,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'rightandroid',
+            frames: this.anims.generateFrameNumbers('Android', {frames: [8,9,10,11,12,13,14,15]}),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'leftandroid',
+            frames: this.anims.generateFrameNumbers('Android', {frames: [0,1,2,3,4,5,6,7]}),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "attackandroid",
+            frames: this.anims.generateFrameNumbers('Android', {frames: [24,25,26,27,28,29,30,31]}),
+            frameRate: 5
+        });
+        this.anims.create({
+            key: 'defeatedandroid',
+            frames: this.anims.generateFrameNumbers('Android', {frames: [33]}),
             frameRate: 5,
             repeat: -1
         });
@@ -714,14 +743,19 @@ var WorldScene = new Phaser.Class({
             unitSoldierSkills3 = new unitSkills("Hawkeye", "Increases critical hit chance by 25%", "hawkeye");
             unitSoldierSkillArray = [unitSoldierSkills1, unitSoldierSkills2, unitSoldierSkills3];
             unitSoldierStats = new unitStats(43, 20, 58, 40, 12, 45, 32); //this is Alyene's current stats
-            soldierAnimations = ['rightsoldier', 'leftsoldier','attacksoldier','defeatedsoldier'];
+            soldierAnimations = ['leftsoldier', 'rightsoldier','attacksoldier','defeatedsoldier'];
             unitSoldierBattleSkills1 = new unitBattleSkills("Snipe", "inflicts paralysis and magic damage", 5, "magic", "single", "snipe");
             unitSoldierBattleSkillArray = [unitSoldierBattleSkills1];
 
-            unitSoldier = new unitInformation(this.soldier, "Soldier", soldierAnimations, "soldiersprite", unitSoldierSkillArray, unitSoldierStats, null, unitSoldierBattleSkillArray, 30);
+            unitSoldier = new unitInformation(this.soldier, "Soldier", soldierAnimations, "soldierallysprite", unitSoldierSkillArray, unitSoldierStats, null, unitSoldierBattleSkillArray, 30);
             players.push(unitSoldier);
             playersCopy.push(unitSoldier);
             num_of_players = 4;
+            this.scene.pause(currentScene);
+            this.scene.run('DialogScene');
+        }
+
+        else if (currentDialogStatus === "earth3"){
             this.scene.pause(currentScene);
             this.scene.run('DialogScene');
         }
@@ -820,6 +854,39 @@ var WorldScene = new Phaser.Class({
             this.cameras.main.shake(300);
             this.input.stopPropagation();
 
+            this.scene.switch("BattleScene");
+        }
+
+        else if (npc.texture.key === "Android"){
+            canEscape = false;
+            currentDialogScene = "earth3";
+            this.reena.y += 20;
+            this.reena.body.setVelocity(0,0);
+
+            AndroidSkills1 = new unitSkills("Overdrive", "Increase damage received by 50%. Increase damage delt and critical rate by 25%", "overdrive");
+            AndroidSkills2 = new unitSkills("Heavy Armor", "Drastically reduces physical damage received. Nullifies poison damage", "heavyarmor");
+            AndroidSkillArray = [AndroidSkills1, AndroidSkills2];
+            AndroidStats = new unitStats(1, 110, 75, 60, 50, 66, 30);
+            AndroidAnimations = ['rightandroid', 'leftandroid', 'attackingandroid', 'defeatedandroid'];
+            AndroidBattleSkills1 = new unitBattleSkills("Snipe", "inflicts paralysis and magic damage", 5, "magic", "single", "snipe");
+            AndroidBattleSkills2 = new unitBattleSkills("Energy Leak", "deals magical damage to all opponents and inflicts paralysis on all opponenets.", 20, "magic", "multiple", "energyleak");
+            AndroidBattleSkillArray = [AndroidBattleSkills1, AndroidBattleSkills2];
+            Android = new unitInformation(null, "Android Links", AndroidAnimations, "androidsprite", AndroidSkillArray, AndroidStats, null, AndroidBattleSkillArray, 50);
+            enemies.push(Android);
+
+            Android2Skills1 = new unitSkills("Overdrive", "Increase damage received by 50%. Increase damage delt and critical rate by 25%", "overdrive");
+            Android2Skills2 = new unitSkills("Heavy Armor", "Drastically reduces physical damage received. Nullifies poison damage", "heavyarmor");
+            Android2SkillArray = [Android2Skills1, Android2Skills2];
+            Android2Stats = new unitStats(1, 110, 75, 60, 50, 66, 30);
+            Android2Animations = ['rightandroid', 'leftandroid', 'attackingandroid', 'defeatedandroid'];
+            Android2BattleSkills1 = new unitBattleSkills("Snipe", "inflicts paralysis and magic damage", 5, "magic", "single", "snipe");
+            Android2BattleSkills2 = new unitBattleSkills("Energy Leak", "deals magical damage to all opponents and inflicts paralysis on all opponenets.", 20, "magic", "multiple", "energyleak");
+            Android2BattleSkillArray = [Android2BattleSkills1, Android2BattleSkills2];
+            Android2 = new unitInformation(null, "Android Richtig", Android2Animations, "androidsprite", Android2SkillArray, Android2Stats, null, Android2BattleSkillArray, 50);
+            enemies.push(Android2);
+
+            this.cameras.main.shake(300); 
+            this.input.stopPropagation();
             this.scene.switch("BattleScene");
         }
 
@@ -1813,12 +1880,27 @@ var DialogScene = new Phaser.Class({
         this.convoNames2 = ["Yune", "Reena", "Yune", "Reena", "Yune", "Reena","Yune", "Reena", "Yune", "Alyene",null];
         this.convo3 = ["Watch out! Don't approach that thing!", "Huh? Who are you... a human who can see us?", "My name is Anne, but there is no more time, you've just activated a Colossus, we need to destroy it!", null];
         this.convoNames3 = ["???", "Reena", "Anne", null];
-        this.convo4 = ["test", null];
-        this.convoNames4 = ["Reena", null];
-        this.convo5 = ["I am a soldier", null];
-        this.convoNames5 = ["Soldier", null];
-        this.convo6 = ["I am really a soldier", null];
-        this.convoNames6 = ["Soldier", null];
+        this.convo4 = ["That was dangerous, may the Engineer protect us all", "Thank you for your help, without your help we woudln't have survived. Those mechas made by humans packs such destructive power...",
+        "I wonder what happened here in the human realm of Earth? There's no sign of life anywhere... and these automated machines created to kill...", "That's important, but most importantly, who are you? Since you can see us, you don't seem very... human",
+        "Forgive me, my name is Anne, and I am indeed a goddess of this realm. I was appointed by Father as a head of the Koptus Church, to watch over this realm. But the church is no more, and our Father is nowhere to be found.",
+        "But the people in this realm, what happened to them? I don't sense any life energy around here at all...", "The place you are standing on right now used to be a country known as the United States of America. However, war and conflict has destroyed this planet. The population has been reduced to a mere fifty thousand, and yet the conflict still continues...",
+        "How could this happen? Could it be that Father has abandoned this realm? Has he abandoned all of us as well?", "I do not know. All I know is how this planet has been reduced to such a state. Should I tell you about this realm's final moments?" ,
+        "Please.", "Solar year 2032, due to the unending issue regaring racism and social injustice, tension grew within the United States. The Democratic states have launched a full on coup d'état against the Republican states.",
+        "While the country is being torn apart by a violent civil war, the United States has lost grip of its annexed countries. The annexed nations of Japan, South Korea, and Iran formed an alliance to launch a full scale invasion against the United States.",
+        "Of course, the United States has retaliated with its full force. Hundreds of millions of people have lost their lives. The war ended with Japan, South Korea, and Iran as the victors. The United States is left without a central government, and local governments ruled over their states. Of course, the internal conflicts continued.",
+        "The Eastern Alliance of China, seeing Japan's independence as a threat, launched a full invasion on Japan. The United States of Korea also launched a full scale invasion on its Southern neighbor, South Korea. This was the beginning of World War III.",
+        "War torned the planet, and it seemed never-ending. People born during this time never knew peace. There are no more smiles on anyone's faces. The state of the world now is what they called home. We are currently in Solar year 2068.", "Yet still, the fighting went on. Humans fought amongst themselves for no apparent reason. I can't do anything but watch as this realm is reduced to ashes. This realm is only a former shell of itself.",
+        "So those lost souls we saw in our realm, are the human souls who died... with no one to judge them, they wandered across realms...","I am currently on a mission to investigate the realm of Rukkr. However, dangerous man made machines have blocked my path. Perhaps we will find some answers there, perhaps Father is there, perhaps we can still save our realm.",
+        "We will help you Anne, let's go to realm of Rukkur together. Yune? It will get dangerous, but will you come with us?", "Of course sister, where you go, I will follow", "I sincerely thank you both. Now, let's get going.", null];
+        this.convoNames4 = ["Anne", "Reena", "Yune", "Reena", "Anne", "Yune", "Anne", "Reena", "Anne", "Reena", "Anne", "Anne", "Anne", "Anne", "Anne", "Anne", "Reena", "Anne",  "Reena", "Yune", "Anne" ,null];
+        this.convo5 = ["Stop right there, the three of you! How dare you all come to my turf uninvited. I'm going to slaughter you all!", "A..another human that can see us?", "Watch out! she's gonna attack!", null];
+        this.convoNames5 = ["Soldier", "Yune", "Reena", null];
+        this.convo6 = ["Calm down now, we meant no harm...", "Such power, to think there are other magic users like me... Interesting, this is the first time anyone ever stood a chance against me", "How is this human able to see us? Most importantly, the power that dwells within this girl is... not human", "It seems like this one is a descendant of a demon of Rukkr, but somehow has ended up on this realm. The demon blood that runs deep within might explain why this human can see our presence",
+        "That might explain why, I sense strong animosity in this one's energy.", "Pardon us, young one. We meant no harm. We simply wish to pass, we simply need to get to the Koptus Shrine just ahead.", "Even though I cannot believe such words, it is clear that I am no match against you bunch. I can lead the way to the temple for you. I know a thing or two about dealing with these pieces of scrap running around as well.",
+        "We will gladly take that invitation. Thank you, young one. What is your name?", "I have no parents, I have none. Just refer to me as a soldier, that's what lieutenant used to call me. But he is no longer here now. Enough talk, come on, I'll show you the way across.", null];
+        this.convoNames6 = ["Yune", "Soldier", "Reena", "Anne", "Reena", "Anne", "Soldier", "Anne", "Soldier", null];
+        this.convo7 = ["We are almost there, just a bit more", "Let's move forward!", null];
+        this.convoNames7 = ["Soldier", "Reena", null];
 
             //click anywhere
         this.input.on("pointerdown", ()=>{
@@ -1917,6 +1999,18 @@ var DialogScene = new Phaser.Class({
                     this.currentIndex = -1;
                     this.scene.stop('DialogScene');
                     this.scene.switch('World4');
+                }
+            }
+
+            else if (currentDialogStatus === "earth3"){
+                this.currentIndex++;
+                this.convoText.text = this.convo7[this.currentIndex];
+                this.convoName.text = this.convoNames7[this.currentIndex];
+                if (this.convo7[this.currentIndex] === null){
+                    currentDialogStatus = "earth4";
+                    this.currentIndex = -1;
+                    this.scene.stop('DialogScene');
+                    this.scene.switch('World5');
                 }
             }
 
@@ -2786,11 +2880,11 @@ var World4 = new Phaser.Class({
         // add collider robot
         //this.physics.add.collider(this.reena, this.spawns, this.onMeetEnemy, false, this);
 
-        //Soldier
-        //this.soldier = this.physics.add.sprite(1920, 128+64, 'Soldier', 6).setImmovable();
-        //this.soldier.anims.play('rightsoldier', true);
-        //npcs.push(this.soldier);
-        //this.physics.add.collider(this.reena, this.soldier, this.onNpcDialog, false, this).name = "Soldiercollider";
+        //Android
+        this.android = this.physics.add.sprite(1920, 128+64, 'Android', 6).setImmovable();
+        this.android.anims.play('rightandroid', true);
+        npcs.push(this.android);
+        this.physics.add.collider(this.reena, this.android, this.onNpcDialog, false, this).name = "Androidcollider";
         
         // we listen for 'wake' event
         this.sys.events.on('wake', this.wake, this);
@@ -2846,7 +2940,229 @@ var World4 = new Phaser.Class({
     }
 });
 
+var World5 = new Phaser.Class({
+    Extends: WorldScene,
 
+    initialize:
+
+    function World5 ()
+    {
+        Phaser.Scene.call(this, { key: 'World5' });
+    },
+    
+    create: function(){
+        var level5 = this.make.tilemap({
+            key: 'level5'
+        });
+                //keep an array of all the npcs on this map 
+                var npcs = [];
+
+                // create the map
+                var level5 = this.make.tilemap({ key: 'level5' });
+                
+                // first parameter is the name of the tilemap in tiled
+                var tiles = level5.addTilesetImage('Mapset2', 'tiles2');
+                
+                // creating the layers
+                var traverse = level5.createStaticLayer('traverse', tiles, 0, 0);
+                var blocked = level5.createStaticLayer('blocked', tiles, 0, 0);
+                
+                // make all tiles in obstacles collidable
+                blocked.setCollisionByExclusion([-1]);
+        
+                //list of global attributes that the current player has 
+        
+                var animations = []; //a string of animations being stored 
+        
+                //conversations array;
+        
+                battlescenemap = "earthDestroyed";
+                
+                //  animation with key 'left', we don't need left and right as we will use one and flip the sprite
+                this.anims.create({
+                    key: 'left',
+                    frames: this.anims.generateFrameNumbers('Reena', { frames: [8,9,10,11,12,13,14,15]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+                
+                // animation with key 'right'
+                this.anims.create({
+                    key: 'right',
+                    frames: this.anims.generateFrameNumbers('Reena', { frames: [0,1,2,3,4,5,6,7] }),
+                    frameRate: 5,
+                    repeat: -1
+                });
+                this.anims.create({
+                    key: 'up',
+                    frames: this.anims.generateFrameNumbers('Reena', { frames: [8,9,10,11,12,13,14,15]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+                this.anims.create({
+                    key: 'down',
+                    frames: this.anims.generateFrameNumbers('Reena', { frames: [0,1,2,3,4,5,6,7] }),
+                    frameRate: 5,
+                    repeat: -1
+                });     
+        
+                this.anims.create({
+                    key: 'attack',
+                    frames: this.anims.generateFrameNumbers('Reena', { frames: [24,25,26,27,28,29,30,31] }),
+                    frameRate: 5,
+                });
+                
+                this.anims.create({
+                    key: 'defeated',
+                    frames: this.anims.generateFrameNumbers('Reena', {frames: [32]}),
+                    frameRate: 1,
+                    repeat: -1
+                })
+        
+                //alyene animations
+                this.anims.create({
+                    key: 'rightalyene',
+                    frames: this.anims.generateFrameNumbers('Alyene', { frames: [8,9,10,11,12,13,14,15]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+                this.anims.create({
+                    key: 'leftalyene',
+                    frames: this.anims.generateFrameNumbers('Alyene', { frames: [0,1,2,3,4,5,6,7]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+                this.anims.create({
+                    key: 'attackalyene',
+                    frames: this.anims.generateFrameNumbers('Alyene', { frames: [24,25,26,27,28,29,30,31]}),
+                    frameRate: 5,
+                });
+                this.anims.create({
+                    key: 'defeatedalyene',
+                    frames: this.anims.generateFrameNumbers('Alyene', { frames: [33]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+        
+                //yune animations
+                this.anims.create({
+                    key: 'rightyune',
+                    frames: this.anims.generateFrameNumbers('Yune', {frames: [8,9,10,11,12,13,14,15]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+                this.anims.create({
+                    key: 'leftyune',
+                    frames: this.anims.generateFrameNumbers('Yune', {frames: [0,1,2,3,4,5,6,7]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+        
+                // our player sprite created through the phycis system
+                this.reena = this.physics.add.sprite(128+64, 8768, 'Reena', 6);
+                
+                // don't go out of the map
+                this.physics.world.bounds.width = level5.widthInPixels;
+                this.physics.world.bounds.height = level5.heightInPixels;
+                this.reena.setCollideWorldBounds(true);
+                
+                // don't walk on trees
+                this.physics.add.collider(this.reena, blocked);
+        
+                // limit camera to map
+                this.cameras.main.setBounds(0, 0, level5.widthInPixels, level5.heightInPixels);
+                this.cameras.main.startFollow(this.reena);
+                this.cameras.main.roundPixels = true; // avoid tile bleed
+
+                        // user input
+        //this.cursors = this.input.keyboard.createCursorKeys();
+        this.cursors = this.input.keyboard.addKeys({
+            up: 'W',
+            down: 'S',
+            left: 'A',
+            right: 'D'
+        });  // keys.up, keys.down, keys.left, keys.right
+
+
+        this.input.keyboard.on('keydown_F', ()=>{
+            this.scene.switch("PartyMembersScene");
+        });
+
+        this.input.keyboard.on('keydown_G', ()=>{
+            this.scene.switch("SkillScene");
+        });
+
+        currentScene = "World5";
+        // where the enemies will be
+        this.spawns = this.physics.add.group({ classType: Phaser.GameObjects.Zone });
+        for(var i = 0; i < 25; i++) {
+            var x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
+            var y = Phaser.Math.RND.between(0, this.physics.world.bounds.height);
+            // parameters are x, y, width, height
+            this.spawns.create(x, y, 30, 30);            
+        }        
+        // add collider robot
+        //this.physics.add.collider(this.reena, this.spawns, this.onMeetEnemy, false, this);
+
+        //Android
+        //this.android = this.physics.add.sprite(1920, 128+64, 'Android', 6).setImmovable();
+        //this.android.anims.play('rightandroid', true);
+        //npcs.push(this.android);
+        //this.physics.add.collider(this.reena, this.android, this.onNpcDialog, false, this).name = "Androidcollider";
+        
+        // we listen for 'wake' event
+        this.sys.events.on('wake', this.wake, this);
+    },
+    
+    update: function (time, delta)
+    {             
+        this.reena.body.setVelocity(0);
+        
+        // Horizontal movement
+        if (this.cursors.left.isDown)
+        {
+            this.reena.body.setVelocityX(-1550);
+        }
+        else if (this.cursors.right.isDown)
+        {
+            this.reena.body.setVelocityX(1550);
+        }
+        // Vertical movement
+        if (this.cursors.up.isDown)
+        {
+            this.reena.body.setVelocityY(-1550);
+        }
+        else if (this.cursors.down.isDown)
+        {
+            this.reena.body.setVelocityY(1550);
+        }        
+
+        // Update the animation last and give left/right animations precedence over up/down animations
+        if (this.cursors.left.isDown)
+        {
+            this.reena.anims.play('left', true);
+            //this.reena.flipX = true;
+        }
+        else if (this.cursors.right.isDown)
+        {
+            this.reena.anims.play('right', true);
+            this.reena.flipX = false;
+        }
+        else if (this.cursors.up.isDown)
+        {
+            this.reena.anims.play('up', true);
+        }
+        else if (this.cursors.down.isDown)
+        {
+            this.reena.anims.play('down', true);
+        }
+        else
+        {
+            //this.reena.anims.stop();
+            this.reena.body.setVelocity(0);
+        }
+    }
+});
 
 
 
