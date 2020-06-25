@@ -39,6 +39,7 @@ var BootScene = new Phaser.Class({
         this.load.tilemapTiledJSON('level3', 'assets/map/level3.json');
         this.load.tilemapTiledJSON('level4', 'assets/map/level4.json');
         this.load.tilemapTiledJSON('level5', 'assets/map/level5.json');
+        this.load.tilemapTiledJSON('level6', 'assets/map/level6.json');
         
         // enemies
         this.load.image("dragonblue", "assets/dragonblue.png");
@@ -60,6 +61,8 @@ var BootScene = new Phaser.Class({
         this.load.image('soldiersprite', 'assets/sprites/Soldier.png');
         this.load.image('soldierallysprite', 'assets/sprites/Soldier_Ally.png');
         this.load.image('androidsprite', 'assets/sprites/Android.png');
+        this.load.image('dusksprite', 'assets/sprites/Dusk.png');
+        this.load.image('duskallysprite', 'assets/sprites.Dusk_Ally.png');
         
         //load menu items
         this.load.image('attack', "assets/menu/attack.png");
@@ -96,6 +99,7 @@ var BootScene = new Phaser.Class({
         this.load.spritesheet('Flyer', 'assets/enemies/flyer.png', {frameWidth: 128, frameHeight: 128});
         this.load.spritesheet('Colossus', 'assets/enemies/colossus.png', {frameWidth: 256, frameHeight: 256});
         this.load.spritesheet('Android', 'assets/Character Design/FireGirl.png', {frameWidth: 128, frameHeight: 128});
+        this.load.spritesheet('Dusk', 'assets/Character Design/grimory.png', {frameWidth: 128, frameHeight: 128});
         
 
         //load battle skills
@@ -423,6 +427,41 @@ var WorldScene = new Phaser.Class({
             repeat: -1
         });
 
+        this.anims.create({
+            key: 'rightdusk',
+            frames: this.anims.generateFrameNumbers('Dusk', {frames: [8,9,10,11,12,13,14,15]}),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'leftdusk',
+            frames: this.anims.generateFrameNumbers('Dusk', {frames: [0,1,2,3,4,5,6,7]}),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "attackdusk",
+            frames: this.anims.generateFrameNumbers('Dusk', {frames: [16,17,18,19,20,21,22,23]}),
+            frameRate: 5
+        });
+        this.anims.create({
+            key: "attackrightdusk",
+            frames: this.anims.generateFrameNumbers('Dusk', {frames: [24,25,26,27,28,29,30,31]}),
+            frameRate: 5
+        });
+        this.anims.create({
+            key: 'defeateddusk',
+            frames: this.anims.generateFrameNumbers('Dusk', {frames: [33]}),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'defeatedduskplayer',
+            frames: this.anims.generateFrameNumbers('Dusk', {frames: [32]}),
+            frameRate: 5,
+            repeat: -1
+        });
+
         //lost soul animations + enemy animations
         this.anims.create({
             key: 'attacklostsoul',
@@ -532,7 +571,7 @@ var WorldScene = new Phaser.Class({
         unitReenaSkills1 = new unitSkills("Rightful God","Grants ATK + 10% when initiating combat", "rightfulgod");
         unitReenaSkills2 = new unitSkills("Cloud Nine","increase critical hit chance by 5% when initiating combat", "cloudnine");
         unitReenaSkillArray = [unitReenaSkills1, unitReenaSkills2]; //an array with the two beginning skills
-        unitReenaStats = new unitStats(20, 18, 25, 8, 14, 15, 13); //this is Reena's current stats
+        unitReenaStats = new unitStats(20, 18, 250, 8, 14, 15, 13); //this is Reena's current stats
         reenaAnimations = ['left', 'right', 'attack', 'defeated'];
         //create a new unit information that stores all of Reena's information 
         unitReenaBattleSkills1 = new unitBattleSkills("Fire Magic", "deals 1x magical damage to opponent", 5, "magic", "single", "firemagic");
@@ -760,6 +799,11 @@ var WorldScene = new Phaser.Class({
             this.scene.run('DialogScene');
         }
 
+        else if (currentDialogStatus === "earth4extra"){
+            this.scene.pause(currentScene);
+            this.scene.run('DialogScene');
+        }
+
         this.scene.pause(currentScene);
         this.scene.run('DialogScene');
         
@@ -858,6 +902,38 @@ var WorldScene = new Phaser.Class({
             this.input.stopPropagation();
 
             this.scene.switch("BattleScene");
+        }
+
+        else if (npc.texture.key === "Dusk"){
+            canEscape = false;
+            currentDialogStatus = "earth4";
+            this.reena.y -= 20;
+            this.reena.body.setVelocity(0, 0);
+
+            DuskSkills1 = new unitSkills("Devil Scale", "Negates status damage. Inflicts attack down status on opponent(s) that initiates an attack. (Effect applies immediately)", "dragonskin");
+            DuskSkills2 = new unitSkills("Devilbound","Increases damage received by 25%. Increase damage delt by 25%", "devilbound");
+            DuskSkills3 = new unitSkills("Fury", "Increase damage delt by 10%", "fury");
+            DuskSkillArray = [DuskSkills1, DuskSkills2, DuskSkills3];
+            DuskStats = new unitStats(750, 100, 180, 365, 257, 630, 525);
+            DuskAnimations = ['rightdusk', 'leftdusk', 'attackrightdusk', 'defeateddusk'];
+            DuskBattleSkills1 = new unitBattleSkills("Pure Chaos", "inflicts attack down status to all opponents.", 25, "magic", "multiple", "purechaos");
+            DuskBattleSkills2 = new unitBattleSkills("Spirit Shackle", "inflicts magical damage and paralysis on one target", 10, "magic", "single", "spiritshackle");
+            DuskBattleSkills3 = new unitBattleSkills("Come on, let's play more!", "inflicts massive damage to one opponent", 0, "magic", "single");
+            DuskBattleSkills4 = new unitBattleSkills("I'm not done playing yet!", "inflicts massive damage to one opponent,", 0, "magic", "single", "none");
+            DuskBattleSkills5 = new unitBattleSkills("Soooo Booooring... Zzz...", "heals itself", 0, "heal", "single");
+            DuskBattleSkills6 = new unitBattleSkills("You don't seem very energetic do you?", "inflicts massive damage to one opponent", 0, "magic", "single");
+            DuskBattleSkillArray = [DuskBattleSkills3, DuskBattleSkills4, DuskBattleSkills5, DuskBattleSkills6];
+            Dusk = new unitInformation(null, "Dusk", DuskAnimations, "dusksprite", DuskSkillArray, DuskStats, null, DuskBattleSkillArray, 80);
+            enemies.push(Dusk);
+
+            this.cameras.main.shake(300);
+            this.input.stopPropagation();
+
+            this.scene.pause(currentScene);
+            this.scene.run('DialogScene');
+
+            this.scene.pause(currentScene);
+            this.scene.run('DialogScene');
         }
 
         else if (npc.texture.key === "Android"){
@@ -1905,6 +1981,10 @@ var DialogScene = new Phaser.Class({
         this.convoNames6 = ["Yune", "Soldier", "Reena", "Anne", "Reena", "Anne", "Soldier", "Anne", "Soldier", null];
         this.convo7 = ["We are almost there, just a bit more", "Let's move forward!", null];
         this.convoNames7 = ["Soldier", "Reena", null];
+        this.convo8 = ["Test", null];
+        this.convoNames8 = ["Dusk", null];
+        this.convo9 = ["Ughhhh that wasn't fun at all! Not at all!", null];
+        this.convoNames9 = ["Dusk", null];
 
             //click anywhere
         this.input.on("pointerdown", ()=>{
@@ -2018,6 +2098,29 @@ var DialogScene = new Phaser.Class({
                 }
             }
 
+            else if (currentDialogStatus === "earth4"){
+                this.currentIndex++;
+                this.convoText.text = this.convo8[this.currentIndex];
+                this.convoName.text = this.convoNames8[this.currentIndex];
+                if (this.convo8[this.currentIndex] === null){
+                    currentDialogStatus = "earth4extra";
+                    this.currentIndex = -1;
+                    this.scene.stop('DialogScene');
+                    this.scene.get(currentScene).startBattle();
+                }
+            }
+
+            else if (currentDialogStatus === "earth4extra"){
+                this.currentIndex++;
+                this.convoText.text = this.convo9[this.currentIndex];
+                this.convoName.text = this.convoNames9[this.currentIndex];
+                if (this.convo8[this.currentIndex] === null){
+                    currentDialogStatus = "earth5";
+                    this.currentIndex = -1;
+                    this.scene.stop('DialogScene');
+                    this.scene.switch('World6');
+                }
+            }
 
         })
     },
@@ -3105,14 +3208,238 @@ var World5 = new Phaser.Class({
             // parameters are x, y, width, height
             this.spawns.create(x, y, 30, 30);            
         }        
-        // add collider robot
+        // add collider Dusk
         //this.physics.add.collider(this.reena, this.spawns, this.onMeetEnemy, false, this);
 
-        //Android
-        //this.android = this.physics.add.sprite(1920, 128+64, 'Android', 6).setImmovable();
-        //this.android.anims.play('rightandroid', true);
-        //npcs.push(this.android);
-        //this.physics.add.collider(this.reena, this.android, this.onNpcDialog, false, this).name = "Androidcollider";
+        //Dusk
+        this.dusk = this.physics.add.sprite(1920, 128+64, 'Dusk', 6).setImmovable();
+        this.dusk.anims.play('rightdusk', true);
+        npcs.push(this.dusk);
+        this.physics.add.collider(this.reena, this.dusk, this.onNpcDialog, false, this).name = "Duskcollider";
+        
+        // we listen for 'wake' event
+        this.sys.events.on('wake', this.wake, this);
+    },
+    
+    update: function (time, delta)
+    {             
+        this.reena.body.setVelocity(0);
+        
+        // Horizontal movement
+        if (this.cursors.left.isDown)
+        {
+            this.reena.body.setVelocityX(-1550);
+        }
+        else if (this.cursors.right.isDown)
+        {
+            this.reena.body.setVelocityX(1550);
+        }
+        // Vertical movement
+        if (this.cursors.up.isDown)
+        {
+            this.reena.body.setVelocityY(-1550);
+        }
+        else if (this.cursors.down.isDown)
+        {
+            this.reena.body.setVelocityY(1550);
+        }        
+
+        // Update the animation last and give left/right animations precedence over up/down animations
+        if (this.cursors.left.isDown)
+        {
+            this.reena.anims.play('left', true);
+            //this.reena.flipX = true;
+        }
+        else if (this.cursors.right.isDown)
+        {
+            this.reena.anims.play('right', true);
+            this.reena.flipX = false;
+        }
+        else if (this.cursors.up.isDown)
+        {
+            this.reena.anims.play('up', true);
+        }
+        else if (this.cursors.down.isDown)
+        {
+            this.reena.anims.play('down', true);
+        }
+        else
+        {
+            //this.reena.anims.stop();
+            this.reena.body.setVelocity(0);
+        }
+    }
+});
+
+var World6 = new Phaser.Class({
+    Extends: WorldScene,
+
+    initialize:
+
+    function World6 ()
+    {
+        Phaser.Scene.call(this, { key: 'World6' });
+    },
+    
+    create: function(){
+        var level6 = this.make.tilemap({
+            key: 'level6'
+        });
+                //keep an array of all the npcs on this map 
+                var npcs = [];
+
+                // create the map
+                var level6 = this.make.tilemap({ key: 'level6' });
+                
+                // first parameter is the name of the tilemap in tiled
+                var tiles = level6.addTilesetImage('Mapset2', 'tiles2');
+                
+                // creating the layers
+                var traverse = level6.createStaticLayer('traverse', tiles, 0, 0);
+                var blocked = level6.createStaticLayer('blocked', tiles, 0, 0);
+                
+                // make all tiles in obstacles collidable
+                blocked.setCollisionByExclusion([-1]);
+        
+                //list of global attributes that the current player has 
+        
+                var animations = []; //a string of animations being stored 
+        
+                //conversations array;
+        
+                battlescenemap = "godTower";
+                
+                //  animation with key 'left', we don't need left and right as we will use one and flip the sprite
+                this.anims.create({
+                    key: 'left',
+                    frames: this.anims.generateFrameNumbers('Reena', { frames: [8,9,10,11,12,13,14,15]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+                
+                // animation with key 'right'
+                this.anims.create({
+                    key: 'right',
+                    frames: this.anims.generateFrameNumbers('Reena', { frames: [0,1,2,3,4,5,6,7] }),
+                    frameRate: 5,
+                    repeat: -1
+                });
+                this.anims.create({
+                    key: 'up',
+                    frames: this.anims.generateFrameNumbers('Reena', { frames: [8,9,10,11,12,13,14,15]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+                this.anims.create({
+                    key: 'down',
+                    frames: this.anims.generateFrameNumbers('Reena', { frames: [0,1,2,3,4,5,6,7] }),
+                    frameRate: 5,
+                    repeat: -1
+                });     
+        
+                this.anims.create({
+                    key: 'attack',
+                    frames: this.anims.generateFrameNumbers('Reena', { frames: [24,25,26,27,28,29,30,31] }),
+                    frameRate: 5,
+                });
+                
+                this.anims.create({
+                    key: 'defeated',
+                    frames: this.anims.generateFrameNumbers('Reena', {frames: [32]}),
+                    frameRate: 1,
+                    repeat: -1
+                })
+        
+                //alyene animations
+                this.anims.create({
+                    key: 'rightalyene',
+                    frames: this.anims.generateFrameNumbers('Alyene', { frames: [8,9,10,11,12,13,14,15]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+                this.anims.create({
+                    key: 'leftalyene',
+                    frames: this.anims.generateFrameNumbers('Alyene', { frames: [0,1,2,3,4,5,6,7]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+                this.anims.create({
+                    key: 'attackalyene',
+                    frames: this.anims.generateFrameNumbers('Alyene', { frames: [24,25,26,27,28,29,30,31]}),
+                    frameRate: 5,
+                });
+                this.anims.create({
+                    key: 'defeatedalyene',
+                    frames: this.anims.generateFrameNumbers('Alyene', { frames: [33]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+        
+                //yune animations
+                this.anims.create({
+                    key: 'rightyune',
+                    frames: this.anims.generateFrameNumbers('Yune', {frames: [8,9,10,11,12,13,14,15]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+                this.anims.create({
+                    key: 'leftyune',
+                    frames: this.anims.generateFrameNumbers('Yune', {frames: [0,1,2,3,4,5,6,7]}),
+                    frameRate: 5,
+                    repeat: -1
+                });
+        
+                // our player sprite created through the phycis system
+                this.reena = this.physics.add.sprite(3840/2, 3840 - 128, 'Reena', 6);
+                
+                // don't go out of the map
+                this.physics.world.bounds.width = level6.widthInPixels;
+                this.physics.world.bounds.height = level6.heightInPixels;
+                this.reena.setCollideWorldBounds(true);
+                
+                // don't walk on trees
+                this.physics.add.collider(this.reena, blocked);
+        
+                // limit camera to map
+                this.cameras.main.setBounds(0, 0, level6.widthInPixels, level6.heightInPixels);
+                this.cameras.main.startFollow(this.reena);
+                this.cameras.main.roundPixels = true; // avoid tile bleed
+
+                        // user input
+        //this.cursors = this.input.keyboard.createCursorKeys();
+        this.cursors = this.input.keyboard.addKeys({
+            up: 'W',
+            down: 'S',
+            left: 'A',
+            right: 'D'
+        });  // keys.up, keys.down, keys.left, keys.right
+
+
+        this.input.keyboard.on('keydown_F', ()=>{
+            this.scene.switch("PartyMembersScene");
+        });
+
+        this.input.keyboard.on('keydown_G', ()=>{
+            this.scene.switch("SkillScene");
+        });
+
+        currentScene = "World6";
+        // where the enemies will be
+        this.spawns = this.physics.add.group({ classType: Phaser.GameObjects.Zone });
+        for(var i = 0; i < 25; i++) {
+            var x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
+            var y = Phaser.Math.RND.between(0, this.physics.world.bounds.height);
+            // parameters are x, y, width, height
+            this.spawns.create(x, y, 30, 30);            
+        }        
+        // add collider Dusk
+        //this.physics.add.collider(this.reena, this.spawns, this.onMeetEnemy, false, this);
+
+        //Dusk
+        //this.dusk = this.physics.add.sprite(1920, 128+64, 'Dusk', 6).setImmovable();
+        //this.android.anims.play('rightdusk', true);
+        //npcs.push(this.dusk);
+        //this.physics.add.collider(this.reena, this.dusk, this.onNpcDialog, false, this).name = "Duskcollider";
         
         // we listen for 'wake' event
         this.sys.events.on('wake', this.wake, this);

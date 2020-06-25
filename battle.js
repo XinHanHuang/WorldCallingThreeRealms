@@ -55,6 +55,13 @@ var BattleScene = new Phaser.Class({
 			this.traverse = this.level.createStaticLayer('traverse', this.tiles, 0, 0);
 			this.blocked = this.level.createStaticLayer('blocked', this.tiles, 0, 0);
 		}
+
+		else if (battlescenemap === "godTower"){
+           	this.level = this.make.tilemap({ key: 'level6' });
+            this.tiles = level6.addTilesetImage('Mapset2', 'tiles2');
+            this.traverse = level6.createStaticLayer('traverse', tiles, 0, 0);
+            this.blocked = level6.createStaticLayer('blocked', tiles, 0, 0);
+		}
         // player character - warrior
 		this.heroes = [];
 		this.enemiesArray = [];
@@ -210,6 +217,28 @@ var BattleScene = new Phaser.Class({
 				}
 			}
 
+			else if (currentEnemy.playerInformation.unitName === "Dusk"){
+				var r;
+				do{
+					r = Math.floor(Math.random() * this.heroes.length);
+				} while (!this.heroes[r].living)
+				skillOrAttack = Phaser.Math.RND.between(0, 20);
+				if (skillOrAttack <= 5){
+					this.scene.get('UIScene').battle(this.units[this.index].playerInformation, this.heroes[r].playerInformation, "skill", "Come on, let's play more!", false);
+				}
+				else if (skillOrAttack > 5 && skillOrAttack <= 10){
+					this.scene.get('UIScene').battle(this.units[this.index].playerInformation, this.heroes[r].playerInformation, "skill", "I'm not done playing yet!", false);
+				}
+				else if (skillOrAttack > 10 && skillOrAttack <= 15){
+					this.scene.get('UIScene').heal(this.units[this.index].playerInformation, this.units[this.index].playerInformation, "skill", "Soooo Booooring... Zzz...", false);
+				}
+				else{
+					this.scene.get('UIScene').battle(this.units[this.index].playerInformation, this.heroes[r].playerInformation, "skill", "You don't seem very energetic do you?", false);
+				}
+			}
+
+
+
 			else {
 				//Random for all other random spawns 
 				// pick random living hero to be attacked
@@ -353,13 +382,15 @@ var BattleScene = new Phaser.Class({
 		if (partyWipeCounter === this.heroes.length && enemies[0].unitName === "???" ||
 		partyWipeCounter === this.heroes.length && enemies[0].unitName === "Colossus"||
 		partyWipeCounter === this.heroes.length && enemies[0].unitName === "Soldier" ||
-		partyWipeCounter === this.heroes.length && enemies[0].unitName.split(" ")[0] === "Android"){
+		partyWipeCounter === this.heroes.length && enemies[0].unitName.split(" ")[0] === "Android" ||
+		partyWipeCounter != this.heroes.length && enemies[0].unitName === "Dusk"){
             bossBattleVictory = false;
 		}
 		else if (partyWipeCounter != this.heroes.length && enemies[0].unitName === "???" ||
 		partyWipeCounter != this.heroes.length && enemies[0].unitName === "Colossus" ||
 		partyWipeCounter != this.heroes.length && enemies[0].unitName === "Soldier" ||
-		partyWipeCounter != this.heroes.length && enemies[0].unitName.split(" ")[0] === "Android"){
+		partyWipeCounter != this.heroes.length && enemies[0].unitName.split(" ")[0] === "Android" ||
+		partyWipeCounter === this.heroes.length && enemies[0].unitName === "Dusk"){
 			bossBattleVictory = true;
 		}
 		
@@ -446,6 +477,10 @@ var BattleScene = new Phaser.Class({
 			this.scene.get(currentScene).continueDialog();
 		}
 		else if(currentDialogStatus === "earth3" && bossBattleVictory === true){
+			this.scene.switch(currentScene);
+			this.scene.get(currentScene).continueDialog();
+		}
+		else if(currentDialogStatus === "earth4extra" && bossBattleVictory === true){
 			this.scene.switch(currentScene);
 			this.scene.get(currentScene).continueDialog();
 		}
@@ -1972,6 +2007,9 @@ var UIScene = new Phaser.Class({
 				if (target.unitSkills[i].skillName === "Overdrive"){
 					damagedelt = Math.floor(damagedelt * 1.5);
 				}
+				if (target.unitSkills[i].skillName === "Devil Scale"){
+					player.unitStatus = "attackdown";
+				}
 				
             }
             
@@ -1991,7 +2029,30 @@ var UIScene = new Phaser.Class({
 				}
             }
 
-
+			if (player.unitStatus === "paralyzed") {
+				for (var i = 0; i < players.length; i++){
+					if (players[i].unitName === player.unitName){
+						var status = this.add.sprite(1280 - 500, 1024 - 22 - 3 * 95 + i * 90, "paralysis").setInteractive();
+						this.scene.get('BattleScene').heroesStatusArray[i] = status;
+					}
+				}
+			}
+			if (player.unitStatus === "poisoned") {
+				for (var i = 0; i < players.length; i++){
+					if (players[i].unitName === player.unitName){
+						var status = this.add.sprite(1280 - 500, 1024 - 22 - 3 * 95 + i * 90, "poison").setInteractive();
+						this.scene.get('BattleScene').heroesStatusArray[i] = status;
+					}
+				}
+			}
+			if (player.unitStatus === "attackdown") {
+				for (var i = 0; i < players.length; i++){
+					if (players[i].unitName === player.unitName){
+						var status = this.add.sprite(1280 - 500, 1024 - 22 - 3 * 95 + i * 90, "attackdown").setInteractive();
+						this.scene.get('BattleScene').heroesStatusArray[i] = status;
+					}
+				}
+			}
 
 			if (target.isGuarding === true) {
 				damagedelt = Math.floor(damagedelt / 2);
@@ -2279,7 +2340,7 @@ var UIScene = new Phaser.Class({
 					target.unitStats.hp = 0;
 				}
 			}
-			else if (skillName === "Pure Halo" || skillName === "Shining Light") {
+			else if (skillName === "Pure Halo" || skillName === "Shining Light" || skillName === "You don't seem very energetic do you?") {
 				for (var i = 0; i < this.damageDeltArray.length; i++) {
 					this.damageDeltArray[i] = Math.floor(this.damageDeltArray[i] * 1.5);
 				}
@@ -2304,7 +2365,8 @@ var UIScene = new Phaser.Class({
 					}
 				}
 			}
-			else if (skillName === "Chaos" || skillName === "Thunderbrand" || skillName === "Spirit Shackle") {
+			else if (skillName === "Chaos" || skillName === "Thunderbrand" || skillName === "Spirit Shackle" ||
+			skillName === "I'm not done playing yet!") {
 
 				//also inflicts paralysis. (Status effects generally handled in 'next turn')
 				//if (target.unitName === "Alyene", not paralyzed or something here)
@@ -2339,7 +2401,7 @@ var UIScene = new Phaser.Class({
 				}
 			}
 
-			else if (skillName === "Spirit Break" || skillName === "Snipe") {
+			else if (skillName === "Spirit Break" || skillName === "Snipe" || skillName === "Come on, let's play more!") {
 
 				target.unitStatus = "attackdown";
 				for (var i = 0; i < players.length; i++) {
@@ -2371,7 +2433,7 @@ var UIScene = new Phaser.Class({
 
 			}
 			//testing multi target
-			else if (skillName === "Pure Chaos" || skillName === "Energy Leak") {
+			else if (skillName === "Demon Glare" || skillName === "Energy Leak") {
 				multiTarget = true; //set to true
 
 				if (isPlayer === true) {
@@ -2389,6 +2451,35 @@ var UIScene = new Phaser.Class({
 				else if (isPlayer === false) {
 					for (var i = 0; i < players.length; i++) {
 						players[i].unitStatus = "paralyzed";
+						players[i].unitStats.hp = players[i].unitStats.hp - this.damageDeltArray[i];
+						if (players[i].unitStats.hp < 0) {
+							players[i].unitStats.hp = 0;
+						}
+						if (this.scene.get('BattleScene').heroesStatusArray[i]) {
+							this.scene.get('BattleScene').heroesStatusArray[i].destroy();
+						}
+					}
+				}
+			}
+
+			else if (skillName === "Pure Chaos" || skillName === "Merciful Mary") {
+				multiTarget = true; //set to true
+
+				if (isPlayer === true) {
+					for (var i = 0; i < enemies.length; i++) {
+						enemies[i].unitStatus = "attackdown";
+						enemies[i].unitStats.hp = enemies[i].unitStats.hp - this.damageDeltArray[i];
+						if (enemies[i].unitStats.hp < 0) {
+							enemies[i].unitStats.hp = 0;
+						}
+						if (this.scene.get('BattleScene').enemiesStatusArray[i]) {
+							this.scene.get('BattleScene').enemiesStatusArray[i].destroy();
+						}
+					}
+				}
+				else if (isPlayer === false) {
+					for (var i = 0; i < players.length; i++) {
+						players[i].unitStatus = "attackdown";
 						players[i].unitStats.hp = players[i].unitStats.hp - this.damageDeltArray[i];
 						if (players[i].unitStats.hp < 0) {
 							players[i].unitStats.hp = 0;
@@ -2783,7 +2874,7 @@ var UIScene = new Phaser.Class({
 		//there are 3 types. normal magic that deals 1x magic does not get included in this if list, only those that are special do
 		//there are also enemy exclusive skills that do not do anything. 
 		if (skillName === "Light" || skillName === "Prayer" || skillName === "God's Voice" ||
-			skillName === "Encore" || skillName === "God's Benevolence") {
+			skillName === "Encore" || skillName === "God's Benevolence" || skillName === "Soooo Booooring... Zzz...") {
 			var currentHP = target.unitStats.hp; //get the current HP 
 			if (target.living === false){
 				damagehealed = 0;
